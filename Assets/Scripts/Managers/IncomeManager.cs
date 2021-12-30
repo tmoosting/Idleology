@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IncomeManager : MonoBehaviour
+namespace Managers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class IncomeManager : MonoBehaviour
     {
+      // Calculates income every game tick
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        
         
     }
 }

@@ -25,7 +25,7 @@ namespace Managers
             GetComponent<GeneratorManager>().InitializeGenerators(newGame);
             UIManager.GetComponent<PurchaserUI>().InitializePurchasers(newGame);
             GetComponent<ModifierManager>().InitializeModifiers(newGame);
-            UIManager.GetComponent<ResourceUI>().InitializeResources(newGame);
+            GetComponent<ResourceManager>().InitializeResources(newGame);
             UIManager.GetComponent<ContentUI>().InitializeContentSections(newGame);
         }
       

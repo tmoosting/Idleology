@@ -23,6 +23,7 @@ namespace Managers
         IDataReader reader;  
         
         [Header("Assigns")]  
+        public List<ResourceData> resourceDataList = new List<ResourceData>();
         public List<GeneratorData> generatorDataList = new List<GeneratorData>();
         // ADD: ModifierDataList
         // ADD: UnlockerDataList
@@ -30,15 +31,31 @@ namespace Managers
         
         
         [Header("Settings")] 
+        public bool forceCloseDatabase;
         public bool loadDatabase;
+        public bool loadDataObjects;
 
         public void LoadDataObjects()
         {
-            if (loadDatabase == true)
-                ImportDatabase();
- 
-            foreach (Generator generator in GetComponent<GeneratorManager>().generatorList) 
-                LoadGeneratorFromData(generator);  
+            if (forceCloseDatabase == true)
+            {
+                GetTableNames();
+                CloseDatabase();
+            }
+            else
+            {
+                if (loadDatabase == true)
+                    ImportDatabase();
+                if (loadDataObjects == true)
+                {
+                    foreach (Resource  resource in GetComponent<ResourceManager>().resourceList)
+                        LoadResourceFromData(resource);
+                    foreach (Generator generator in GetComponent<GeneratorManager>().generatorList) 
+                        LoadGeneratorFromData(generator);  
+                    //ADD: Modifier
+                }
+            }
+        
         }
 
         private void Awake()
@@ -53,11 +70,17 @@ namespace Managers
 
         private void ImportDatabase()
         { 
+            if (GetTableNames().Contains("Resources"))
+            {
+                foreach (string str in GetFieldValuesForTable("Resources", "Type")) 
+                    LoadResourceDataObject(str);
+            }
+            else
+                Debug.LogWarning("NO Resources Table Found..!");
             if (GetTableNames().Contains("Generators"))
             {
                 foreach (string str in GetFieldValuesForTable("Generators", "Type")) 
-                    LoadGeneratorDataObject(str); 
-
+                    LoadGeneratorDataObject(str);
             }
             else
                 Debug.LogWarning("NO Generator Table Found..!");
@@ -65,6 +88,27 @@ namespace Managers
         }
 
    
+        
+        private void LoadResourceDataObject(string type)
+        {
+            ResourceData resourceData = GetResourceData(type);
+            
+            resourceData._newGame = int.Parse( GetEntryForTableAndFieldWithType("Resources", "NewGame", type));
+            resourceData._devGame = int.Parse( GetEntryForTableAndFieldWithType("Resources", "DevGame", type));
+            resourceData._minBound = int.Parse( GetEntryForTableAndFieldWithType("Resources", "MinBound", type));
+            resourceData._maxBound= int.Parse( GetEntryForTableAndFieldWithType("Resources", "MaxBound", type));
+
+        }
+        private  void LoadResourceFromData(Resource resource)
+        {
+            ResourceData resourceData = GetResourceData(resource._type);
+
+            resource._newGame = resourceData._newGame;
+            resource._devGame = resourceData._devGame;
+            resource._minBound = resourceData._minBound;
+            resource._maxBound = resourceData._maxBound;
+        }
+        
 
         private void LoadGeneratorDataObject(string type)
         {
@@ -89,7 +133,44 @@ namespace Managers
  
         
         
-        // Returns a string-list of all table names in database
+     
+        public ResourceData GetResourceData(Resource.Type type)
+        {
+            foreach (ResourceData gen in resourceDataList)
+                if (gen._type == type)
+                    return gen;
+            Debug.LogWarning(("Did not find resourcedata for type: " + type.ToString()+"..!"));
+            return null;
+        }
+        public ResourceData GetResourceData(string type)
+        {
+            foreach (ResourceData gen in resourceDataList)
+                if (gen._type.ToString() == type)
+                    return gen;
+            Debug.LogWarning(("Did not find resourcedata for type: " + type.ToString()+"..!"));
+            return null;
+        }
+        public GeneratorData GetGeneratorData(Generator.Type type)
+        {
+            foreach (GeneratorData gen in generatorDataList)
+                if (gen.GetGeneratorType() == type)
+                    return gen;
+            Debug.LogWarning(("Did not find generatordata for type: " + type.ToString()+"..!"));
+            return null;
+        }
+
+        public GeneratorData GetGeneratorData(string type)
+        {
+            foreach (GeneratorData gen in generatorDataList)
+                if (gen.GetGeneratorType().ToString() == type)
+                    return gen;
+            Debug.LogWarning(("Did not find generatordata for type: " + type +"..!"));
+            return null;
+        }
+        
+        
+        
+           // Returns a string-list of all table names in database
         public List<string> GetTableNames()
         {
             List<string> returnList = new List<string>(); 
@@ -151,29 +232,6 @@ namespace Managers
             dbcmd.Dispose();
             dbconn.Close();
         }
-        
-        
-        public GeneratorData GetGeneratorData(Generator.Type type)
-        {
-            foreach (GeneratorData gen in generatorDataList)
-                if (gen.GetGeneratorType() == type)
-                    return gen;
-            Debug.LogWarning(("Did not find generator for type: " + type.ToString()+"..!"));
-            return null;
-        }
-
-        public GeneratorData GetGeneratorData(string type)
-        {
-            foreach (GeneratorData gen in generatorDataList)
-                if (gen.GetGeneratorType().ToString() == type)
-                    return gen;
-            Debug.LogWarning(("Did not find generator for type: " + type +"..!"));
-            return null;
-        }
-        
-        
-        
-        
         
     }
 

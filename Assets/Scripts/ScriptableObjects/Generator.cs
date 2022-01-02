@@ -27,8 +27,8 @@ namespace ScriptableObjects
         public Type _type; 
         [HideInInspector] public IOperator.State _state { get; set; }
         
-        public int _production;
         private int _workers = 0;
+        public int _production;
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
         public int _levelCost { get; set; }
@@ -42,7 +42,11 @@ namespace ScriptableObjects
 
         public void AddLevel()
         {
-            _workers++;
+            _workers++; 
+        }
+        public void SetLevel(int level)
+        {
+            _workers = level;
         }
         public int GetLevel()
         {

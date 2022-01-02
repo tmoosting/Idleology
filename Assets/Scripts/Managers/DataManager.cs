@@ -143,6 +143,7 @@ namespace Managers
         private  void LoadGeneratorFromData(Generator generator)
         {
             GeneratorData generatorData = GetGeneratorData((generator._type));
+            generator._production = generatorData._production;
             generator._resource = generatorData._resource;
             generator._costResource = generatorData._costResource;
             generator._purchaseCost = generatorData._purchaseCost;

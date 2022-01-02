@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
+using Managers;
+using Michsky.UI.ModernUIPack;
 using ScriptableObjects;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +18,8 @@ public class Tab : MonoBehaviour
     public Generator.Type _requiredGenerator;
     public bool _requiresModifier;
     public Modifier.Type _requiredModifier;
-    public int _requiredWorkers;
-
+    public int _requiredLevel;
+    private bool _locked = true;
 
     
     private void Start ()
@@ -24,7 +28,7 @@ public class Tab : MonoBehaviour
         amountText.GetComponent<TextMeshProUGUI>().text =  "0"; 
 
     }
-    
+
     public void Unlock()
     {
         gameObject.SetActive(true);
@@ -32,20 +36,29 @@ public class Tab : MonoBehaviour
     
     public void UpdateTab()
     {
-        /*
-        incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", ResourceController.Instance.GetResourceIncome(resourceType)); 
 
-        if (resourceType == ResourceController.ResourceType.Influence) 
-            amountText.GetComponent<TextMeshProUGUI>().text =  ResourceController.Instance.resources[ResourceController.ResourceType.Influence].ToString(); 
-        else if (resourceType == ResourceController.ResourceType.Force) 
-            amountText.GetComponent<TextMeshProUGUI>().text = ResourceController.Instance.resources[ResourceController.ResourceType.Force].ToString(); 
-            */
+        ResourceManager resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();
+      
+
+        if (gameObject.name == "TabInfluence")
+        {
+            amountText.GetComponent<TextMeshProUGUI>().text =  resourceManager.GetResource(Resource.Type.Influence)._amount.ToString(); 
+            incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", resourceManager.CalculateIncome(Resource.Type.Influence));
+        }
+          
+        else if (gameObject.name == "TabForce")
+        {
+            amountText.GetComponent<TextMeshProUGUI>().text =  resourceManager.GetResource(Resource.Type.Force)._amount.ToString(); 
+            incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", resourceManager.CalculateIncome(Resource.Type.Force));
+        }
+           
+            
 
     }
     
     private void OnMouseDown()
     {
-     //   UIController.Instance.ClickTab(this);
+        GameStateManager.Instance.UIManager.GetComponent<ContentUI>().OpenTab(this);
     }
 
     public void HighlightTab()
@@ -57,4 +70,41 @@ public class Tab : MonoBehaviour
     {
         highlight.enabled = false; 
     }
+
+    public void ValidateUnlock()
+    {
+        if (_locked == true)
+        {
+            if (_requiresGenerator)
+            {
+                Generator generator = GameStateManager.Instance.GetComponent<GeneratorManager>().GetGenerator(_requiredGenerator);
+                if (generator._state != IOperator.State.Owned)
+                    return;
+                if (_requiredLevel > generator.GetLevel())
+                    return;
+            }
+            if (_requiresModifier)
+            {
+                Modifier modifier = GameStateManager.Instance.GetComponent<ModifierManager>().GetModifier(_requiredModifier);
+                if (modifier._state != IOperator.State.Owned)
+                    return;
+                if (_requiredLevel > modifier.GetLevel())
+                    return;
+            }
+
+            UnlockTab();
+        }
+    }
+    
+    
+    public void HideTab()
+    {
+        gameObject.SetActive(false);
+    }
+    private void UnlockTab()
+    {
+        gameObject.SetActive(true);
+    }
+
+  
 }

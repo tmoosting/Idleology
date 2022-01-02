@@ -16,6 +16,8 @@ namespace Managers
         public bool newGame;
 
         private float tickTimer = 0;
+        [HideInInspector]
+        public float timePassed = 0;
 
 
         private void Awake()
@@ -31,6 +33,7 @@ namespace Managers
         private void FixedUpdate()
         {
             tickTimer += Time.deltaTime;
+            timePassed += Time.deltaTime;
             if (tickTimer > 1.0f)
             {
                 tickTimer = 0f;
@@ -56,7 +59,7 @@ namespace Managers
         private void GameTick()
         {
             GetComponent<ResourceManager>().GenerateIncome();
-            UIManager.GetComponent<ResourceUI>().UpdateTexts();
+            UpdateUI();
             ScanUnlockables();
         }
 
@@ -65,6 +68,14 @@ namespace Managers
             // Called on GameStart, GameTick, and Purchaser's ClickBuyButton
             GetComponent<PurchaserManager>().ScanUnlockables(); 
             UIManager.GetComponent<ContentUI>().ScanUnlockables(); 
+        }
+
+        public void UpdateUI()
+        {
+            UIManager.GetComponent<ContentUI>().UpdateContentUI();
+           GetComponent<ResourceManager>().UpdateTexts();
+           GetComponent<PurchaserManager>().UpdateTexts();
+
         }
         
         

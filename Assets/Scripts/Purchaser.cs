@@ -24,11 +24,9 @@ public class Purchaser : MonoBehaviour
         Color defaultColor; 
         GeneratorManager generatorManager;
         ModifierManager modifierManager;
-        ResourceManager resourceManager; 
-      
-          
-        [HideInInspector] public int _currentCostAmount;
-        [HideInInspector] public Resource.Type _currentCostResource; 
+        ResourceManager resourceManager;
+        private bool unlocked = false;
+           
 
         private void Awake()
         {
@@ -42,56 +40,83 @@ public class Purchaser : MonoBehaviour
                 modifierManager = GameStateManager.Instance.GetComponent<ModifierManager>();
                 resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();
         }
+        
+        
+
+        private void Lock()
+        {
+                unlocked = false;
+                DisableBuyButton();
+        }
 
         public void Unlock()
-        {  
+        {
+                unlocked = true;
                 if (source._state == IOperator.State.Hidden)
                 { 
                         RevealPurchaser();
+                        ValidateUnlock();
                 }
                 else     if (source._state == IOperator.State.Visible)
                 { 
-                        EnableBuyButton();
+                        EnableBuyButton(); 
                 }
                 else     if (source._state == IOperator.State.Owned)
                 { 
                         EnableBuyButton();
                 }
-                // Update buy button text
-                buyButtonText.text = "$ " + GetCurrentBuyButtonCost();
+                // Update texts
+                UpdateTexts();
         }
      
     
 
 
         public void ValidateUnlock()
-        {   
+        {
+                if (gameObject.name == "PoliceStation")
+                        Debug.Log("check for police");
                 if (source._state == IOperator.State.Hidden)
                 { 
                         if (source._requiresGenerator)
                         {
                                 Generator generator = generatorManager.GetGenerator(source._requiredGenerator);
-                                if ( generator._state != IOperator.State.Owned)
+                                if (generator._state != IOperator.State.Owned)
+                                {
+                                        Lock();
                                         return;
+                                }
                                 if (source._requiredLevel > generator.GetLevel()) 
+                                {
+                                        Lock();
                                         return;
+                                }
                                 
                         }
                         if (source._requiresModifier)
                         {
                                 Modifier modifier = modifierManager.GetModifier(source._requiredModifier);
                                 if ( modifier._state != IOperator.State.Owned)
+                                {
+                                        Lock();
                                         return;
+                                }
                                 if (source._requiredLevel > modifier.GetLevel()) 
+                                {
+                                        Lock();
                                         return;
+                                }
                                 
                         } 
                         Unlock(); 
                 }
                 else
-                { 
-                        if (resourceManager.RequirementsMet(source._costResource, source._purchaseCost) == false)
-                                return; 
+                {
+                        if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
+                        {
+                                Lock();
+                                return;
+                        }
                         Unlock(); 
                 }
               
@@ -101,22 +126,38 @@ public class Purchaser : MonoBehaviour
 
         public void ClickBuyButton()
         { 
-                Purchase();   
-                GameStateManager.Instance.ScanUnlockables();
+                Purchase();
+                if (Input.GetKey(KeyCode.LeftControl) )
+                {
+                        for (int i = 0; i < 10; i++)
+                        {
+                                GameStateManager.Instance.ScanUnlockables();
+                                if (unlocked == true)
+                                        Purchase();
+                        }       
+                                          
+                }
         }
 
-        private void Purchase()
+        void Purchase()
         {
+                resourceManager.PayResource(source._costResource, GetCurrentCost());
                 if (source._state == IOperator.State.Visible)
                 {
                         source._state = IOperator.State.Owned;
+                        workersObject.SetActive(true);
+                        workersImage.SetActive(true);
+                        imageObject.SetActive(true);
                 }
                 else  if (source._state == IOperator.State.Owned)
                 {
                         source.AddLevel();
                 }
+                GameStateManager.Instance.ScanUnlockables();
+                GameStateManager.Instance.UpdateUI();
         }
 
+         
         public void HidePurchaser()
         {
                 gameObject.SetActive(false);
@@ -154,9 +195,16 @@ public class Purchaser : MonoBehaviour
         }
 
 
-        
+        public void UpdateTexts()
+        {
+                if (source._state != IOperator.State.Hidden)
+                {
+                        buyButtonText.text = "$ " + GetCurrentCost();
+                        workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
+                } 
+        }
 
-        public int GetCurrentBuyButtonCost()
+        public int GetCurrentCost()
         {
                 if (source._state == IOperator.State.Hidden)
                 {
@@ -166,7 +214,7 @@ public class Purchaser : MonoBehaviour
                 if (source._state == IOperator.State.Visible)
                         return source._purchaseCost;
              
-                return source.GetLevel() * source._levelCost;
+                return (source.GetLevel() + 1) * source._levelCost; 
         }
         
         

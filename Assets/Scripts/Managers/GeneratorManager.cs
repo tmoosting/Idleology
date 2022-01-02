@@ -18,7 +18,10 @@ namespace Managers
      { 
          if (newGame == true)
          {
-           
+             foreach (Generator generator in generatorList)
+             {
+                 generator.SetLevel(0);
+             }
          }
          else 
          {

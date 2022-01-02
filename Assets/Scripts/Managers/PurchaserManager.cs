@@ -26,10 +26,8 @@ namespace Managers
                 if (tf.GetComponent<Purchaser>() != null)
                     purchaserList.Add(tf.GetComponent<Purchaser>() ); 
      
-        
-            // ADD: influence, force etc 
-        
-        
+         
+          
         }
 
 
@@ -66,11 +64,14 @@ namespace Managers
         public void ScanUnlockables()
         {
             foreach (Purchaser purchaser in purchaserList)
-            { 
-                purchaser.ValidateUnlock(); 
-            }
+                purchaser.ValidateUnlock();
         }
-        
-        
+
+
+        public void UpdateTexts()
+        {
+            foreach (Purchaser purchaser in purchaserList)
+                purchaser.UpdateTexts();
+        }
     }
 }

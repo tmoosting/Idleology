@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 6955354538336431124}
   - component: {fileID: 188166919707670942}
   m_Layer: 5
-  m_Name: Generator
+  m_Name: Purchaser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae928a427ea3ee4fb613e3d8a399622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  source: {fileID: 0}
   imageObject: {fileID: 1099149552316360147}
   nameObject: {fileID: 6955354539055635339}
   buyButtonObject: {fileID: 6955354538874421058}
@@ -136,7 +135,9 @@ MonoBehaviour:
   workersObject: {fileID: 6955354539703526767}
   workersImage: {fileID: 9140439655987512677}
   disabledColor: {r: 1, g: 1, b: 1, a: 0.64705884}
-  _type: 0
+  _currentCostAmount: 0
+  _currentCostResource: 0
+  unlocked: 0
 --- !u!1 &6955354538355593916
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,7 +372,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 188166919707670942}
         m_TargetAssemblyTypeName: Purchaser, Assembly-CSharp
-        m_MethodName: ClickPurchase
+        m_MethodName: ClickBuyButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -34,19 +34,22 @@ namespace Managers
 
 
         public void InitializePurchasers(bool newGame)
-        {
-            // hide all purchasers
-            foreach (Purchaser pur in purchaserList)
-                pur.HidePurchaser();
-
+        { 
+          
             // Set source object for purchasers 
             foreach (Purchaser pur in purchaserList)
             {
-                if (pur.GetPurchaserType() == Purchaser.Type.Generator)
+                if (GetComponent<GeneratorManager>().GetGenerator(pur.gameObject.name) != null)
                     pur.source =  GetComponent<GeneratorManager>().GetGenerator(pur.gameObject.name);
-                else if (pur.GetPurchaserType() == Purchaser.Type.Modifier)
+                else  if (GetComponent<ModifierManager>().GetModifier(pur.gameObject.name) != null)
                     pur.source =  GetComponent<ModifierManager>().GetModifier(pur.gameObject.name);
+                else 
+                    Debug.LogWarning("Did not find a source for Purchaser: " + pur.gameObject.name + "..!");
             }
+            
+            // hide all purchasers
+            foreach (Purchaser pur in purchaserList)
+                pur.HidePurchaser();
         
             if (newGame == true)
             {
@@ -57,8 +60,16 @@ namespace Managers
             {
                 //TODO: Load from save
             }
+        } 
+        
+        
+        public void ScanUnlockables()
+        {
+            foreach (Purchaser purchaser in purchaserList)
+            { 
+                purchaser.ValidateUnlock(); 
+            }
         }
-
         
         
     }

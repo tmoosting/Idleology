@@ -26,8 +26,7 @@ namespace Managers
          }
      }
      
-     
-     
+   
      
      
      
@@ -42,7 +41,7 @@ namespace Managers
          Debug.LogWarning(("Did not find generator for type: " + type.ToString()+"..!"));
          return null;
      }
-
+  
      public Generator GetGenerator(string type)
      {
          foreach (Generator gen in generatorList)
@@ -51,5 +50,7 @@ namespace Managers
          Debug.LogWarning(("Did not find generator for type: " + type +"..!"));
          return null;
      }
+
+
     }
 }

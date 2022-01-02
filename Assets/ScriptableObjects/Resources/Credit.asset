@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Credit
   m_EditorClassIdentifier: 
   _type: 0
-  amount: 0
+  _amount: 19
+  _newGame: 8
+  _devGame: 500000
+  _minBound: 0
+  _maxBound: 0

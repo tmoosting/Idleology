@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Tab : MonoBehaviour, IUnlockable
+public class Tab : MonoBehaviour
 {
     public Image highlight;
     public GameObject amountText;

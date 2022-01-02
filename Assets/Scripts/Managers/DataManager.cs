@@ -116,15 +116,16 @@ namespace Managers
             
             generatorData._resource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
                 GetEntryForTableAndFieldWithType("Generators", "Resource", type)); 
+            generatorData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
+                GetEntryForTableAndFieldWithType("Generators", "CostResource", type)); 
             generatorData._purchaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
-            generatorData._workerBaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "WorkerBaseCost", type));
+            generatorData._levelCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
             generatorData._production= int.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
             string requiredGenerator = GetEntryForTableAndFieldWithType("Generators", "RequiresGenerator", type);
             if (requiredGenerator == "")
                 generatorData._requiresGenerator = false;
             else
             {
-                Debug.Log("fddfdf");
                 generatorData._requiredGenerator = (Generator.Type) System.Enum.Parse(typeof(Generator.Type),requiredGenerator); 
                 generatorData._requiresGenerator = true;
             }
@@ -137,20 +138,21 @@ namespace Managers
                 generatorData._requiredModifier = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),requiredModifier); 
                 generatorData._requiresModifier = true;
             }
-            generatorData._requiredWorkers =    int.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresWorkers", type));
+            generatorData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
         }
         private  void LoadGeneratorFromData(Generator generator)
         {
             GeneratorData generatorData = GetGeneratorData((generator._type));
             generator._resource = generatorData._resource;
+            generator._costResource = generatorData._costResource;
             generator._purchaseCost = generatorData._purchaseCost;
-            generator._workerBaseCost = generatorData._workerBaseCost;
+            generator._levelCost = generatorData._levelCost;
             generator._production = generatorData._production;
             generator._requiresGenerator = generatorData._requiresGenerator;
             generator._requiredGenerator = generatorData._requiredGenerator;
             generator._requiresModifier = generatorData._requiresModifier;
             generator._requiredModifier = generatorData._requiredModifier;
-            generator._requiredWorkers = generatorData._requiredWorkers;
+            generator._requiredLevel = generatorData._requiredLevel;
         }
  
  

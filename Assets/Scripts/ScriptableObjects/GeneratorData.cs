@@ -10,14 +10,15 @@ namespace ScriptableObjects
         
         public Generator.Type _type;
         public Resource.Type _resource;
+        public Resource.Type _costResource;
         public int _purchaseCost;
-        public int _workerBaseCost;
+        public int _levelCost;
         public int _production;
         public bool _requiresGenerator;
         public Generator.Type _requiredGenerator;
         public bool _requiresModifier;
         public Modifier.Type _requiredModifier;
-        public int _requiredWorkers;
+        public int _requiredLevel;
 
         public Generator.Type GetGeneratorType()
         {

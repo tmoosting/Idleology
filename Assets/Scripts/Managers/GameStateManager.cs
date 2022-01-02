@@ -7,16 +7,22 @@ namespace Managers
     public class GameStateManager : MonoBehaviour
     {
         // Starts Game, Creates GameTicks, Tracks Prestige Level
-        
+
+        public static GameStateManager Instance;
         [Header("Assigns")] 
         public GameObject UIManager;
         
         [Header("Settings")]
         public bool newGame;
 
-        private float tickTimer = 0; 
-  
-        
+        private float tickTimer = 0;
+
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         private void Start()
         {
            StartGame(); 
@@ -40,27 +46,26 @@ namespace Managers
             GetComponent<GeneratorManager>().InitializeGenerators(newGame);
             GetComponent<PurchaserManager>().InitializePurchasers(newGame);
             GetComponent<ModifierManager>().InitializeModifiers(newGame);
-        //    GetComponent<ResourceManager>().InitializeResources(newGame);
-            GetComponent<UnlockManager>().CreateUnlockablesList();
+            GetComponent<ResourceManager>().InitializeResources(newGame);
             UIManager.GetComponent<ContentUI>().InitializeContentSections(newGame);
+            ScanUnlockables();
+            GameTick();
         }
 
 
         private void GameTick()
         {
-            Debug.Log("TICK");
-            // generate income
-            // update resource texts
-            // check for unlocks
-            // new tabs
-            // buy buttons
-            // new purchasers
-            // for generators
-            // for modifiers
-
-
+            GetComponent<ResourceManager>().GenerateIncome();
+            UIManager.GetComponent<ResourceUI>().UpdateTexts();
+            ScanUnlockables();
         }
-        
+
+        public void ScanUnlockables()
+        {
+            // Called on GameStart, GameTick, and Purchaser's ClickBuyButton
+            GetComponent<PurchaserManager>().ScanUnlockables(); 
+            UIManager.GetComponent<ContentUI>().ScanUnlockables(); 
+        }
         
         
     }

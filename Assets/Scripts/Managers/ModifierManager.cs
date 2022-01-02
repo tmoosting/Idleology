@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace Managers
@@ -36,6 +37,11 @@ namespace Managers
                     return gen;
             Debug.LogWarning(("Did not find Modifier for type: " + type +"..!"));
             return null;
+        }
+
+        public void ScanUnlockables()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

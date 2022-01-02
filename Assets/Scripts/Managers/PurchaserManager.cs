@@ -24,9 +24,7 @@ namespace Managers
             
             foreach (Transform tf in contentPurchaserParent.GetComponentsInChildren<Transform>())
                 if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>() ); 
-     
-         
+                    purchaserList.Add(tf.GetComponent<Purchaser>() );  
           
         }
 

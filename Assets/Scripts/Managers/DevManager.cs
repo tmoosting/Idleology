@@ -16,21 +16,13 @@ namespace Managers
    
         [Header("Settings")] 
         public bool enableDevMode;
+        public bool enableSpeedSlider;
   
-   
-      
+    
 
-        private void Start()
-        {
-            if (enableDevMode == true)
-            {
-                speedSlider.gameObject.SetActive(true);
-
-            }
-            else
-            {
-                speedSlider.gameObject.SetActive(false);
-            }
+        private void Awake()
+        { 
+                speedSlider.gameObject.SetActive(enableSpeedSlider); 
         }
 
         private void Update()

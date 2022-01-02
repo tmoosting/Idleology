@@ -52,7 +52,8 @@ namespace Managers
                         LoadResourceFromData(resource);
                     foreach (Generator generator in GetComponent<GeneratorManager>().generatorList) 
                         LoadGeneratorFromData(generator);  
-                    //ADD: Modifier
+                    foreach (Modifier modifier in GetComponent<ModifierManager>().modifierList) 
+                        LoadModifierFromData(modifier);  
                 }
             }
         
@@ -84,7 +85,13 @@ namespace Managers
             }
             else
                 Debug.LogWarning("NO Generator Table Found..!");
-            //ADD: Modifiers
+            if (GetTableNames().Contains("Modifiers"))
+            {
+                foreach (string str in GetFieldValuesForTable("Modifiers", "Type")) 
+                    LoadModifierDataObject(str);
+            }
+            else
+                Debug.LogWarning("NO Modifier Table Found..!");
         }
 
    
@@ -159,6 +166,61 @@ namespace Managers
  
         
         
+        
+        
+        
+          private void LoadGeneratorDataObject(string type)
+        {
+            GeneratorData generatorData = GetGeneratorData(type);
+            
+            generatorData._resource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
+                GetEntryForTableAndFieldWithType("Generators", "Resource", type)); 
+            generatorData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
+                GetEntryForTableAndFieldWithType("Generators", "CostResource", type)); 
+            generatorData._purchaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
+            generatorData._levelCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
+            generatorData._production= int.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
+            string requiredGenerator = GetEntryForTableAndFieldWithType("Generators", "RequiresGenerator", type);
+            if (requiredGenerator == "")
+                generatorData._requiresGenerator = false;
+            else
+            {
+                generatorData._requiredGenerator = (Generator.Type) System.Enum.Parse(typeof(Generator.Type),requiredGenerator); 
+                generatorData._requiresGenerator = true;
+            }
+            string requiredModifier = GetEntryForTableAndFieldWithType("Generators", "RequiresModifier", type);
+            if (requiredModifier == "")
+                generatorData._requiresModifier = false;
+         
+            else
+            {
+                generatorData._requiredModifier = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),requiredModifier); 
+                generatorData._requiresModifier = true;
+            }
+            generatorData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
+        }
+        private  void LoadGeneratorFromData(Generator generator)
+        {
+            GeneratorData generatorData = GetGeneratorData((generator._type));
+            generator._production = generatorData._production;
+            generator._resource = generatorData._resource;
+            generator._costResource = generatorData._costResource;
+            generator._purchaseCost = generatorData._purchaseCost;
+            generator._levelCost = generatorData._levelCost;
+            generator._production = generatorData._production;
+            generator._requiresGenerator = generatorData._requiresGenerator;
+            generator._requiredGenerator = generatorData._requiredGenerator;
+            generator._requiresModifier = generatorData._requiresModifier;
+            generator._requiredModifier = generatorData._requiredModifier;
+            generator._requiredLevel = generatorData._requiredLevel;
+        }
+        
+        
+        
+        
+        
+        
+        
      
         public ResourceData GetResourceData(Resource.Type type)
         {
@@ -193,7 +255,14 @@ namespace Managers
             Debug.LogWarning(("Did not find generatordata for type: " + type +"..!"));
             return null;
         }
-        
+        public GeneratorData GetGeneratorData(Generator.Type type)
+        {
+            foreach (GeneratorData gen in generatorDataList)
+                if (gen.GetGeneratorType() == type)
+                    return gen;
+            Debug.LogWarning(("Did not find generatordata for type: " + type.ToString()+"..!"));
+            return null;
+        }
         
         
            // Returns a string-list of all table names in database

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ScriptableObjects;
 using UnityEngine;
@@ -8,7 +9,10 @@ namespace Managers
     {
         
         public List<Modifier> modifierList = new List<Modifier>();
+
+
         
+
         public void InitializeModifiers(bool newGame)
         { 
             if (newGame == true)

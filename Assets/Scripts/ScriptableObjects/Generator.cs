@@ -15,9 +15,10 @@ namespace ScriptableObjects
         {
             LemonadeStand, 
             PizzaPlace, 
-            CarWash, 
+            CarWash,           
             Senate, 
-            PoliceStation
+            PoliceStation,
+            CandyFactory
         }
 
 

@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
-  m_Name: SenateData
+  m_Script: {fileID: 11500000, guid: 46a5586a6719da848b419bc092a72323, type: 3}
+  m_Name: 01LessPayData
   m_EditorClassIdentifier: 
-  _type: 3
-  _resource: 3
-  _purchaseCost: 10000
-  _workerBaseCost: 5000
-  _production: 1
+  _type: 1
+  _costResource: 2
+  _purchaseCost: 100
+  _levelCost: 100
+  _requiresGenerator: 1
+  _requiredGenerator: 3
+  _requiresModifier: 0
+  _requiredModifier: 0
+  _requiredLevel: 10

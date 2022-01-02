@@ -9,15 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a5586a6719da848b419bc092a72323, type: 3}
-  m_Name: LessPayData
+  m_Script: {fileID: 11500000, guid: 2277116fdcad98b429681ae32bfd9f87, type: 3}
+  m_Name: 03CandyFactory
   m_EditorClassIdentifier: 
-  _type: 1
-  _costResource: 2
-  _purchaseCost: 100
-  _levelCost: 100
-  _requiresGenerator: 1
-  _requiredGenerator: 3
-  _requiresModifier: 0
-  _requiredModifier: 0
-  _requiredLevel: 10
+  _type: 5
+  _production: 1000

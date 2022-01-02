@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46a5586a6719da848b419bc092a72323, type: 3}
-  m_Name: NoSafetyRegulationsData
+  m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
+  m_Name: 01PizzaPlaceData
   m_EditorClassIdentifier: 
-  _type: 2
-  _costResource: 3
-  _purchaseCost: 10
-  _levelCost: 10
-  _requiresGenerator: 1
-  _requiredGenerator: 4
-  _requiresModifier: 0
-  _requiredModifier: 0
-  _requiredLevel: 5
+  _type: 1
+  _resource: 0
+  _purchaseCost: 100
+  _workerBaseCost: 50
+  _production: 10

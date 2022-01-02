@@ -1229,10 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e12b9f42bdb64c46b078560c6ecd960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basePurchaserParent: {fileID: 2114766406}
-  contentPurchaserParent: {fileID: 1860407813}
-  generatorManager: {fileID: 1934957791}
-  modifierManager: {fileID: 1934957790}
 --- !u!1 &1934957787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,6 +1246,7 @@ GameObject:
   - component: {fileID: 1934957791}
   - component: {fileID: 1934957790}
   - component: {fileID: 1934957796}
+  - component: {fileID: 1934957797}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1397,6 +1394,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 74fd65c2c9e28b749b0cdd83f5f79536, type: 2}
   - {fileID: 11400000, guid: 7441483f290e2bc478d7cc4964be1a82, type: 2}
   - {fileID: 11400000, guid: bf6eef5d948ca35469421d03a70da88b, type: 2}
+--- !u!114 &1934957797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934957787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc1d347f115ca404fb14825cd93144ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basePurchaserParent: {fileID: 2114766406}
+  contentPurchaserParent: {fileID: 1860407813}
+  purchaserList: []
 --- !u!1 &2014971459
 GameObject:
   m_ObjectHideFlags: 0

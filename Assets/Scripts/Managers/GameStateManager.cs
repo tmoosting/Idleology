@@ -38,26 +38,27 @@ namespace Managers
         {
             GetComponent<DataManager>().LoadDataObjects(); // if (loadDatabase == true)
             GetComponent<GeneratorManager>().InitializeGenerators(newGame);
-            UIManager.GetComponent<PurchaserUI>().InitializePurchasers(newGame);
+            GetComponent<PurchaserManager>().InitializePurchasers(newGame);
             GetComponent<ModifierManager>().InitializeModifiers(newGame);
         //    GetComponent<ResourceManager>().InitializeResources(newGame);
+            GetComponent<UnlockManager>().CreateUnlockablesList();
             UIManager.GetComponent<ContentUI>().InitializeContentSections(newGame);
         }
 
 
         private void GameTick()
         {
-
+            Debug.Log("TICK");
             // generate income
             // update resource texts
             // check for unlocks
-                    // new tabs
-                    // buy buttons
-                    // new purchasers
-                        // for generators
-                        // for modifiers
-                   
-            
+            // new tabs
+            // buy buttons
+            // new purchasers
+            // for generators
+            // for modifiers
+
+
         }
         
         

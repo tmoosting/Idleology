@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
-public class Unlockable : MonoBehaviour
+public interface IUnlockable
 {
+    /*public Generator.Type _prerequisiteGenerator { get; set; }
+    public Modifier.Type prerequisiteModifier{ get; set; }
+    public int prerequisiteWorkers { get; set; }*/
 
-    public Purchaser linkedPurchaser;
-    public int currentCost;
-    public bool sufficientResources;
-    public bool sufficientInfrastructure;
+    public void Unlock();
 
-    
-    // give a delegate function pointer to function called when the two bools are true ? 
 
 
 }

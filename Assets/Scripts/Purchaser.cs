@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Purchaser : MonoBehaviour
+public class Purchaser : MonoBehaviour, IUnlockable
 {
         [Header("Assigns")]
         [HideInInspector] public ScriptableObject source;
@@ -18,6 +18,8 @@ public class Purchaser : MonoBehaviour
         public GameObject workersObject;
         public GameObject workersImage;
         public Color disabledColor;
+        Color defaultColor; 
+
         
         public enum Type
         {
@@ -33,31 +35,19 @@ public class Purchaser : MonoBehaviour
         
         private State _state;
         [SerializeField] Type _type;
-        [HideInInspector] public bool buyable = false;
-        
-        public void HidePurchaser()
+  //      [HideInInspector] public bool buyable = false;
+
+        private void Awake()
         {
-                gameObject.SetActive(false);
-                _state = State.Hidden;
+                defaultColor = buyButtonText.color; 
+
         }
-        public void UnlockPurchaser()
-        {
-                if (_state == State.Hidden)
-                {
-                        RevealPurchaser();
-                }else     if (_state == State.Visible)
-                {
-                        
-                }else     if (_state == State.Owned)
-                {
-                        
-                }
-                SetTexts();
-        }
+
+      
         
       
 
-        private void SetTexts()
+        private void SetPrice()
         {
                 if (_type == Type.Generator)
                 {
@@ -73,7 +63,28 @@ public class Purchaser : MonoBehaviour
                 //ADD: Modifier
         }
 
-        
+    
+        public void Unlock()
+        {
+                // Called from Unlockable objects
+                if (_state == State.Hidden)
+                {
+                        RevealPurchaser();
+                }else     if (_state == State.Visible)
+                {
+                        
+                }else     if (_state == State.Owned)
+                {
+                        
+                }
+                SetPrice();
+        }
+        public void HidePurchaser()
+        {
+                gameObject.SetActive(false);
+                _state = State.Hidden;
+                DisableBuyButton();
+        }
         public void RevealPurchaser()
         {
                 // update state
@@ -89,15 +100,35 @@ public class Purchaser : MonoBehaviour
                 workersObject.SetActive(false);
                 workersImage.SetActive(false);
 
-                buyable = false;
+           //     buyable = false;
         }
 
+        void EnableBuyButton()
+        {
+                buyButtonText.color = default; 
+                buyButtonObject.GetComponent<Button>().interactable = true; 
+        }
         void DisableBuyButton()
         {
                 buyButtonText.color = disabledColor; 
                 buyButtonObject.GetComponent<Button>().interactable = false; 
         }
 
+
+
+
+
+        public void ClickPurchase()
+        {
+                GetComponent<UnlockManager>().UpdateUnlockables();
+        }
+        
+        
+        
+        
+        
+        
+        
         public Type GetPurchaserType()
         {
                 return _type;

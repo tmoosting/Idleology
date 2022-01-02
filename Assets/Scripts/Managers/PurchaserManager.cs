@@ -1,19 +1,18 @@
 using System.Collections.Generic;
-using Managers;
 using UnityEngine;
 
-namespace UI
+namespace Managers
 {
-    public class PurchaserUI : MonoBehaviour
+    public class PurchaserManager : MonoBehaviour
     {
+    
         [Header("Assigns")] 
         [SerializeField] GameObject basePurchaserParent;
-        [SerializeField] GameObject contentPurchaserParent;
-        [SerializeField] GeneratorManager generatorManager;
-        [SerializeField] ModifierManager modifierManager;
+        [SerializeField] GameObject contentPurchaserParent; 
        
  
-        List<Purchaser> purchaserList = new List<Purchaser>();
+        [HideInInspector]
+       public List<Purchaser> purchaserList = new List<Purchaser>();
 
 
         private void Awake()
@@ -36,7 +35,7 @@ namespace UI
 
         public void InitializePurchasers(bool newGame)
         {
-            // disable all purchasers
+            // hide all purchasers
             foreach (Purchaser pur in purchaserList)
                 pur.HidePurchaser();
 
@@ -44,23 +43,23 @@ namespace UI
             foreach (Purchaser pur in purchaserList)
             {
                 if (pur.GetPurchaserType() == Purchaser.Type.Generator)
-                    pur.source =  generatorManager.GetGenerator(pur.gameObject.name);
+                    pur.source =  GetComponent<GeneratorManager>().GetGenerator(pur.gameObject.name);
                 else if (pur.GetPurchaserType() == Purchaser.Type.Modifier)
-                    pur.source =  modifierManager.GetModifier(pur.gameObject.name);
+                    pur.source =  GetComponent<ModifierManager>().GetModifier(pur.gameObject.name);
             }
         
             if (newGame == true)
             {
                 // unlock lemonade stand for purchasing
-                purchaserList[0].RevealPurchaser();
+                purchaserList[0].Unlock();
             }
             else if (newGame == false)
             {
                 //TODO: Load from save
             }
         }
-     
-    
 
+        
+        
     }
 }

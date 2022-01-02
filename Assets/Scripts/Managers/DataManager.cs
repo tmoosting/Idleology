@@ -119,7 +119,25 @@ namespace Managers
             generatorData._purchaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
             generatorData._workerBaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "WorkerBaseCost", type));
             generatorData._production= int.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
- 
+            string requiredGenerator = GetEntryForTableAndFieldWithType("Generators", "RequiresGenerator", type);
+            if (requiredGenerator == "")
+                generatorData._requiresGenerator = false;
+            else
+            {
+                Debug.Log("fddfdf");
+                generatorData._requiredGenerator = (Generator.Type) System.Enum.Parse(typeof(Generator.Type),requiredGenerator); 
+                generatorData._requiresGenerator = true;
+            }
+            string requiredModifier = GetEntryForTableAndFieldWithType("Generators", "RequiresModifier", type);
+            if (requiredModifier == "")
+                generatorData._requiresModifier = false;
+         
+            else
+            {
+                generatorData._requiredModifier = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),requiredModifier); 
+                generatorData._requiresModifier = true;
+            }
+            generatorData._requiredWorkers =    int.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresWorkers", type));
         }
         private  void LoadGeneratorFromData(Generator generator)
         {
@@ -127,7 +145,12 @@ namespace Managers
             generator._resource = generatorData._resource;
             generator._purchaseCost = generatorData._purchaseCost;
             generator._workerBaseCost = generatorData._workerBaseCost;
-            generator._production = generatorData._production; 
+            generator._production = generatorData._production;
+            generator._requiresGenerator = generatorData._requiresGenerator;
+            generator._requiredGenerator = generatorData._requiredGenerator;
+            generator._requiresModifier = generatorData._requiresModifier;
+            generator._requiredModifier = generatorData._requiredModifier;
+            generator._requiredWorkers = generatorData._requiredWorkers;
         }
  
  

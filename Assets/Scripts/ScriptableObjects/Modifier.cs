@@ -8,8 +8,9 @@ namespace ScriptableObjects
     {
         public enum Type
         {
-            InfluenceOne, 
-            InfluenceTwo  
+            LongerHours,
+            LessPay,
+            NoSafetyRegulations
         }
 
    

@@ -24,8 +24,8 @@ namespace Managers
             
             foreach (Transform tf in contentPurchaserParent.GetComponentsInChildren<Transform>())
                 if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>() );  
-          
+                    purchaserList.Add(tf.GetComponent<Purchaser>() );
+
         }
 
 
@@ -36,7 +36,10 @@ namespace Managers
             foreach (Purchaser pur in purchaserList)
             {
                 if (GetComponent<GeneratorManager>().GetGenerator(pur.gameObject.name) != null)
+                {
                     pur.source =  GetComponent<GeneratorManager>().GetGenerator(pur.gameObject.name);
+                //    pur.isGenerator = true;
+                }
                 else  if (GetComponent<ModifierManager>().GetModifier(pur.gameObject.name) != null)
                     pur.source =  GetComponent<ModifierManager>().GetModifier(pur.gameObject.name);
                 else 

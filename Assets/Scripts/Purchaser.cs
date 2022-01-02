@@ -19,8 +19,8 @@ public class Purchaser : MonoBehaviour
         public GameObject workersObject;
         public GameObject workersImage;
         public Color disabledColor;
-        
-        
+
+
         Color defaultColor; 
         GeneratorManager generatorManager;
         ModifierManager modifierManager;
@@ -74,8 +74,7 @@ public class Purchaser : MonoBehaviour
 
         public void ValidateUnlock()
         {
-                if (gameObject.name == "PoliceStation")
-                        Debug.Log("check for police");
+               
                 if (source._state == IOperator.State.Hidden)
                 { 
                         if (source._requiresGenerator)

@@ -1878,8 +1878,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedSlider: {fileID: 1299180759745111657}
   speedSliderText: {fileID: 1299180761232232854}
-  enableDevMode: 1
-  enableSpeedSlider: 0
+  enableDevMode: 0
+  enableSpeedSlider: 1
 --- !u!4 &1934957789
 Transform:
   m_ObjectHideFlags: 0
@@ -1906,7 +1906,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9160a566b43b3f4f9e64a5e110883b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifierList: []
+  modifierList:
+  - {fileID: 11400000, guid: c6520067eb691ab44869869bc5e84aa4, type: 2}
+  - {fileID: 11400000, guid: abe93ca5e96bbaa4a87cdbfffea63a7b, type: 2}
+  - {fileID: 11400000, guid: a8a5ebb5ff6ab8e4ab08abf6d546d1d3, type: 2}
 --- !u!114 &1934957791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1963,6 +1966,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e82ca9bacf9474b4986326dc4222adab, type: 2}
   - {fileID: 11400000, guid: 393a276baac194a4d97c08f4e2a46186, type: 2}
   - {fileID: 11400000, guid: 7e3ca7c1c3afa0e4b93219a83809b3c4, type: 2}
+  modifierDataList:
+  - {fileID: 11400000, guid: 47a5d183872604542bbd0fb5a0b0bc3d, type: 2}
+  - {fileID: 11400000, guid: c5e98aa3eb7a6d742886eca8eedbfb1f, type: 2}
+  - {fileID: 11400000, guid: be6d0ac1177929046b6e43b922dbd986, type: 2}
   forceCloseDatabase: 0
   loadDatabase: 1
   loadDataObjects: 1

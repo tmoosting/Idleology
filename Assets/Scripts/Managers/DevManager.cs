@@ -27,7 +27,7 @@ namespace Managers
 
         private void Update()
         { 
-            if (enableDevMode == true)
+            if (enableSpeedSlider == true)
                    SetTimerText();
         }
 

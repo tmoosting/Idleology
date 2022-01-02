@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -15,23 +16,20 @@ namespace Managers
        public List<Purchaser> purchaserList = new List<Purchaser>();
 
 
-        private void Awake()
-        {
-            // Collect Purchasers From Parents
-            foreach (Transform tf in basePurchaserParent.GetComponentsInChildren<Transform>())
-                if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>() );
-            
-            foreach (Transform tf in contentPurchaserParent.GetComponentsInChildren<Transform>())
-                if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>() );
-
-        }
+      
 
 
         public void InitializePurchasers(bool newGame)
-        { 
-          
+        {
+
+            foreach (Transform tf in basePurchaserParent.GetComponentsInChildren<Transform>())
+                if (tf.GetComponent<Purchaser>() != null)
+                    purchaserList.Add(tf.GetComponent<Purchaser>());
+
+            foreach (Transform tf in contentPurchaserParent.GetComponentsInChildren<Transform>())
+                if (tf.GetComponent<Purchaser>() != null)
+                    purchaserList.Add(tf.GetComponent<Purchaser>());
+
             // Set source object for purchasers 
             foreach (Purchaser pur in purchaserList)
             {

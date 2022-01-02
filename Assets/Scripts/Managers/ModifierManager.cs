@@ -17,14 +17,30 @@ namespace Managers
         { 
             if (newGame == true)
             {
-           
+                foreach (Modifier modifier in modifierList)
+                {
+                    modifier.SetLevel(0);
+                    modifier.isGenerator = false;
+                }
             }
             else 
             {
                 //TODO: Load from save
             }
         }
-        
+        public List<Modifier> GetActiveModifiers()
+        {
+            List<Modifier> returnList = new List<Modifier>();
+
+            foreach (Modifier modifier in modifierList)
+            {
+                if (modifier._state == Interfaces.IOperator.State.Owned)
+                    returnList.Add(modifier);
+            }
+
+            return returnList;
+        }
+
         public Modifier GetModifier(Modifier.Type type)
         {
             foreach (Modifier mod in modifierList)

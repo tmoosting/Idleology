@@ -186,6 +186,9 @@ namespace Managers
                 modifierData._requiresModifier = true;
             }
             modifierData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Modifiers", "RequiresLevel", type));
+            modifierData._creditPercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
+            modifierData._happinessCost = int.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
+            modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
         }
         private  void LoadModifierFromData(Modifier modifier)
         {
@@ -198,6 +201,9 @@ namespace Managers
             modifier._requiresModifier = modifierData._requiresModifier;
             modifier._requiredModifier = modifierData._requiredModifier;
             modifier._requiredLevel = modifierData._requiredLevel;
+            modifier._creditPercentage = modifierData._creditPercentage;
+            modifier._happinessCost = modifierData._happinessCost;
+            modifier._levelPricePercentage = modifierData._levelPricePercentage;
         }
         
         

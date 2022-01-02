@@ -54,13 +54,22 @@ namespace Managers
         {
             int income = 0;
             foreach (Generator generator in GetComponent<GeneratorManager>().generatorList)
-                 if (generator._resource == resourceType)
+                 if (generator._resource == resourceType)                
                     income += generator._production * generator.GetLevel();
-            return income;
+
+            //float newAmount = 0;
+            //foreach (Modifier modifier in GetComponent<ModifierManager>().GetActiveModifiers())
+            //{
+            //    if (modifier._creditPercentage != 0)
+            //    {
+            //        newAmount = income * (1 + (modifier._creditPercentage * modifier.GetLevel()));
+            //    }
+            //}
+            return (int)income;
         }
         private void GenerateCreditIncome(int amount)
         { 
-            AddIncome(Resource.Type.Credit,  amount);
+            AddIncome(Resource.Type.Credit, (int)amount);
         }
 
         private void GenerateInfluenceIncome(int amount)

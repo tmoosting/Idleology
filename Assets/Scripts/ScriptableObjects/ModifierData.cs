@@ -17,6 +17,9 @@ namespace ScriptableObjects
         public bool _requiresModifier;
         public Modifier.Type _requiredModifier;
         public int _requiredLevel;
+        public float _creditPercentage = 0f;
+        public int _happinessCost = 0;
+        public float _levelPricePercentage = 0;
 
         public Modifier.Type GetModifierType()
         {

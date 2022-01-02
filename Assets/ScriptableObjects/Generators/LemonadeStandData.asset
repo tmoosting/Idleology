@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 0
   _resource: 0
-  _purchaseCost: 10
-  _workerBaseCost: 5
+  _costResource: 0
+  _purchaseCost: 10000
+  _levelCost: 5
   _production: 1
+  _requiresGenerator: 0
+  _requiredGenerator: 0
+  _requiresModifier: 0
+  _requiredModifier: 0
+  _requiredLevel: 0

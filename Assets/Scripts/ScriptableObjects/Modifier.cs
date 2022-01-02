@@ -8,16 +8,16 @@ namespace ScriptableObjects
     {
         public enum Type
         {
-            LongerHours,
-            LessPay,
-            NoSafetyRegulations
+            LongerHours, // more income, decrease happiness
+            LessPay, // decrease worker hire cost, decrease happiness
+            NoSafetyRegulations // more income, decrease worker hire cost, decrease happiness
         }
 
    
     
         public Type _type;
-        private int _level; 
-        [HideInInspector] public IOperator.State _state { get; set; }
+        public int _level { get; set; }
+        public IOperator.State _state { get; set; }
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
         public int _levelCost { get; set; }
@@ -27,9 +27,13 @@ namespace ScriptableObjects
         public bool _requiresModifier { get; set; }
         public Type _requiredModifier { get; set; }
         public int _requiredLevel { get; set; }
+        public bool isGenerator { get; set; }
 
-        
-        
+        [HideInInspector] public float _creditPercentage = 0f;
+        [HideInInspector] public int _happinessCost = 0;
+        [HideInInspector] public float _levelPricePercentage = 0;
+
+
         public Type GetModifierType()
         {
             return _type;
@@ -38,6 +42,10 @@ namespace ScriptableObjects
         public void AddLevel()
         {
             _level++;
+        }
+        public void SetLevel(int level)
+        {
+            _level = level;
         }
         public int GetLevel()
         {

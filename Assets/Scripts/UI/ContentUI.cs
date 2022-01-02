@@ -19,15 +19,25 @@ namespace UI
 
    
         public Dictionary<Tab, GameObject> tabContentPairings = new Dictionary<Tab, GameObject>();
-        
+
+        private void Awake()
+        {
+
+            // Ugly fix for (true) not working in PurchaseManager's GetChildren() when sections are disabled in editor
+            contentsList.Add(influenceSection);
+            contentsList.Add(forceSection);
+            foreach (GameObject obj in contentsList)
+                obj.SetActive(true);
+
+        }
+ 
+
         public void InitializeContentSections(bool newGame)
         { 
             if (newGame)
             {
                 tabsList.Add(influenceTab);
-                tabsList.Add(forceTab);
-                contentsList.Add(influenceSection);
-                contentsList.Add(forceSection);
+                tabsList.Add(forceTab); 
                 tabContentPairings.Add(influenceTab, influenceSection);
                 tabContentPairings.Add(forceTab, forceSection);
                 

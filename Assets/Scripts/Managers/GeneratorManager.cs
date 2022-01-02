@@ -20,8 +20,9 @@ namespace Managers
          {
              foreach (Generator generator in generatorList)
              {
-                 generator.SetLevel(0);
-             }
+                    generator.SetLevel(0);
+                    generator.isGenerator = true;
+              }
          }
          else 
          {

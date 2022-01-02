@@ -48,8 +48,13 @@ public class Purchaser : MonoBehaviour
                 unlocked = false;
                 DisableBuyButton();
         }
-
-        public void Unlock()
+        private void PermaLock()
+        {
+            unlocked = false;
+            DisableBuyButton();
+        buyButtonText.gameObject.SetActive(false);
+        }
+    public void Unlock()
         {
                 unlocked = true;
                 if (source._state == IOperator.State.Hidden)
@@ -106,9 +111,15 @@ public class Purchaser : MonoBehaviour
                                         return;
                                 }
                                 
-                        } 
-                        Unlock(); 
-                }
+                        }
+            if (source.isGenerator == false && source.GetLevel() == 10)
+            {
+                PermaLock();
+                return;
+            }
+            else
+                Unlock();
+        }
                 else
                 {
                         if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
@@ -116,8 +127,14 @@ public class Purchaser : MonoBehaviour
                                 Lock();
                                 return;
                         }
-                        Unlock(); 
-                }
+            if (source.isGenerator == false && source.GetLevel() == 10)
+            {
+                PermaLock();
+                return;
+            }
+            else
+                Unlock();
+        }
               
         }
 
@@ -139,16 +156,25 @@ public class Purchaser : MonoBehaviour
         }
 
         void Purchase()
-        {
+        { 
                 resourceManager.PayResource(source._costResource, GetCurrentCost());
-                if (source._state == IOperator.State.Visible)
-                {
-                        source._state = IOperator.State.Owned;
-                        workersObject.SetActive(true);
-                        workersImage.SetActive(true);
-                        imageObject.SetActive(true);
-                }
-                else  if (source._state == IOperator.State.Owned)
+        if (source._state == IOperator.State.Visible)
+        {
+            source._state = IOperator.State.Owned;
+            workersObject.SetActive(true);
+            if (source.isGenerator)
+            {
+                workersImage.SetActive(true);
+            }
+            else
+            {
+                source.AddLevel();
+            }
+             
+
+            imageObject.SetActive(true);
+        }
+        else  if (source._state == IOperator.State.Owned)
                 {
                         source.AddLevel();
                 }
@@ -196,12 +222,22 @@ public class Purchaser : MonoBehaviour
 
         public void UpdateTexts()
         {
-                if (source._state != IOperator.State.Hidden)
-                {
-                        buyButtonText.text = "$ " + GetCurrentCost();
-                        workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
-                } 
+        if (source._state != IOperator.State.Hidden)
+        {
+            string currencyString = "";
+            if (source._costResource == Resource.Type.Credit)
+                currencyString += "$ ";
+            if (source._costResource == Resource.Type.Influence)
+                currencyString += "";
+            if (source._costResource == Resource.Type.Force)
+                currencyString += "";
+            if (source._costResource == Resource.Type.Happiness)
+                currencyString += "";
+
+            buyButtonText.text = currencyString + GetCurrentCost();
+            workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
         }
+    }
 
         public int GetCurrentCost()
         {

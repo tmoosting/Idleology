@@ -59,8 +59,8 @@ namespace Managers
         private void GameTick()
         {
             GetComponent<ResourceManager>().GenerateIncome();
-            UpdateUI();
             ScanUnlockables();
+            UpdateUI();
         }
 
         public void ScanUnlockables()
@@ -75,7 +75,6 @@ namespace Managers
             UIManager.GetComponent<ContentUI>().UpdateContentUI();
            GetComponent<ResourceManager>().UpdateTexts();
            GetComponent<PurchaserManager>().UpdateTexts();
-
         }
         
         

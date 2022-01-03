@@ -188,7 +188,7 @@ namespace Managers
             modifierData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Modifiers", "RequiresLevel", type));
             modifierData._creditPercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
             modifierData._happinessCost = int.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
-            modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
+            modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "LevelPricePercentage", type));
         }
         private  void LoadModifierFromData(Modifier modifier)
         {

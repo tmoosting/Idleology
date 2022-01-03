@@ -163,21 +163,16 @@ public class Purchaser : MonoBehaviour
             source._state = IOperator.State.Owned;
             workersObject.SetActive(true);
             if (source.isGenerator)
-            {
-                workersImage.SetActive(true);
-            }
+                    workersImage.SetActive(true);
             else
-            {
-                source.AddLevel();
-            }
-             
-
+                    source.AddLevel();
             imageObject.SetActive(true);
         }
         else  if (source._state == IOperator.State.Owned)
-                {
-                        source.AddLevel();
-                }
+                source.AddLevel();
+
+        if (source.isGenerator == false)
+                modifierManager.HandleStaticModifierEffects(source);
                 GameStateManager.Instance.ScanUnlockables();
                 GameStateManager.Instance.UpdateUI();
         }
@@ -248,8 +243,10 @@ public class Purchaser : MonoBehaviour
                 }
                 if (source._state == IOperator.State.Visible)
                         return source._purchaseCost;
-             
-                return (source.GetLevel() + 1) * source._levelCost; 
+
+                float rawCost = (source.GetLevel() + 1) * source._levelCost;
+                float modifiedCost = modifierManager.GetDiscountLevellingPrice(rawCost);
+                return (int)modifiedCost; 
         }
         
         

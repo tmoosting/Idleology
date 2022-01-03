@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -43,6 +44,7 @@ namespace Managers
 
         public void GenerateIncome()
         {
+            //Alternative: Have income as its own data type, persistent, with purchases immediately changing it
             GenerateCreditIncome(CalculateIncome(Resource.Type.Credit));
             GenerateInfluenceIncome(CalculateIncome(Resource.Type.Influence));
             GenerateForceIncome(CalculateIncome(Resource.Type.Force));
@@ -52,20 +54,36 @@ namespace Managers
 
         public int CalculateIncome(Resource.Type resourceType)
         {
-            int income = 0;
+            int rawIncome = 0;
             foreach (Generator generator in GetComponent<GeneratorManager>().generatorList)
                  if (generator._resource == resourceType)                
-                    income += generator._production * generator.GetLevel();
+                     rawIncome += generator._production * generator.GetLevel();
 
-            //float newAmount = 0;
-            //foreach (Modifier modifier in GetComponent<ModifierManager>().GetActiveModifiers())
-            //{
-            //    if (modifier._creditPercentage != 0)
-            //    {
-            //        newAmount = income * (1 + (modifier._creditPercentage * modifier.GetLevel()));
-            //    }
-            //}
-            return (int)income;
+            float modifiedIncome = rawIncome;
+
+            if (resourceType == Resource.Type.Credit)
+                modifiedIncome = ModifyCreditIncome(rawIncome);
+            
+         
+            return (int)modifiedIncome;
+        }
+
+        private int ModifyCreditIncome(int rawAmount)
+        {
+            float modifiedAmount = rawAmount;
+
+            foreach (Modifier modifier in GetComponent<ModifierManager>().GetActiveModifiers())
+            {
+                if (modifier._creditPercentage != 0)
+                {
+                    float multiplier = (1 + (modifier._creditPercentage * modifier.GetLevel())); 
+                    modifiedAmount *= multiplier;
+                }
+            }
+            
+            
+
+            return (int)modifiedAmount;
         }
         private void GenerateCreditIncome(int amount)
         { 

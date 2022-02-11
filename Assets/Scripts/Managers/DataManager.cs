@@ -5,8 +5,10 @@ using Mono.Data.Sqlite;
 using System.Data;
 using System; 
 using System.IO;
+using System.Linq;
 using ScriptableObjects;
-using UnityEditor.Experimental.GraphView;
+using UI; 
+using UnityEditor; 
 
 
 namespace Managers
@@ -31,7 +33,10 @@ namespace Managers
         public bool forceCloseDatabase;
         public bool loadDatabase;
         public bool loadDataObjects;
+        public bool loadNarrativeEvents;
 
+        
+        // Called from GameStateManager's Start()
         public void LoadDataObjects()
         {
             if (forceCloseDatabase == true)
@@ -88,10 +93,94 @@ namespace Managers
             }
             else
                 Debug.LogWarning("NO Modifier Table Found..!");
+            if (loadNarrativeEvents == true)
+            {
+                if (GetTableNames().Contains("Narrative"))
+                    ImportNarrativeData();
+                else
+                    Debug.LogWarning("NO Narrative Table Found..!");
+            }
         }
 
-   
-        
+        private void ImportNarrativeData()
+        {
+            // Delete previous Narrative objects
+            GameStateManager.Instance.UIManager.GetComponent<NarrativeUI>().DeleteNarrativeObjects();
+            
+            // Create new objects
+            foreach (string str in GetFieldValuesForTable("Narrative", "ID")) 
+                if (!String.IsNullOrEmpty(str))
+                    CreateNarrativeEventFromData(str);
+            
+            // Load them in the list
+            GameStateManager.Instance.UIManager.GetComponent<NarrativeUI>().LoadNarrativeObjects();
+
+        }
+
+        private void CreateNarrativeEventFromData(string id )
+        {
+            NarrativeEvent narrEvent = ScriptableObject.CreateInstance<NarrativeEvent>();
+            narrEvent.ID = id;
+            narrEvent.eventName =  GetEntryForTableAndFieldWithID("Narrative", "Name", id);
+            narrEvent.eventText =  GetEntryForTableAndFieldWithID("Narrative", "Text", id);
+
+            List<string> generatorStrings = new List<string>();
+            List<int> generatorTriggers = new List<int>();   
+            List<string> modifierStrings = new List<string>();
+            List<int> modifierTriggers = new List<int>();
+            List<string> resourceStrings = new List<string>();
+            List<int> resourceTriggers = new List<int>();
+            foreach (string generator in GetEntryForTableAndFieldWithID("Narrative", "Generators", id).Split(','))
+                generatorStrings.Add(generator);
+            foreach (string generatorTrigger in GetEntryForTableAndFieldWithID("Narrative", "GeneratorTriggers", id).Split(','))
+                if (generatorTrigger != "" && generatorTrigger != "NotFound")
+                {
+                    generatorTriggers.Add(int.Parse(generatorTrigger));
+
+                }
+            foreach (string modifier in GetEntryForTableAndFieldWithID("Narrative", "Modifiers", id).Split(','))
+                modifierStrings.Add(modifier);
+            foreach (string modifierTrigger in GetEntryForTableAndFieldWithID("Narrative", "ModifierTriggers", id).Split(','))
+                if (modifierTrigger != ""&& modifierTrigger != "NotFound")
+                    modifierTriggers.Add(int.Parse(modifierTrigger));
+            foreach (string resource in GetEntryForTableAndFieldWithID("Narrative", "Resources", id).Split(','))
+                resourceStrings.Add(resource);
+            foreach (string resourceTrigger in GetEntryForTableAndFieldWithID("Narrative", "ResourceTriggers", id).Split(','))
+                if (resourceTrigger != ""&& resourceTrigger != "NotFound")
+                    resourceTriggers.Add(int.Parse(resourceTrigger));
+
+            if (generatorStrings.Count != 0)
+                foreach (string str in generatorStrings)
+                {
+                    if (str != "")
+                    {
+                        Generator.Type genType = (Generator.Type) System.Enum.Parse(typeof(Generator.Type),str); 
+                        narrEvent.generatorTriggermap.Add(genType, generatorTriggers[generatorStrings.IndexOf(str)]);
+                    } 
+                }
+            if (modifierStrings.Count != 0)
+                foreach (string str in modifierStrings)
+                {
+                    if (str != "")
+                    {
+                        Modifier.Type modType = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),str); 
+                        narrEvent.modifierTriggermap.Add(modType, modifierTriggers[modifierStrings.IndexOf(str)]);
+                    } 
+                }
+            if (resourceStrings.Count != 0)
+                foreach (string str in resourceStrings)
+                {
+                    if (str != "")
+                    {
+                        Resource.Type resType = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),str); 
+                        narrEvent.resourceTriggermap.Add(resType, resourceTriggers[resourceStrings.IndexOf(str)]);
+                    }  
+                }
+            AssetDatabase.CreateAsset(narrEvent, $"Assets/ScriptableObjects/NarrativeEvents/{narrEvent.ID}.asset");
+            GameStateManager.Instance.UIManager.GetComponent<NarrativeUI>().ReceiveNewNarrativeEvent(narrEvent);
+        }
+
+
         private void LoadResourceDataObject(string type)
         {
             ResourceData resourceData = GetResourceData(type);
@@ -315,7 +404,18 @@ namespace Managers
             CloseDatabase();
             return returnString;
         }
-        
+        public string GetEntryForTableAndFieldWithID(string tableName, string fieldName, string id )
+        { 
+            string returnString = "NotFound";
+            OpenDatabase(); 
+            string sqlQuery = "SELECT " + fieldName + " FROM " + tableName + " WHERE ID='" + id + "'";
+            dbcmd.CommandText = sqlQuery;
+            reader = dbcmd.ExecuteReader();
+            while (reader.Read())        
+                returnString = reader.GetValue(0).ToString();        
+            CloseDatabase(); 
+            return returnString;
+        }
         
         
         void OpenDatabase()

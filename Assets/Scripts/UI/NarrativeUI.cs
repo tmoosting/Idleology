@@ -1,48 +1,69 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using Managers;
 using ScriptableObjects;
+using UnityEditor;
 using UnityEngine;
 
 namespace UI
 {
      //TODO:
-     // Import NarrPops from sheet and store+maintain in NarrativeUI
      // Create a callback system ingame ticks and user actions, that includes checking for triggers on all available NarrPops
      // Create NarrPop placement system
 
-    public struct NarrativePop
-    {
-        private string ID;
-        private string popName;
-        private string popText;
-        private Dictionary<Generator, int> generatorTriggers;
-        private Dictionary<ModifierManager, int> modifierTriggers;
-        private Dictionary<Resource.Type, int> resourcetiggers;
-
-        public NarrativePop(string givenID, string givenText)
-        {
-            ID = givenID;
-            popName = "ManualPop" + ID;
-            popText = givenText;
-            generatorTriggers = new Dictionary<Generator, int>();
-            modifierTriggers = new Dictionary<ModifierManager, int>();
-            resourcetiggers = new Dictionary<Resource.Type, int>();
-        }
-    } 
+    
     
     
     public class NarrativeUI : MonoBehaviour
     {
+        private List<NarrativeEvent> narrativeEventList = new List<NarrativeEvent>();
         
-        // TODO: logic for start-popup, which is not loaded through IdleDB Sheet
-        private NarrativePop startPop = new NarrativePop("NAR00", 
-            "Most young entrepreneurs need a lil’ something " +
-            "to get them on the right track. The track to profit that is. " +
-            "Luckily for some of them, they start off with a good amount " +
-            "of investment capital courtesy of their parental figures. " +
-            "You know what they say: 'it takes money to make money'.");
-        
-        
+        private void Awake()
+        {
+        // TODO: logic for start-popup, which is not loaded through IdleDB 
+        }
 
+       
+
+
+
+        public List<NarrativeEvent> GetNarrativeEvents()
+        {
+            List<NarrativeEvent> returnList = new List<NarrativeEvent>();
+
+
+            return returnList;
+        }
+        public void DeleteNarrativeObjects()
+        {
+            if (narrativeEventList.Count != 0)
+            {
+                foreach (NarrativeEvent narrEvent in narrativeEventList)
+                {
+                    string path = AssetDatabase.GetAssetPath(narrEvent);
+                    AssetDatabase.DeleteAsset(path);
+                    narrativeEventList.Remove(narrEvent);
+                }
+            }
+        }
+
+
+        public void LoadNarrativeObjects()
+        { 
+            narrativeEventList.Clear();
+            string[] allPaths = Directory.GetFiles("Assets/ScriptableObjects/NarrativeEvents", "*.asset", 
+                SearchOption.AllDirectories);
+            foreach (string path in allPaths)
+            {
+                string cleanedPath = path.Replace("\\", "/");
+                narrativeEventList.Add((NarrativeEvent)AssetDatabase.LoadAssetAtPath(cleanedPath,  typeof(NarrativeEvent)));
+            }
+        }
+
+        public void ReceiveNewNarrativeEvent(NarrativeEvent narrEvent)
+        {
+            narrativeEventList.Add(narrEvent);
+        }
     }
 }

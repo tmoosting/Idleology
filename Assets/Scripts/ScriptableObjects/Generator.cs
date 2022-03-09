@@ -18,7 +18,11 @@ namespace ScriptableObjects
             CarWash,           
             Senate, 
             PoliceStation,
-            CandyFactory
+            DepartmentStore,
+            CandyFactory,
+            LumberMill,
+            StripMine,
+            OilConglomerate
         }
 
 

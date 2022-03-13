@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: NarrativeEvents
+    uniqueID: 3145069047
+    locked: 0
+  - name: 
+    uniqueID: 1208098909
+    locked: 0

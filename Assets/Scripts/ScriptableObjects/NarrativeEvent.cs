@@ -10,9 +10,13 @@ namespace ScriptableObjects
         public string ID;
         public string eventName;
         public string eventText;
-        public Dictionary<Generator.Type, int> generatorTriggermap = new Dictionary<Generator.Type, int>();
-        public Dictionary<Modifier.Type, int> modifierTriggermap = new Dictionary<Modifier.Type, int>();
-        public Dictionary<Resource.Type, int> resourceTriggermap = new Dictionary<Resource.Type, int>();
+        public Dictionary<Generator.Type, ulong> generatorTriggermap;
+        public Dictionary<Modifier.Type, ulong> modifierTriggermap;
+        public Dictionary<Resource.Type, ulong> resourceTriggermap;
+
+
+        [HideInInspector] public bool hasBeenTriggered = false;
+
 
         /*public NarrativeEvent(string givenID, string givenText)
         {

@@ -123,6 +123,9 @@ namespace Managers
             narrEvent.ID = id;
             narrEvent.eventName =  GetEntryForTableAndFieldWithID("Narrative", "Name", id);
             narrEvent.eventText =  GetEntryForTableAndFieldWithID("Narrative", "Text", id);
+            narrEvent.generatorTriggermap = new Dictionary<Generator.Type, ulong>();
+            narrEvent.modifierTriggermap = new Dictionary<Modifier.Type, ulong>();
+            narrEvent.resourceTriggermap = new Dictionary<Resource.Type, ulong>();
 
             List<string> generatorStrings = new List<string>();
             List<int> generatorTriggers = new List<int>();   
@@ -132,7 +135,7 @@ namespace Managers
             List<int> resourceTriggers = new List<int>();
             foreach (string generator in GetEntryForTableAndFieldWithID("Narrative", "Generators", id).Split(','))
                 generatorStrings.Add(generator);
-            foreach (string generatorTrigger in GetEntryForTableAndFieldWithID("Narrative", "GeneratorTriggers", id).Split(','))
+            foreach (string generatorTrigger in GetEntryForTableAndFieldWithID("Narrative", "GeneratorLevelTriggers", id).Split(','))
                 if (generatorTrigger != "" && generatorTrigger != "NotFound")
                 {
                     generatorTriggers.Add(int.Parse(generatorTrigger));
@@ -152,11 +155,13 @@ namespace Managers
             if (generatorStrings.Count != 0)
                 foreach (string str in generatorStrings)
                 {
+                  
                     if (str != "")
                     {
                         Generator.Type genType = (Generator.Type) System.Enum.Parse(typeof(Generator.Type),str); 
-                        narrEvent.generatorTriggermap.Add(genType, generatorTriggers[generatorStrings.IndexOf(str)]);
+                        narrEvent.generatorTriggermap.Add(genType, (ulong)generatorTriggers[generatorStrings.IndexOf(str)]);
                     } 
+             //       Debug.Log("narrEvent " + narrEvent.ID + "  has count " + narrEvent.generatorTriggermap.Count);
                 }
             if (modifierStrings.Count != 0)
                 foreach (string str in modifierStrings)
@@ -164,7 +169,7 @@ namespace Managers
                     if (str != "")
                     {
                         Modifier.Type modType = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),str); 
-                        narrEvent.modifierTriggermap.Add(modType, modifierTriggers[modifierStrings.IndexOf(str)]);
+                        narrEvent.modifierTriggermap.Add(modType, (ulong)modifierTriggers[modifierStrings.IndexOf(str)]);
                     } 
                 }
             if (resourceStrings.Count != 0)
@@ -173,7 +178,7 @@ namespace Managers
                     if (str != "")
                     {
                         Resource.Type resType = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),str); 
-                        narrEvent.resourceTriggermap.Add(resType, resourceTriggers[resourceStrings.IndexOf(str)]);
+                        narrEvent.resourceTriggermap.Add(resType, (ulong) resourceTriggers[resourceStrings.IndexOf(str)]);
                     }  
                 }
             AssetDatabase.CreateAsset(narrEvent, $"Assets/ScriptableObjects/NarrativeEvents/{narrEvent.ID}.asset");
@@ -185,10 +190,10 @@ namespace Managers
         {
             ResourceData resourceData = GetResourceData(type);
             
-            resourceData._newGame = int.Parse( GetEntryForTableAndFieldWithType("Resources", "NewGame", type));
-            resourceData._devGame = int.Parse( GetEntryForTableAndFieldWithType("Resources", "DevGame", type));
-            resourceData._minBound = int.Parse( GetEntryForTableAndFieldWithType("Resources", "MinBound", type));
-            resourceData._maxBound= int.Parse( GetEntryForTableAndFieldWithType("Resources", "MaxBound", type));
+            resourceData._newGame = ulong.Parse( GetEntryForTableAndFieldWithType("Resources", "NewGame", type));
+            resourceData._devGame = ulong.Parse( GetEntryForTableAndFieldWithType("Resources", "DevGame", type));
+            resourceData._minBound = ulong.Parse( GetEntryForTableAndFieldWithType("Resources", "MinBound", type));
+            resourceData._maxBound= ulong.Parse( GetEntryForTableAndFieldWithType("Resources", "MaxBound", type));
 
         }
         private  void LoadResourceFromData(Resource resource)
@@ -210,9 +215,10 @@ namespace Managers
                 GetEntryForTableAndFieldWithType("Generators", "Resource", type)); 
             generatorData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
                 GetEntryForTableAndFieldWithType("Generators", "CostResource", type)); 
-            generatorData._purchaseCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
-            generatorData._levelCost = int.Parse( GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
-            generatorData._production= int.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
+            generatorData._purchaseCost = ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
+        //    Debug.Log("Entry: " + GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
+            generatorData._levelCost = ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
+            generatorData._production= ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
             string requiredGenerator = GetEntryForTableAndFieldWithType("Generators", "RequiresGenerator", type);
             if (requiredGenerator == "")
                 generatorData._requiresGenerator = false;
@@ -230,7 +236,7 @@ namespace Managers
                 generatorData._requiredModifier = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),requiredModifier); 
                 generatorData._requiresModifier = true;
             }
-            generatorData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
+            generatorData._requiredLevel =    ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
         }
         private  void LoadGeneratorFromData(Generator generator)
         {
@@ -255,8 +261,8 @@ namespace Managers
              
             modifierData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
                 GetEntryForTableAndFieldWithType("Modifiers", "CostResource", type)); 
-            modifierData._purchaseCost = int.Parse( GetEntryForTableAndFieldWithType("Modifiers", "PurchaseCost", type));
-            modifierData._levelCost = int.Parse( GetEntryForTableAndFieldWithType("Modifiers", "LevelCost", type)); 
+            modifierData._purchaseCost = ulong.Parse( GetEntryForTableAndFieldWithType("Modifiers", "PurchaseCost", type));
+            modifierData._levelCost = ulong.Parse( GetEntryForTableAndFieldWithType("Modifiers", "LevelCost", type)); 
             string requiredGenerator = GetEntryForTableAndFieldWithType("Modifiers", "RequiresGenerator", type);
             if (requiredGenerator == "")
                 modifierData._requiresGenerator = false;
@@ -274,9 +280,9 @@ namespace Managers
                 modifierData._requiredModifier = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),requiredModifier); 
                 modifierData._requiresModifier = true;
             }
-            modifierData._requiredLevel =    int.Parse( GetEntryForTableAndFieldWithType("Modifiers", "RequiresLevel", type));
+            modifierData._requiredLevel =    ulong.Parse( GetEntryForTableAndFieldWithType("Modifiers", "RequiresLevel", type));
             modifierData._creditPercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
-            modifierData._happinessCost = int.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
+            modifierData._happinessCost = ulong.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
             modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "LevelPricePercentage", type));
         }
         private  void LoadModifierFromData(Modifier modifier)

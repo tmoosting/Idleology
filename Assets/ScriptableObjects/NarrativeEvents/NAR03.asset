@@ -15,3 +15,4 @@ MonoBehaviour:
   ID: NAR03
   eventName: GettingTesty
   eventText: A double whammy trigger
+  hasBeenTriggered: 0

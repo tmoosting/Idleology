@@ -18,7 +18,7 @@ public class Tab : MonoBehaviour
     public Generator.Type _requiredGenerator;
     public bool _requiresModifier;
     public Modifier.Type _requiredModifier;
-    public int _requiredLevel;
+    public ulong _requiredLevel;
     private bool _locked = true;
 
     

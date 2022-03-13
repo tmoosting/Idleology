@@ -16,18 +16,18 @@ namespace Interfaces
         [HideInInspector] public State _state { get; set; }
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
-        public int _levelCost { get; set; }
-        public int _level { get; set; }
-        public int _purchaseCost{ get; set; }
+        public ulong _levelCost { get; set; }
+        public ulong _level { get; set; }
+        public ulong _purchaseCost{ get; set; }
         public bool _requiresGenerator{ get; set; }
         public Generator.Type _requiredGenerator{ get; set; }
         public bool _requiresModifier{ get; set; }
         public Modifier.Type _requiredModifier{ get; set; }
-        public int _requiredLevel{ get; set; }
+        public ulong _requiredLevel{ get; set; }
         public bool isGenerator { get; set; }
 
         public void AddLevel();
-        public void SetLevel(int level);
-        public int GetLevel();
+        public void SetLevel(ulong level);
+        public ulong GetLevel();
     }
 }

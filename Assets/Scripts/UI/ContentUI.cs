@@ -58,7 +58,7 @@ namespace UI
             openedTab.HighlightTab();
             tabContentPairings[openedTab].SetActive(true);
         }
-        public void ScanUnlockables()
+        public void ScanUIUnlockables()
         {
             foreach (Tab tab in tabsList)
                 tab.ValidateUnlock();

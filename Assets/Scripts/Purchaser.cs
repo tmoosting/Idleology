@@ -234,7 +234,7 @@ public class Purchaser : MonoBehaviour
         }
     }
 
-        public int GetCurrentCost()
+        public ulong GetCurrentCost()
         {
                 if (source._state == IOperator.State.Hidden)
                 {
@@ -246,7 +246,7 @@ public class Purchaser : MonoBehaviour
 
                 float rawCost = (source.GetLevel() + 1) * source._levelCost;
                 float modifiedCost = modifierManager.GetDiscountLevellingPrice(rawCost);
-                return (int)modifiedCost; 
+                return (ulong)modifiedCost; 
         }
         
         

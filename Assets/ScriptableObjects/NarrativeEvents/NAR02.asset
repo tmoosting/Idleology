@@ -17,3 +17,4 @@ MonoBehaviour:
   eventText: Lemonade! If only I had thought of that myself! Very nice! But no self
     respecting entrepeneur is going to slave away over a hot lemon juicer themselves.
     They would hire someone to do that for them.
+  hasBeenTriggered: 0

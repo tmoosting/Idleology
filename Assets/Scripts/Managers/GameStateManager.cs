@@ -1,4 +1,5 @@
 using System;
+using ScriptableObjects;
 using UI;
 using UnityEngine;
 
@@ -67,7 +68,8 @@ namespace Managers
         {
             // Called on GameStart, GameTick, and Purchaser's ClickBuyButton
             GetComponent<PurchaserManager>().ScanUnlockables(); 
-            UIManager.GetComponent<ContentUI>().ScanUnlockables(); 
+            UIManager.GetComponent<ContentUI>().ScanUIUnlockables(); 
+            UIManager.GetComponent<NarrativeUI>().ScanForNarrativeEventTriggers(); 
         }
 
         public void UpdateUI()

@@ -10,6 +10,13 @@ namespace Managers
     {
      //   Initializing  purchasing   Tracking / value setting 
 
+     public static GeneratorManager Instance;
+
+     private void Awake()
+     {
+         Instance = this;
+     }
+
      public List<Generator> generatorList = new List<Generator>();
 
      

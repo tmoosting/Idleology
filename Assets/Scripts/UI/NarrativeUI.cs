@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Interfaces;
 using Managers;
 using ScriptableObjects;
 using UnityEditor;
@@ -10,31 +11,158 @@ namespace UI
 {
      //TODO:
      // Create a callback system ingame ticks and user actions, that includes checking for triggers on all available NarrPops
-     // Create NarrPop placement system
-
-    
-    
+     // Create NarrPop placement system 
     
     public class NarrativeUI : MonoBehaviour
     {
+
+        public GameObject narrativePopupsParent;
+        public GameObject narrativePopupPrefab;
+        public GameObject narrativeZero;
+        public GameObject narrativeZeroOne;
+        public bool enableNarrativeZero;
+        
         private List<NarrativeEvent> narrativeEventList = new List<NarrativeEvent>();
         
         private void Awake()
         {
         // TODO: logic for start-popup, which is not loaded through IdleDB 
+        foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>())
+            narrPopup.gameObject.SetActive(false); 
+        narrativeZeroOne.gameObject.SetActive(enableNarrativeZero);
+            narrativeZero.gameObject.SetActive(enableNarrativeZero);
         }
 
-       
-
-
-
-        public List<NarrativeEvent> GetNarrativeEvents()
+        public void ScanForNarrativeEventTriggers()
         {
-            List<NarrativeEvent> returnList = new List<NarrativeEvent>();
-
-
-            return returnList;
+            NarrativeEvent triggeredEvent = null;
+            foreach (NarrativeEvent narrativeEvent in narrativeEventList)
+                if (narrativeEvent.hasBeenTriggered == false)
+                    if (EventMeetsGeneratorRequirements(narrativeEvent))
+                        if (EventMeetsModifierRequirements(narrativeEvent))
+                            if (EventMeetsResourceRequirements(narrativeEvent)) 
+                                triggeredEvent = narrativeEvent;  
+            if (triggeredEvent != null)
+                PopupEvent(triggeredEvent);
         }
+
+
+        private bool EventMeetsGeneratorRequirements(NarrativeEvent narrativeEvent )
+        {
+            bool returnValue = true;
+            if (narrativeEvent.generatorTriggermap.Count == 0)
+                return true;
+            else
+            {
+                foreach (Generator.Type type in narrativeEvent.generatorTriggermap.Keys)
+                {
+                    Generator generator = GeneratorManager.Instance.GetGenerator(type);
+                    if (generator._state != IOperator.State.Owned)
+                    {
+                        returnValue = false;
+                    }
+                    else 
+                    {
+                        if (narrativeEvent.generatorTriggermap[type] != 0)
+                            if (generator._level < narrativeEvent.generatorTriggermap[type])
+                                returnValue = false;
+                    }
+                }
+            }
+
+//            Debug.Log("returning " + returnValue + " for id " + narrativeEvent.ID);
+            return returnValue;
+        } 
+        private bool EventMeetsModifierRequirements(NarrativeEvent narrativeEvent )
+        {
+            bool returnValue = true;
+            if (narrativeEvent.modifierTriggermap.Count == 0)
+                return true;
+            else
+            {
+                foreach (Modifier.Type type in narrativeEvent.modifierTriggermap.Keys)
+                {
+                    Modifier modifier = ModifierManager.Instance.GetModifier(type);
+                    if (modifier._state != IOperator.State.Owned)
+                    {
+                        returnValue = false;
+                    }
+                    else 
+                    {
+                        if (narrativeEvent.modifierTriggermap[type] != 0)
+                            if (modifier._level < narrativeEvent.modifierTriggermap[type])
+                                returnValue = false;
+                    }
+                }
+            }
+            return returnValue;
+        } 
+        private bool EventMeetsResourceRequirements(NarrativeEvent narrativeEvent )
+        {
+            bool returnValue = true;
+            if (narrativeEvent.resourceTriggermap.Count == 0)
+                return true;
+            else
+            {
+                foreach (Resource.Type type in narrativeEvent.resourceTriggermap.Keys)
+                {
+                    Resource resource = ResourceManager.Instance.GetResource(type);
+                  
+                    if (narrativeEvent.resourceTriggermap[type] != 0)
+                        if (resource._amount < narrativeEvent.resourceTriggermap[type])
+                            returnValue = false; 
+                }
+            }
+
+            return returnValue;
+        } 
+        
+        void PopupEvent(NarrativeEvent narrativeEvent)
+        {
+            narrativeEvent.hasBeenTriggered = true;
+            // create prefab narrativePopupPrefab
+
+            if (PopupIsPremade(narrativeEvent))
+            {
+                GetExistingPopup(narrativeEvent).LoadNarrativeEventIntoPopup(narrativeEvent);
+
+            
+            }
+            else
+            {
+                GameObject popObj = Instantiate(narrativePopupPrefab, narrativePopupsParent.transform);
+                popObj.transform.position = new Vector3(0, 0, 0);
+                popObj.GetComponent<NarrativePopup>().LoadNarrativeEventIntoPopup(narrativeEvent);
+            }
+                
+        }
+
+
+        private bool PopupIsPremade(NarrativeEvent narrativeEvent)
+        {
+            bool returnValue = false;
+            foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>(true))
+                if (narrPopup.gameObject.name == narrativeEvent.ID)
+                    returnValue =  true; 
+            return returnValue;
+        }
+
+        private NarrativePopup GetExistingPopup(NarrativeEvent narrativeEvent)
+        {
+            NarrativePopup returnPopup = null;
+            foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>(true))
+                if (narrPopup.gameObject.name == narrativeEvent.ID)
+                    returnPopup =  narrPopup;
+
+            return returnPopup;
+        }
+        
+        
+        
+        
+        
+        #region DataManagerFunctions
+        
         public void DeleteNarrativeObjects()
         {
             if (narrativeEventList.Count != 0)
@@ -47,8 +175,6 @@ namespace UI
                 }
             }
         }
-
-
         public void LoadNarrativeObjects()
         { 
             narrativeEventList.Clear();
@@ -60,10 +186,10 @@ namespace UI
                 narrativeEventList.Add((NarrativeEvent)AssetDatabase.LoadAssetAtPath(cleanedPath,  typeof(NarrativeEvent)));
             }
         }
-
         public void ReceiveNewNarrativeEvent(NarrativeEvent narrEvent)
         {
             narrativeEventList.Add(narrEvent);
         }
+        #endregion
     }
 }

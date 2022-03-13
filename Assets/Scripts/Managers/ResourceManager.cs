@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using ScriptableObjects;
@@ -8,13 +9,21 @@ namespace Managers
 {
     public class ResourceManager : MonoBehaviour
     {
+        public static ResourceManager Instance;
+
+
         [Header("Assigns")] 
         [SerializeField] TextMeshProUGUI creditText;
         [SerializeField] TextMeshProUGUI creditIncomeText;
         [SerializeField] TextMeshProUGUI happinessText;
         
-        public List<Resource> resourceList = new List<Resource>(); 
-        
+        public List<Resource> resourceList = new List<Resource>();
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         public void InitializeResources(bool newGame)
         { 
             if (newGame == true)
@@ -52,12 +61,12 @@ namespace Managers
 
         
 
-        public int CalculateIncome(Resource.Type resourceType)
+        public ulong CalculateIncome(Resource.Type resourceType)
         {
-            int rawIncome = 0;
+            ulong rawIncome = 0;
             foreach (Generator generator in GetComponent<GeneratorManager>().generatorList)
                  if (generator._resource == resourceType)                
-                     rawIncome += generator._production * generator.GetLevel();
+                     rawIncome += generator._production * (ulong)generator.GetLevel();
 
             float modifiedIncome = rawIncome;
 
@@ -65,10 +74,10 @@ namespace Managers
                 modifiedIncome = ModifyCreditIncome(rawIncome);
             
          
-            return (int)modifiedIncome;
+            return (ulong)modifiedIncome;
         }
 
-        private int ModifyCreditIncome(int rawAmount)
+        private ulong ModifyCreditIncome(ulong rawAmount)
         {
             float modifiedAmount = rawAmount;
 
@@ -83,34 +92,34 @@ namespace Managers
             
             
 
-            return (int)modifiedAmount;
+            return (ulong)modifiedAmount;
         }
-        private void GenerateCreditIncome(int amount)
+        private void GenerateCreditIncome(ulong amount)
         { 
-            AddIncome(Resource.Type.Credit, (int)amount);
+            AddIncome(Resource.Type.Credit, (ulong)amount);
         }
 
-        private void GenerateInfluenceIncome(int amount)
+        private void GenerateInfluenceIncome(ulong amount)
         { 
             AddIncome(Resource.Type.Influence,  amount);
         }
         
-        private void GenerateForceIncome(int amount)
+        private void GenerateForceIncome(ulong amount)
         { 
             AddIncome(Resource.Type.Force,  amount);
         }
 
-        public void AddIncome(Resource.Type resourceType, int amount)
+        public void AddIncome(Resource.Type resourceType, ulong amount)
         {
             GetResource(resourceType)._amount += amount;
         }
-        public void PayResource(Resource.Type resourceType, int amount)
+        public void PayResource(Resource.Type resourceType, ulong amount)
         {
             GetResource(resourceType)._amount -= amount;
         }
 
 
-        public bool RequirementsMet(Resource.Type resourcetype, int amount)
+        public bool RequirementsMet(Resource.Type resourcetype, ulong amount)
         {
             bool returnBool = false;
             foreach (Resource resource in resourceList)

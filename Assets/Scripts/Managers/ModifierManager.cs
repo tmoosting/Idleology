@@ -8,11 +8,16 @@ namespace Managers
 {
     public class ModifierManager : MonoBehaviour
     {
+
+        public static ModifierManager Instance;
         
         public List<Modifier> modifierList = new List<Modifier>();
 
 
-        
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         public void InitializeModifiers(bool newGame)
         { 

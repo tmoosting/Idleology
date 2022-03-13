@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c78b27d9baa25a948a5611f804271fd1, type: 3}
-  m_Name: NAR01
+  m_Name: NAR04
   m_EditorClassIdentifier: 
-  ID: NAR01
-  eventName: GettingStarted
-  eventText: "Alright! Now with that out of the way\u2026\n\nA good way to start
-    would be to invest that money in a small local business and grow from there.
-    People around here must be tired of drinking water all the time, maybe it would
-    be possible to create the demand for something more interesting?"
+  ID: NAR04
+  eventName: BuyLemonadeWorker
+  eventText: "Nice! Money is being made, just watch that gravy pour in. I do hope
+    there\u2019s no gravy in the lemonade tho, I don\u2019t think the world is ready
+    for that just yet."
+  hasBeenTriggered: 0

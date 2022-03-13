@@ -9,9 +9,9 @@ namespace ScriptableObjects
     public class ResourceData : ScriptableObject
     {
         public Resource.Type _type; 
-        public int _newGame;
-        public int _devGame;
-        public int _minBound;    
-        public int _maxBound;
+        public ulong _newGame;
+        public ulong _devGame;
+        public ulong _minBound;    
+        public ulong _maxBound;
     }
 }

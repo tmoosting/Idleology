@@ -30,17 +30,21 @@ public class Purchaser : MonoBehaviour
 
         private void Awake()
         {
-                defaultColor = buyButtonText.color;
 
         }
 
         private void Start()
+        { 
+             
+        }
+
+        public void Initialize()
         {
+                defaultColor = buyButtonText.color;
                 generatorManager = GameStateManager.Instance.GetComponent<GeneratorManager>();
                 modifierManager = GameStateManager.Instance.GetComponent<ModifierManager>();
-                resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();
+                resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();  
         }
-        
         
 
         private void Lock()
@@ -83,7 +87,7 @@ public class Purchaser : MonoBehaviour
                 if (source._state == IOperator.State.Hidden)
                 { 
                         if (source._requiresGenerator)
-                        {
+                        { 
                                 Generator generator = generatorManager.GetGenerator(source._requiredGenerator);
                                 if (generator._state != IOperator.State.Owned)
                                 {

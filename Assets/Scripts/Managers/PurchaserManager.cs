@@ -22,13 +22,19 @@ namespace Managers
         public void InitializePurchasers(bool newGame)
         {
 
-            foreach (Transform tf in basePurchaserParent.GetComponentsInChildren<Transform>())
-                if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>());
+            foreach (Purchaser pur in basePurchaserParent.GetComponentsInChildren<Purchaser>(true))
+                if (pur != null)
+                {
+                    pur.Initialize();
+                    purchaserList.Add(pur.GetComponent<Purchaser>()); 
+                }
 
-            foreach (Transform tf in contentPurchaserParent.GetComponentsInChildren<Transform>())
-                if (tf.GetComponent<Purchaser>() != null)
-                    purchaserList.Add(tf.GetComponent<Purchaser>());
+            foreach (Purchaser pur in contentPurchaserParent.GetComponentsInChildren<Purchaser>(true))
+                if (pur != null) 
+                {
+                    pur.Initialize();
+                    purchaserList.Add(pur.GetComponent<Purchaser>()); 
+                }
 
             // Set source object for purchasers 
             foreach (Purchaser pur in purchaserList)

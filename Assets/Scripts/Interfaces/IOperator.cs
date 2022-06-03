@@ -25,6 +25,7 @@ namespace Interfaces
         public Modifier.Type _requiredModifier{ get; set; }
         public ulong _requiredLevel{ get; set; }
         public bool isGenerator { get; set; }
+        public string _tooltipText { get; set; }
 
         public void AddLevel();
         public void SetLevel(ulong level);

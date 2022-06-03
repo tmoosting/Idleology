@@ -19,6 +19,7 @@ namespace ScriptableObjects
         public bool _requiresModifier;
         public Modifier.Type _requiredModifier;
         public ulong _requiredLevel;
+        public string _tooltipText;
 
         public Generator.Type GetGeneratorType()
         {

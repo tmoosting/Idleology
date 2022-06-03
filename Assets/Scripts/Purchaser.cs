@@ -25,6 +25,7 @@ public class Purchaser : MonoBehaviour
         GeneratorManager generatorManager;
         ModifierManager modifierManager;
         ResourceManager resourceManager;
+        private HoverUI hoverUI;
         private bool unlocked = false;
            
 
@@ -43,7 +44,8 @@ public class Purchaser : MonoBehaviour
                 defaultColor = buyButtonText.color;
                 generatorManager = GameStateManager.Instance.GetComponent<GeneratorManager>();
                 modifierManager = GameStateManager.Instance.GetComponent<ModifierManager>();
-                resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();  
+                resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();
+                hoverUI = GameStateManager.Instance.UIManager.GetComponent<HoverUI>();
         }
         
 
@@ -252,7 +254,19 @@ public class Purchaser : MonoBehaviour
                 float modifiedCost = modifierManager.GetDiscountLevellingPrice(rawCost);
                 return (ulong)modifiedCost; 
         }
-        
-        
-        
+
+        private void OnMouseOver()
+        {  
+                if (hoverUI == null)
+                        hoverUI = FindObjectOfType<HoverUI>();
+                if (hoverUI != null) 
+                    hoverUI.HoverPurchaser(this);
+        }
+        private void OnMouseExit()
+        {  
+                if (hoverUI == null)
+                        hoverUI = FindObjectOfType<HoverUI>();
+                if (hoverUI != null) 
+                        hoverUI.ExitHoverPurchaser(this);
+        }
 }

@@ -237,6 +237,8 @@ namespace Managers
                 generatorData._requiresModifier = true;
             }
             generatorData._requiredLevel =    ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
+            generatorData._tooltipText = GetEntryForTableAndFieldWithType("Generators", "Tooltip", type);
+
         }
         private  void LoadGeneratorFromData(Generator generator)
         {
@@ -251,6 +253,7 @@ namespace Managers
             generator._requiresModifier = generatorData._requiresModifier;
             generator._requiredModifier = generatorData._requiredModifier;
             generator._requiredLevel = generatorData._requiredLevel;
+            generator._tooltipText = generatorData._tooltipText;
         }
  
  
@@ -284,6 +287,7 @@ namespace Managers
             modifierData._creditPercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
             modifierData._happinessCost = ulong.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
             modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "LevelPricePercentage", type));
+            modifierData.tooltipText = GetEntryForTableAndFieldWithType("Modifiers", "Tooltip", type);
         }
         private  void LoadModifierFromData(Modifier modifier)
         {
@@ -299,6 +303,7 @@ namespace Managers
             modifier._creditPercentage = modifierData._creditPercentage;
             modifier._happinessCost = modifierData._happinessCost;
             modifier._levelPricePercentage = modifierData._levelPricePercentage;
+            modifier._tooltipText = modifierData.tooltipText;
         }
         
         

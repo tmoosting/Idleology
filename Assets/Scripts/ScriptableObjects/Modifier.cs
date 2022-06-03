@@ -28,6 +28,7 @@ namespace ScriptableObjects
         public Type _requiredModifier { get; set; }
         public ulong _requiredLevel { get; set; }
         public bool isGenerator { get; set; }
+        public string _tooltipText { get; set; }
 
         [HideInInspector] public float _creditPercentage = 0f;
         [HideInInspector] public ulong _happinessCost = 0;

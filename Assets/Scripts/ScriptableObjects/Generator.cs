@@ -16,7 +16,7 @@ namespace ScriptableObjects
             LemonadeStand, 
             PizzaPlace, 
             CarWash,           
-            Senate, 
+            LobbyingFirm, 
             PoliceStation,
             DepartmentStore,
             CandyFactory,
@@ -44,6 +44,7 @@ namespace ScriptableObjects
         public Modifier.Type _requiredModifier { get; set; }
         public ulong _requiredLevel { get; set; }
         public bool isGenerator { get; set; }
+        public string _tooltipText { get; set; }
 
         public void AddLevel()
         {

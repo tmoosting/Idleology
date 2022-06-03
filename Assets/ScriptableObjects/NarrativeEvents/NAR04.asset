@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: NAR04
   m_EditorClassIdentifier: 
   ID: NAR04
-  eventName: BuyLemonadeWorker
-  eventText: "Nice! Money is being made, just watch that gravy pour in. I do hope
-    there\u2019s no gravy in the lemonade tho, I don\u2019t think the world is ready
-    for that just yet."
+  eventName: BuyLemonadeWorker5
+  eventText: "Now you may have noticed that the hire cost for these workers is going
+    up. You see, workers have this pesky tendency to unionize. The more of them there
+    are, the better wages they are able to negotiate. Maybe we can fix that in the
+    future, but for now it\u2019s best to just deal with it. As long as there\u2019s
+    a net positive cash flow at the end of the day, all is well in the world."
   hasBeenTriggered: 0

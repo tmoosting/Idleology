@@ -189,7 +189,7 @@ public class Purchaser : MonoBehaviour
                 DisableBuyButton();
         }
         public void RevealPurchaser()
-        {
+        { 
                 // update state
                 source._state = IOperator.State.Visible;
                 

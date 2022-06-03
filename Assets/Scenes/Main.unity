@@ -1146,6 +1146,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6955354538336431124, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
   m_PrefabInstance: {fileID: 869571017}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &628372256 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6941201222103437191, guid: 49868120965d1d54d85f1e66d3bf926b, type: 3}
+  m_PrefabInstance: {fileID: 971653307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &647440042
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2872,11 +2877,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1484015008601776488, guid: 49868120965d1d54d85f1e66d3bf926b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -6.83
       objectReference: {fileID: 0}
     - target: {fileID: 1484015008601776488, guid: 49868120965d1d54d85f1e66d3bf926b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 2.22
       objectReference: {fileID: 0}
     - target: {fileID: 1484015008601776488, guid: 49868120965d1d54d85f1e66d3bf926b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3184,8 +3189,9 @@ MonoBehaviour:
   narrativePopupsParent: {fileID: 816771305}
   narrativePopupPrefab: {fileID: 1028044441239429986, guid: 49868120965d1d54d85f1e66d3bf926b, type: 3}
   narrativeZero: {fileID: 395526257}
+  narrativeZeroOKButton: {fileID: 628372256}
   narrativeZeroOne: {fileID: 393180142}
-  enableNarrativeZero: 0
+  finishedIntroEvents: 0
 --- !u!114 &1873834686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3255,7 +3261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedSlider: {fileID: 1299180759745111657}
   speedSliderText: {fileID: 1299180761232232854}
-  enableDevMode: 1
+  enableDevMode: 0
   enableSpeedSlider: 1
 --- !u!4 &1934957789
 Transform:
@@ -3324,6 +3330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManager: {fileID: 1873834684}
   newGame: 1
+  skipIntro: 0
   timePassed: 0
 --- !u!114 &1934957795
 MonoBehaviour:

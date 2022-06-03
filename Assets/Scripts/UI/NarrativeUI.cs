@@ -19,20 +19,50 @@ namespace UI
         public GameObject narrativePopupsParent;
         public GameObject narrativePopupPrefab;
         public GameObject narrativeZero;
-        public GameObject narrativeZeroOne;
-        public bool enableNarrativeZero;
+        public GameObject narrativeZeroOKButton;
+        public GameObject narrativeZeroOne; // second popup, behind the first
         
         private List<NarrativeEvent> narrativeEventList = new List<NarrativeEvent>();
         
-        private void Awake()
-        {
-        // TODO: logic for start-popup, which is not loaded through IdleDB 
-        foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>())
-            narrPopup.gameObject.SetActive(false); 
-        narrativeZeroOne.gameObject.SetActive(enableNarrativeZero);
-            narrativeZero.gameObject.SetActive(enableNarrativeZero);
-        }
+        [HideInInspector] public bool finishedIntroEvents = false;
 
+        
+        public void InitializeNarratives(bool newGame, bool skipIntro)
+        {
+            foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>())
+                narrPopup.gameObject.SetActive(false); 
+            narrativeZeroOKButton.gameObject.SetActive(false); 
+            
+            if (newGame == true)
+            {
+                if (skipIntro == false)
+                {
+                    narrativeZero.SetActive(true);
+                }
+                else
+                {
+                    
+                }
+            }
+            else
+            {
+                //todo: load from save
+            }
+        }
+        public void FinishMoneyPiling()
+        {
+            narrativeZeroOKButton.gameObject.SetActive(true);  
+        }
+        public void ClickedPopup(NarrativePopup clickedPopup)
+        { 
+            if (clickedPopup.gameObject.name == "NAR00")
+                narrativeZeroOne.SetActive(true);
+            if (clickedPopup.gameObject.name == "NAR01")
+            {
+                finishedIntroEvents = true;
+                FindObjectOfType<PurchaserManager>().purchaserList[0].Unlock();
+            }
+        }
         public void ScanForNarrativeEventTriggers()
         {
             NarrativeEvent triggeredEvent = null;
@@ -121,6 +151,7 @@ namespace UI
         {
             narrativeEvent.hasBeenTriggered = true;
             // create prefab narrativePopupPrefab
+ 
 
             if (PopupIsPremade(narrativeEvent))
             {
@@ -191,5 +222,8 @@ namespace UI
             narrativeEventList.Add(narrEvent);
         }
         #endregion
+
+
+    
     }
 }

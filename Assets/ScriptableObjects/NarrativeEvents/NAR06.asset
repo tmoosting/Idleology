@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c78b27d9baa25a948a5611f804271fd1, type: 3}
-  m_Name: NAR03
+  m_Name: NAR06
   m_EditorClassIdentifier: 
-  ID: NAR03
-  eventName: BuyLemonadeWorker1
-  eventText: "Nice! Money is being made, just watch that gravy pour in. I do hope
-    there\u2019s no gravy in the lemonade tho, I don\u2019t think the world is ready
-    for that just yet."
+  ID: NAR06
+  eventName: BuyCarWashWorker10
+  eventText: "Now we\u2019re talking! Looks like our young entrepreneur has finally
+    amassed enough assets to start influencing some local lawmakers. The lobbying
+    firm looms on the horizon."
   hasBeenTriggered: 0

@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Xml.Serialization;
 using ScriptableObjects;
 using TMPro;
+using UI;
 using UnityEngine;
 
 namespace Managers
@@ -19,12 +22,36 @@ namespace Managers
         
         public List<Resource> resourceList = new List<Resource>();
 
+       private bool countToStartMoney = false;
+        
         private void Awake()
         {
             Instance = this;
         }
 
-        public void InitializeResources(bool newGame)
+        private float initialDelay = 0.3f; // in seconds
+        private int delayRate = 6;
+        private int rateCounter = 0;
+        private void FixedUpdate()
+        {
+            if (countToStartMoney == true)
+            {
+                rateCounter++;
+                if (rateCounter >= delayRate)
+                {
+                    rateCounter = 0;
+                    GetResource(Resource.Type.Credit)._amount+=1;
+                    UpdateTexts();
+                    if (GetResource(Resource.Type.Credit)._amount >= GetResource(Resource.Type.Credit)._newGame)
+                    {
+                        countToStartMoney = false;
+                        GetComponent<GameStateManager>().UIManager.GetComponent<NarrativeUI>().FinishMoneyPiling();                     
+                    }
+                }
+            }
+        }
+
+        public void InitializeResources(bool newGame, bool skipIntro)
         { 
             if (newGame == true)
             {
@@ -42,7 +69,12 @@ namespace Managers
                     GetResource(Resource.Type.Influence)._amount = GetResource(Resource.Type.Influence)._newGame;
                     GetResource(Resource.Type.Force)._amount = GetResource(Resource.Type.Force)._newGame;
                 }
-      
+
+                if (skipIntro == false)
+                {
+                    GetResource(Resource.Type.Credit)._amount = 0;
+                    StartCoroutine(WaitAMomentThenStartPiling());
+                }
             }
             else 
             {
@@ -50,6 +82,11 @@ namespace Managers
             }
         }
 
+        private IEnumerator WaitAMomentThenStartPiling()
+        {
+            yield return new WaitForSeconds(initialDelay);
+            countToStartMoney = true;
+        }
 
         public void GenerateIncome()
         {
@@ -80,7 +117,6 @@ namespace Managers
         private ulong ModifyCreditIncome(ulong rawAmount)
         {
             float modifiedAmount = rawAmount;
-
             foreach (Modifier modifier in GetComponent<ModifierManager>().GetActiveModifiers())
             {
                 if (modifier._creditPercentage != 0)
@@ -148,7 +184,8 @@ namespace Managers
 
       
         public void UpdateTexts()
-        { 
+        {
+            Debug.Log("credit" + GetResource(Resource.Type.Credit)._amount.ToString()); 
             creditText.text = GetResource(Resource.Type.Credit)._amount.ToString();
             creditIncomeText.text = "+ "+ CalculateIncome(Resource.Type.Credit).ToString();
             happinessText.text = GetResource(Resource.Type.Happiness)._amount.ToString();

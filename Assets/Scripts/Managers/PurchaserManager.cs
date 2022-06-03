@@ -12,16 +12,15 @@ namespace Managers
         [SerializeField] GameObject contentPurchaserParent; 
        
  
-        [HideInInspector]
-       public List<Purchaser> purchaserList = new List<Purchaser>();
+        [HideInInspector] public List<Purchaser> purchaserList = new List<Purchaser>();
 
-
+        private NarrativeUI _narrativeUI;
       
 
 
-        public void InitializePurchasers(bool newGame)
+        public void InitializePurchasers(bool newGame, bool skipIntro)
         {
-
+            _narrativeUI = FindObjectOfType<NarrativeUI>();
             foreach (Purchaser pur in basePurchaserParent.GetComponentsInChildren<Purchaser>(true))
                 if (pur != null)
                 {
@@ -56,8 +55,8 @@ namespace Managers
         
             if (newGame == true)
             {
-                // unlock lemonade stand for purchasing
-                purchaserList[0].Unlock();
+                 if (skipIntro == true)
+                        purchaserList[0].Unlock();
             }
             else if (newGame == false)
             {
@@ -69,7 +68,21 @@ namespace Managers
         public void ScanUnlockables()
         {
             foreach (Purchaser purchaser in purchaserList)
-                purchaser.ValidateUnlock();
+            {
+                if (GameStateManager.Instance.skipIntro == false)
+                {
+                    if (_narrativeUI.finishedIntroEvents == false)
+                    {
+                        // don't unlock while piling start money
+                    }
+                    else 
+                        purchaser.ValidateUnlock();
+                }
+                else
+                    purchaser.ValidateUnlock();
+            }
+                
+                     
         }
 
 

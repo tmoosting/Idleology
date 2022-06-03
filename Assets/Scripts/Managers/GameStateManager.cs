@@ -15,6 +15,7 @@ namespace Managers
         
         [Header("Settings")]
         public bool newGame;
+        public bool skipIntro;
 
         private float tickTimer = 0;
         [HideInInspector]
@@ -48,10 +49,11 @@ namespace Managers
         {
             GetComponent<DataManager>().LoadDataObjects(); // if (loadDatabase == true)
             GetComponent<GeneratorManager>().InitializeGenerators(newGame);
-            GetComponent<PurchaserManager>().InitializePurchasers(newGame);
+            GetComponent<PurchaserManager>().InitializePurchasers(newGame, skipIntro);
             GetComponent<ModifierManager>().InitializeModifiers(newGame);
-            GetComponent<ResourceManager>().InitializeResources(newGame);
+            GetComponent<ResourceManager>().InitializeResources(newGame, skipIntro);
             UIManager.GetComponent<ContentUI>().InitializeContentSections(newGame);
+            UIManager.GetComponent<NarrativeUI>().InitializeNarratives(newGame, skipIntro);
             ScanUnlockables();
             GameTick();
         }

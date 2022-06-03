@@ -19,7 +19,7 @@ namespace ScriptableObjects
             LobbyingFirm, 
             PoliceStation,
             DepartmentStore,
-            CandyFactory,
+            ChocolateFactory,
             LumberMill,
             StripMine,
             OilConglomerate

@@ -16,13 +16,14 @@ namespace UI
     public class NarrativeUI : MonoBehaviour
     {
 
+        [Header("Assigns")]
         public GameObject narrativePopupsParent;
         public GameObject narrativePopupPrefab;
         public GameObject narrativeZero;
         public GameObject narrativeZeroOKButton;
         public GameObject narrativeZeroOne; // second popup, behind the first
-        
-        
+        [Header("Assigns")] 
+        public bool showPopups;
         private List<NarrativePopup> narrativePopupList = new List<NarrativePopup>();
         private List<NarrativeEvent> narrativeEventList = new List<NarrativeEvent>();
         
@@ -33,10 +34,10 @@ namespace UI
         public void InitializeNarratives(bool newGame, bool skipIntro)
         {
             foreach (NarrativePopup narrPopup in narrativePopupsParent.GetComponentsInChildren<NarrativePopup>())
-                narrPopup.gameObject.SetActive(false); 
-            narrativeZeroOKButton.gameObject.SetActive(false); 
+                narrPopup.gameObject.SetActive(false);
+            narrativeZeroOKButton.gameObject.SetActive(false);
             
-            if (newGame == true)
+            if (newGame == true && showPopups == true)
             {
                 if (skipIntro == false)
                 {
@@ -55,6 +56,8 @@ namespace UI
               
         void PopupEvent(NarrativeEvent narrativeEvent)
         {
+            if (showPopups == false)
+                return;
             // deactive previous popups
             foreach (var popup in narrativePopupList)
             {

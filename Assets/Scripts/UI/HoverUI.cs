@@ -6,9 +6,13 @@ using UnityEngine;
 
 public class HoverUI : MonoBehaviour
 {
+    [Header("Assigns")]
     public GameObject toolTip;
     public TextMeshProUGUI toolTipText;
     public Canvas canvas;
+
+    [Header("Settings")] 
+    public bool showTooltips = false;
 
     Vector2 pos;
     private void Awake()
@@ -22,16 +26,18 @@ public class HoverUI : MonoBehaviour
 
     public void HoverPurchaser(Purchaser purchaser)
     {
-        toolTip.SetActive(true);
-        toolTipText.text = purchaser.source._tooltipText;
-        Vector2 movePos;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-           canvas.transform as RectTransform,
-            Input.mousePosition,canvas.worldCamera,
-            out movePos);
-        movePos += new Vector2(0, -45);
-        toolTip.transform.position =canvas.transform.TransformPoint(movePos);
-         
+        if (showTooltips)
+        {
+            toolTip.SetActive(true);
+            toolTipText.text = purchaser.source._tooltipText;
+            Vector2 movePos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvas.transform as RectTransform,
+                Input.mousePosition,canvas.worldCamera,
+                out movePos);
+            movePos += new Vector2(0, -45);
+            toolTip.transform.position =canvas.transform.TransformPoint(movePos);  
+        }  
     }
 
     public void ExitHoverPurchaser(Purchaser purchaser)

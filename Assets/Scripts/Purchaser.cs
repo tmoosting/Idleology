@@ -256,17 +256,24 @@ public class Purchaser : MonoBehaviour
         }
 
         private void OnMouseOver()
-        {  
-                if (hoverUI == null)
-                        hoverUI = FindObjectOfType<HoverUI>();
-                if (hoverUI != null) 
-                    hoverUI.HoverPurchaser(this);
+        {
+                if (source._state == IOperator.State.Owned)
+                {
+                        if (hoverUI == null)
+                                hoverUI = FindObjectOfType<HoverUI>();
+                        if (hoverUI != null) 
+                                hoverUI.HoverPurchaser(this);    
+                }
+                
         }
         private void OnMouseExit()
-        {  
-                if (hoverUI == null)
-                        hoverUI = FindObjectOfType<HoverUI>();
-                if (hoverUI != null) 
-                        hoverUI.ExitHoverPurchaser(this);
+        {
+                if (source._state == IOperator.State.Owned)
+                {
+                        if (hoverUI == null)
+                                hoverUI = FindObjectOfType<HoverUI>();
+                        if (hoverUI != null) 
+                                hoverUI.ExitHoverPurchaser(this);       
+                } 
         }
 }

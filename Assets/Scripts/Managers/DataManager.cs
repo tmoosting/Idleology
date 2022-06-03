@@ -210,7 +210,7 @@ namespace Managers
         private void LoadGeneratorDataObject(string type)
         {
             GeneratorData generatorData = GetGeneratorData(type);
-            
+             
             generatorData._resource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
                 GetEntryForTableAndFieldWithType("Generators", "Resource", type)); 
             generatorData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),

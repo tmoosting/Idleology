@@ -565,11 +565,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 6166d1c91fe0b2c448dd005b23143d0c, type: 3}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.x
-      value: 118.78
+      value: 437.3
       objectReference: {fileID: 0}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.y
-      value: -26.85
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538336431124, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Pivot.x
@@ -957,11 +957,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 6166d1c91fe0b2c448dd005b23143d0c, type: 3}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.x
-      value: 118.78
+      value: 437.3
       objectReference: {fileID: 0}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.y
-      value: -26.85
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538336431124, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Pivot.x
@@ -1883,11 +1883,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 6166d1c91fe0b2c448dd005b23143d0c, type: 3}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.x
-      value: 118.78
+      value: 437.3
       objectReference: {fileID: 0}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.y
-      value: -26.85
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538336431124, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Pivot.x
@@ -2679,7 +2679,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538336431127, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Name
-      value: CandyFactory
+      value: ChocolateFactory
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538874421086, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: clickEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2687,7 +2687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6955354539055635337, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_text
-      value: 'candy factory
+      value: 'chocolate factory
 
 '
       objectReference: {fileID: 0}
@@ -3217,6 +3217,7 @@ MonoBehaviour:
   narrativeZero: {fileID: 395526257}
   narrativeZeroOKButton: {fileID: 628372256}
   narrativeZeroOne: {fileID: 393180142}
+  showPopups: 1
   finishedIntroEvents: 0
 --- !u!114 &1873834686
 MonoBehaviour:
@@ -3265,6 +3266,7 @@ MonoBehaviour:
   toolTip: {fileID: 8299982817364820179}
   toolTipText: {fileID: 6866456622735580652}
   canvas: {fileID: 776414640}
+  showTooltips: 1
 --- !u!1 &1934957787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,11 +3562,11 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7ef105f86ee4ec746b278d04880bc10b, type: 3}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.x
-      value: 118.78
+      value: 437.3
       objectReference: {fileID: 0}
     - target: {fileID: 3946361693554552296, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Offset.y
-      value: -26.85
+      value: -29
       objectReference: {fileID: 0}
     - target: {fileID: 6955354538336431124, guid: 3e7852e5cf980fd43a40eeff8a493c39, type: 3}
       propertyPath: m_Pivot.x

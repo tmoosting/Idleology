@@ -22,7 +22,10 @@ namespace UI
         public GameObject narrativeZeroOKButton;
         public GameObject narrativeZeroOne; // second popup, behind the first
         
+        
+        private List<NarrativePopup> narrativePopupList = new List<NarrativePopup>();
         private List<NarrativeEvent> narrativeEventList = new List<NarrativeEvent>();
+        
         
         [HideInInspector] public bool finishedIntroEvents = false;
 
@@ -48,6 +51,34 @@ namespace UI
             {
                 //todo: load from save
             }
+        }
+              
+        void PopupEvent(NarrativeEvent narrativeEvent)
+        {
+            // deactive previous popups
+            foreach (var popup in narrativePopupList)
+            {
+                popup.gameObject.SetActive(false);
+            }
+            narrativeEvent.hasBeenTriggered = true;
+            // create prefab narrativePopupPrefab
+ 
+
+            if (PopupIsPremade(narrativeEvent))
+            {
+                GetExistingPopup(narrativeEvent).LoadNarrativeEventIntoPopup(narrativeEvent);
+                narrativePopupList.Add(  GetExistingPopup(narrativeEvent) );
+
+            
+            }
+            else
+            {
+                GameObject popObj = Instantiate(narrativePopupPrefab, narrativePopupsParent.transform);
+                popObj.transform.position = new Vector3(0, 0, 0);
+                popObj.GetComponent<NarrativePopup>().LoadNarrativeEventIntoPopup(narrativeEvent);
+                narrativePopupList.Add( popObj.GetComponent<NarrativePopup>());
+            }
+                
         }
         public void FinishMoneyPiling()
         {
@@ -146,27 +177,7 @@ namespace UI
 
             return returnValue;
         } 
-        
-        void PopupEvent(NarrativeEvent narrativeEvent)
-        {
-            narrativeEvent.hasBeenTriggered = true;
-            // create prefab narrativePopupPrefab
- 
-
-            if (PopupIsPremade(narrativeEvent))
-            {
-                GetExistingPopup(narrativeEvent).LoadNarrativeEventIntoPopup(narrativeEvent);
-
-            
-            }
-            else
-            {
-                GameObject popObj = Instantiate(narrativePopupPrefab, narrativePopupsParent.transform);
-                popObj.transform.position = new Vector3(0, 0, 0);
-                popObj.GetComponent<NarrativePopup>().LoadNarrativeEventIntoPopup(narrativeEvent);
-            }
-                
-        }
+  
 
 
         private bool PopupIsPremade(NarrativeEvent narrativeEvent)

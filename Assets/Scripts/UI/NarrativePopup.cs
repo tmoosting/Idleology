@@ -19,7 +19,6 @@ public class NarrativePopup : MonoBehaviour
 
      public void LoadNarrativeEventIntoPopup(NarrativeEvent narrativeEvent)
      {
-         Debug.Log ("Setting for  " + gameObject.name + " with id: " + narrativeEvent.ID);
          loadedEvent = narrativeEvent;
          narrativePopupText.text = narrativeEvent.eventText;
          gameObject.SetActive(true);

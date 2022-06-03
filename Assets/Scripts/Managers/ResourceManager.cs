@@ -30,7 +30,9 @@ namespace Managers
         }
 
         private float initialDelay = 0.3f; // in seconds
-        private int delayRate = 6;
+        private int delayRate = 1;
+        private ulong increaseAmount = 100;
+        private ulong finalIncreaseAmount = 5;
         private int rateCounter = 0;
         private void FixedUpdate()
         {
@@ -40,7 +42,10 @@ namespace Managers
                 if (rateCounter >= delayRate)
                 {
                     rateCounter = 0;
-                    GetResource(Resource.Type.Credit)._amount+=1;
+                    if (GetResource(Resource.Type.Credit)._amount+increaseAmount > GetResource(Resource.Type.Credit)._newGame)
+                        GetResource(Resource.Type.Credit)._amount+=finalIncreaseAmount;
+                    else
+                        GetResource(Resource.Type.Credit)._amount+=increaseAmount;
                     UpdateTexts();
                     if (GetResource(Resource.Type.Credit)._amount >= GetResource(Resource.Type.Credit)._newGame)
                     {
@@ -185,7 +190,6 @@ namespace Managers
       
         public void UpdateTexts()
         {
-            Debug.Log("credit" + GetResource(Resource.Type.Credit)._amount.ToString()); 
             creditText.text = GetResource(Resource.Type.Credit)._amount.ToString();
             creditIncomeText.text = "+ "+ CalculateIncome(Resource.Type.Credit).ToString();
             happinessText.text = GetResource(Resource.Type.Happiness)._amount.ToString();

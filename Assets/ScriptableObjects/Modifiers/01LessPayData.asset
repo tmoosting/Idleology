@@ -21,3 +21,7 @@ MonoBehaviour:
   _requiresModifier: 0
   _requiredModifier: 0
   _requiredLevel: 10
+  _creditPercentage: 0
+  _happinessCost: 1
+  _levelPricePercentage: 0.1
+  tooltipText: nou nou

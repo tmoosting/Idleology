@@ -86,7 +86,7 @@ namespace Managers
         }
 
 
-        public void UpdateTexts()
+        public void UpdateAllTexts()
         {
             foreach (Purchaser purchaser in purchaserList)
                 purchaser.UpdateTexts();

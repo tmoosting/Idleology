@@ -62,10 +62,10 @@ namespace Managers
             foreach (Modifier mod in modifierList)
                 if (mod._levelPricePercentage != 0)
                 {
-                    float multiplier = (1 + (mod._levelPricePercentage * mod.GetLevel())); 
-                    modifiedCost *= multiplier;
-                } 
-
+                    float multiplier = 1 - mod._levelPricePercentage; 
+                    for (ulong i = 0; i < mod.GetLevel(); i++)
+                        modifiedCost *= multiplier;
+                }
             return (int)modifiedCost;
         }
         

@@ -78,7 +78,7 @@ namespace Managers
         {
             UIManager.GetComponent<ContentUI>().UpdateContentUI();
            GetComponent<ResourceManager>().UpdateTexts();
-           GetComponent<PurchaserManager>().UpdateTexts();
+           GetComponent<PurchaserManager>().UpdateAllTexts();
         }
         
         

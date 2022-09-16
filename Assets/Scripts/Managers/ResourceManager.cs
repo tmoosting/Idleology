@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Numerics;
 using System.Xml.Serialization;
 using ScriptableObjects;
 using TMPro;
@@ -19,11 +20,16 @@ namespace Managers
         [SerializeField] TextMeshProUGUI creditText;
         [SerializeField] TextMeshProUGUI creditIncomeText;
         [SerializeField] TextMeshProUGUI happinessText;
-        
+        public bool formatInScientific;
+        public ulong formatThreshold;
+
         public List<Resource> resourceList = new List<Resource>();
 
        private bool countToStartMoney = false;
-        
+
+
+       private ModifierManager _modifierManager;
+       
         private void Awake()
         {
             Instance = this;
@@ -95,6 +101,8 @@ namespace Managers
 
         public void GenerateIncome()
         {
+            if (_modifierManager == null)
+                _modifierManager = GetComponent<ModifierManager>();
             //Alternative: Have income as its own data type, persistent, with purchases immediately changing it
             GenerateCreditIncome(CalculateIncome(Resource.Type.Credit));
             GenerateInfluenceIncome(CalculateIncome(Resource.Type.Influence));
@@ -105,6 +113,8 @@ namespace Managers
 
         public ulong CalculateIncome(Resource.Type resourceType)
         {
+            if (_modifierManager == null)
+                _modifierManager = GetComponent<ModifierManager>();
             ulong rawIncome = 0;
             foreach (Generator generator in GetComponent<GeneratorManager>().generatorList)
                  if (generator._resource == resourceType)                
@@ -122,17 +132,15 @@ namespace Managers
         private ulong ModifyCreditIncome(ulong rawAmount)
         {
             float modifiedAmount = rawAmount;
-            foreach (Modifier modifier in GetComponent<ModifierManager>().GetActiveModifiers())
+            foreach (Modifier mod in _modifierManager.GetActiveModifiers())
             {
-                if (modifier._creditPercentage != 0)
+                if (mod._creditPercentage != 0)
                 {
-                    float multiplier = (1 + (modifier._creditPercentage * modifier.GetLevel())); 
-                    modifiedAmount *= multiplier;
-                }
-            }
-            
-            
-
+                    float multiplier = 1 + mod._creditPercentage; 
+                    for (ulong i = 0; i < mod.GetLevel(); i++)
+                        modifiedAmount *= multiplier;   
+                } 
+            } 
             return (ulong)modifiedAmount;
         }
         private void GenerateCreditIncome(ulong amount)
@@ -190,11 +198,54 @@ namespace Managers
       
         public void UpdateTexts()
         {
-            creditText.text = GetResource(Resource.Type.Credit)._amount.ToString();
-            creditIncomeText.text = "+ "+ CalculateIncome(Resource.Type.Credit).ToString();
-            happinessText.text = GetResource(Resource.Type.Happiness)._amount.ToString();
+            creditText.text = FormatNumber(  GetResource(Resource.Type.Credit)._amount);
+            creditIncomeText.text = "+ "+ FormatNumber( CalculateIncome(Resource.Type.Credit));
+            happinessText.text = FormatNumber(GetResource(Resource.Type.Happiness)._amount);
         }
 
+        
+        private int charA = Convert.ToInt32('a');
+        private Dictionary<int, string> units = new Dictionary<int, string>
+        {
+            {0, ""},
+            {1, "K"},
+            {2, "M"},
+            {3, "B"},
+            {4, "T"},
+            {5, "KT"},
+            {6, "MT"},
+            {7, "BT"}
+        };
+        public string FormatNumber(ulong amount)
+        {
+            if (amount < formatThreshold)
+            {
+                return amount.ToString();
+            }
+            else
+            {
+                if (formatInScientific)
+                    return amount.ToString("0.00E+0");
+                var n = (int) Math.Log(amount, 1000);
+                var m = amount / Math.Pow(1000, n);
+                var unit = "";
+
+                if (n < units.Count)
+                {
+                    unit = units[n];
+                }
+                else
+                {
+                    var unitInt = n - units.Count;
+                    var secondUnit = unitInt % 26;
+                    var firstUnit = unitInt / 26;
+                    unit = Convert.ToChar(firstUnit + charA).ToString() + Convert.ToChar(secondUnit + charA).ToString();
+                } 
+                return (Math.Floor(m * 100) / 100).ToString("0.##") + unit;
+            }
+        }
+        
+        
      
     }
 }

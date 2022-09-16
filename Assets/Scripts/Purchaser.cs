@@ -79,10 +79,6 @@ public class Purchaser : MonoBehaviour
                 // Update texts
                 UpdateTexts();
         }
-     
-    
-
-
         public void ValidateUnlock()
         {
                
@@ -118,14 +114,14 @@ public class Purchaser : MonoBehaviour
                                 }
                                 
                         }
-            if (source.isGenerator == false && source.GetLevel() == 10)
-            {
-                PermaLock();
-                return;
-            }
-            else
-                Unlock();
-        }
+                        if (source.isGenerator == false && source.GetLevel() == 10)
+                        {
+                                PermaLock();
+                                return;
+                        }
+                        else
+                                Unlock();
+                }
                 else
                 {
                         if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
@@ -133,18 +129,16 @@ public class Purchaser : MonoBehaviour
                                 Lock();
                                 return;
                         }
-            if (source.isGenerator == false && source.GetLevel() == 10)
-            {
-                PermaLock();
-                return;
-            }
-            else
-                Unlock();
-        }
+                        if (source.isGenerator == false && source.GetLevel() == 10)
+                        {
+                                PermaLock();
+                                return;
+                        }
+                        else
+                                Unlock();
+                }
               
         }
-
-
 
         public void ClickBuyButton()
         { 
@@ -179,8 +173,8 @@ public class Purchaser : MonoBehaviour
 
         if (source.isGenerator == false)
                 modifierManager.HandleStaticModifierEffects(source);
-                GameStateManager.Instance.ScanUnlockables();
-                GameStateManager.Instance.UpdateUI();
+        GameStateManager.Instance.ScanUnlockables();
+        GameStateManager.Instance.UpdateUI();
         }
 
          
@@ -235,7 +229,7 @@ public class Purchaser : MonoBehaviour
             if (source._costResource == Resource.Type.Happiness)
                 currencyString += "";
 
-            buyButtonText.text = currencyString + GetCurrentCost();
+            buyButtonText.text = currencyString + resourceManager.FormatNumber( GetCurrentCost());
             workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
         }
     }

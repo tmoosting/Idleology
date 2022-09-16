@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CreditData
   m_EditorClassIdentifier: 
   _type: 0
-  _newGame: 50
+  _newGame: 10005
   _devGame: 500000
   _minBound: 0
   _maxBound: 0

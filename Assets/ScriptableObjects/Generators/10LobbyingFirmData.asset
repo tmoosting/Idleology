@@ -15,11 +15,12 @@ MonoBehaviour:
   _type: 3
   _resource: 2
   _costResource: 0
-  _purchaseCost: 10000
-  _levelCost: 5000
+  _purchaseCost: 40000
+  _levelCost: 50000
   _production: 1
   _requiresGenerator: 1
   _requiredGenerator: 2
   _requiresModifier: 0
   _requiredModifier: 0
   _requiredLevel: 10
+  _tooltipText: 

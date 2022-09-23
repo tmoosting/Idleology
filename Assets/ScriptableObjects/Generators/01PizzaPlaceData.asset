@@ -14,6 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _resource: 0
-  _purchaseCost: 100
-  _workerBaseCost: 50
+  _costResource: 0
+  _purchaseCost: 10
+  _levelCost: 20
   _production: 10
+  _requiresGenerator: 1
+  _requiredGenerator: 0
+  _requiresModifier: 0
+  _requiredModifier: 0
+  _requiredLevel: 10
+  _tooltipText: ahh yes! fat, salt and carbs, the holy trinity! don't worry too much
+    about the quality, people these days mostly crave convienence, and what do you
+    know? we'll have these piping hot flavour discs on their doorsteps in minutes!

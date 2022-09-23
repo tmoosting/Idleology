@@ -15,11 +15,14 @@ MonoBehaviour:
   _type: 5
   _resource: 0
   _costResource: 0
-  _purchaseCost: 100000
-  _levelCost: 50000
-  _production: 1000
+  _purchaseCost: 1000
+  _levelCost: 200
+  _production: 500
   _requiresGenerator: 1
-  _requiredGenerator: 4
-  _requiresModifier: 1
+  _requiredGenerator: 3
+  _requiresModifier: 0
   _requiredModifier: 0
   _requiredLevel: 5
+  _tooltipText: who needs small local shops when you can just cram all your consumer
+    goods into one big edifice. come for the expensive perfume showers, stay for
+    the complicated loyalty rewards program

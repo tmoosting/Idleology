@@ -43,6 +43,7 @@ namespace ScriptableObjects
         public void AddLevel()
         {
             _level++;
+     
         }
         public void SetLevel(ulong level)
         {

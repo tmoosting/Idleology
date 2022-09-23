@@ -14,6 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   _resource: 0
-  _purchaseCost: 1000
-  _workerBaseCost: 500
+  _costResource: 0
+  _purchaseCost: 100
+  _levelCost: 50
   _production: 100
+  _requiresGenerator: 1
+  _requiredGenerator: 1
+  _requiresModifier: 0
+  _requiredModifier: 0
+  _requiredLevel: 10
+  _tooltipText: the most efficient way for people to clean their precious vehicles.
+    don't worry too much about the toxicity of the cleaning chemicals, we are only
+    really cleaning the outside of the cars you know.

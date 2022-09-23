@@ -180,12 +180,15 @@ public class Purchaser : MonoBehaviour
          
         public void HidePurchaser()
         {
+                Debug.Log("HIDE: " + gameObject.name);
+
                 gameObject.SetActive(false);
                 source._state = IOperator.State.Hidden; 
                 DisableBuyButton();
         }
         public void RevealPurchaser()
-        { 
+        {
+                Debug.Log("reveal: " + gameObject.name);
                 // update state
                 source._state = IOperator.State.Visible;
                 

@@ -23,5 +23,5 @@ MonoBehaviour:
   _requiredLevel: 5
   _creditPercentage: 0.4
   _happinessCost: 2
-  _levelPricePercentage: 0.2
+  _levelPricePercentage: 0.15
   tooltipText: hee zeg

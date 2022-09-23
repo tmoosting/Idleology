@@ -33,7 +33,7 @@ namespace ScriptableObjects
         [HideInInspector] public IOperator.State _state { get; set; }
         
         public ulong _level { get; set; }
-        public ulong _production;
+        public ulong _production  { get; set; }
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
         public ulong _levelCost { get; set; }
@@ -48,7 +48,14 @@ namespace ScriptableObjects
 
         public void AddLevel()
         {
-            _level++; 
+            _level++;
+            if (_resource == Resource.Type.Credit)
+                VisualsManager.Instance.SpawnChangeVisual(ChangeVisual.Type.CreditIncome, _production );
+            else  if (_resource == Resource.Type.Influence)
+                VisualsManager.Instance.SpawnChangeVisual(ChangeVisual.Type.InfluenceIncome, _production );
+            else  if (_resource == Resource.Type.Force)
+                VisualsManager.Instance.SpawnChangeVisual(ChangeVisual.Type.ForceIncome, _production );
+            
         }
         public void SetLevel(ulong level)
         {

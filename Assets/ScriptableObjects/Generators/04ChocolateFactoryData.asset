@@ -15,11 +15,15 @@ MonoBehaviour:
   _type: 6
   _resource: 0
   _costResource: 0
-  _purchaseCost: 0
-  _levelCost: 0
-  _production: 0
-  _requiresGenerator: 0
-  _requiredGenerator: 5
+  _purchaseCost: 10000
+  _levelCost: 500
+  _production: 1000
+  _requiresGenerator: 1
+  _requiredGenerator: 4
   _requiresModifier: 0
   _requiredModifier: 0
-  _requiredLevel: 0
+  _requiredLevel: 5
+  _tooltipText: so we take the seeds from this sacred tree, grow them in other warm
+    climates, use our patented processing to get rid of the bitterness, and presto!
+    chocolate! favoured by young and old, you really can't do no wrong with these
+    candy bars

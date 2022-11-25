@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using Michsky.UI.ModernUIPack;
 using ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -175,20 +176,18 @@ public class Purchaser : MonoBehaviour
                 modifierManager.HandleStaticModifierEffects(source);
         GameStateManager.Instance.ScanUnlockables();
         GameStateManager.Instance.UpdateUI();
+        GameStateManager.Instance.UIManager.GetComponent<HoverUI>().ExitHoverPurchaser(null);
         }
 
          
         public void HidePurchaser()
-        {
-                Debug.Log("HIDE: " + gameObject.name);
-
+        { 
                 gameObject.SetActive(false);
                 source._state = IOperator.State.Hidden; 
                 DisableBuyButton();
         }
         public void RevealPurchaser()
-        {
-                Debug.Log("reveal: " + gameObject.name);
+        { 
                 // update state
                 source._state = IOperator.State.Visible;
                 
@@ -254,7 +253,7 @@ public class Purchaser : MonoBehaviour
 
         private void OnMouseOver()
         {
-                if (source._state == IOperator.State.Owned)
+                if (source._state != IOperator.State.Hidden)
                 {
                         if (hoverUI == null)
                                 hoverUI = FindObjectOfType<HoverUI>();
@@ -265,7 +264,7 @@ public class Purchaser : MonoBehaviour
         }
         private void OnMouseExit()
         {
-                if (source._state == IOperator.State.Owned)
+                if (source._state != IOperator.State.Hidden)
                 {
                         if (hoverUI == null)
                                 hoverUI = FindObjectOfType<HoverUI>();

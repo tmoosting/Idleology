@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78b27d9baa25a948a5611f804271fd1, type: 3}
+  m_Name: NAR09
+  m_EditorClassIdentifier: 
+  ID: NAR09
+  eventName: BuyLongerHours3
+  eventText: "Forget politics for now. These lobbyists are just all round experts
+    in social skills. By influencing the media, they could turn these workers against
+    each other, making them much less likely to discuss salaries amongst themselves.
+    It\u2019s a dog eat dog world out there and every little worker wants to be top
+    dog at the end of the day. "
+  hasBeenTriggered: 0

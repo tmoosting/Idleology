@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 2
   _newGame: 0
-  _devGame: 50000
+  _devGame: 0
   _minBound: 0
   _maxBound: 0

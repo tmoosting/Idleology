@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78b27d9baa25a948a5611f804271fd1, type: 3}
+  m_Name: NAR08
+  m_EditorClassIdentifier: 
+  ID: NAR08
+  eventName: GetInfluence10
+  eventText: "Hey, listen! Looks like the lobbyists have garnered enough influence
+    to start changing some policies. If you\u2019re curious on how these changes
+    will affect the world, just hover over it before clicking."
+  hasBeenTriggered: 0

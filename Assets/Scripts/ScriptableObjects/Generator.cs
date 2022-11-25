@@ -15,14 +15,15 @@ namespace ScriptableObjects
         {
             LemonadeStand, 
             PizzaPlace, 
-            CarWash,           
-            LobbyingFirm, 
-            PoliceStation,
+            CarWash,      
             DepartmentStore,
             ChocolateFactory,
             LumberMill,
             StripMine,
-            OilConglomerate
+            OilConglomerate,
+            LobbyingFirm, 
+            PoliceStation,
+            Laboratory
         }
 
 
@@ -44,7 +45,9 @@ namespace ScriptableObjects
         public Modifier.Type _requiredModifier { get; set; }
         public ulong _requiredLevel { get; set; }
         public bool isGenerator { get; set; }
-        public string _tooltipText { get; set; }
+        public string _purchaseTooltip { get; set; }
+        public string _firstWorkerTooltip { get; set; }
+        public string _completedTooltip { get; set; }
 
         public void AddLevel()
         {

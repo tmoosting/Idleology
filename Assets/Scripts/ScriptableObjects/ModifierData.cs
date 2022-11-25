@@ -20,7 +20,9 @@ namespace ScriptableObjects
         public float _creditPercentage = 0f;
         public ulong _happinessCost = 0;
         public float _levelPricePercentage = 0;
-        public string tooltipText;
+        public string _purchaseTooltipText;
+        public string _firstWorkerTooltipText;
+        public string _completedTooltipText;
 
         public Modifier.Type GetModifierType()
         {

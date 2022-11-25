@@ -15,11 +15,15 @@ MonoBehaviour:
   _type: 8
   _resource: 0
   _costResource: 0
-  _purchaseCost: 0
-  _levelCost: 0
-  _production: 0
-  _requiresGenerator: 0
+  _purchaseCost: 1000000
+  _levelCost: 5000
+  _production: 10000
+  _requiresGenerator: 1
   _requiredGenerator: 7
-  _requiresModifier: 0
-  _requiredModifier: 0
-  _requiredLevel: 0
+  _requiresModifier: 1
+  _requiredModifier: 1
+  _requiredLevel: 10
+  _tooltipText: not to be confused with a strip mall, the stripping here actually
+    refers to the complete decemation of the earths crust to get at the precious
+    rocks that lie within. go ahead, add one colourless mana to your pool while you're
+    at it

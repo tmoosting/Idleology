@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78b27d9baa25a948a5611f804271fd1, type: 3}
+  m_Name: NAR07
+  m_EditorClassIdentifier: 
+  ID: NAR07
+  eventName: BuyLobbyingFirm
+  eventText: "Right, now while we could technically also view these lobbyists as
+    workers, their rising cost is more related to the ehm\u2026. compensations that
+    they have to bring to persuade the politicians. Best to could hire a couple of
+    them and watch them work their magic."
+  hasBeenTriggered: 0

@@ -20,7 +20,7 @@ public class NarrativePopup : MonoBehaviour
      public void LoadNarrativeEventIntoPopup(NarrativeEvent narrativeEvent)
      {
          loadedEvent = narrativeEvent;
-         narrativePopupText.text = narrativeEvent.eventText;
+         narrativePopupText.text = narrativeEvent.eventText.ToLower();
          gameObject.SetActive(true);
      }
 }

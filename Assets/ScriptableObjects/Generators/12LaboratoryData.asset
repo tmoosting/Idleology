@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
-  m_Name: 05LumberMillData
+  m_Name: 12LaboratoryData
   m_EditorClassIdentifier: 
-  _type: 7
-  _resource: 0
+  _type: 10
+  _resource: 4
   _costResource: 0
-  _purchaseCost: 100000
-  _levelCost: 2000
-  _production: 5000
+  _purchaseCost: 8000000
+  _levelCost: 300000
+  _production: 1
   _requiresGenerator: 1
-  _requiredGenerator: 6
-  _requiresModifier: 1
+  _requiredGenerator: 9
+  _requiresModifier: 0
   _requiredModifier: 0
-  _requiredLevel: 1
-  _tooltipText: trees, what are they good for? well lumber of course! who needs lush
-    expansive forests when you can have cheap flat-pack furniture, printer paper
-    by the dozen and colourful boxes for your cereal
+  _requiredLevel: 10
+  _purchasteTooltipText: PurchaseLab
+  _firstWorkerTooltipText: WorkerLab

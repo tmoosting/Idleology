@@ -10,7 +10,8 @@ namespace ScriptableObjects
             Credit,
             Happiness,
             Influence,
-            Force
+            Force,
+            Tech
         }
 
 

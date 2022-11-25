@@ -135,7 +135,7 @@ namespace Managers
             List<int> resourceTriggers = new List<int>();
             foreach (string generator in GetEntryForTableAndFieldWithID("Narrative", "Generators", id).Split(','))
                 generatorStrings.Add(generator);
-            foreach (string generatorTrigger in GetEntryForTableAndFieldWithID("Narrative", "GeneratorLevelTriggers", id).Split(','))
+            foreach (string generatorTrigger in GetEntryForTableAndFieldWithID("Narrative", "GeneratorLevelTrigger", id).Split(','))
                 if (generatorTrigger != "" && generatorTrigger != "NotFound")
                 {
                     generatorTriggers.Add(int.Parse(generatorTrigger));
@@ -143,12 +143,12 @@ namespace Managers
                 }
             foreach (string modifier in GetEntryForTableAndFieldWithID("Narrative", "Modifiers", id).Split(','))
                 modifierStrings.Add(modifier);
-            foreach (string modifierTrigger in GetEntryForTableAndFieldWithID("Narrative", "ModifierTriggers", id).Split(','))
+            foreach (string modifierTrigger in GetEntryForTableAndFieldWithID("Narrative", "ModifierLevelTrigger", id).Split(','))
                 if (modifierTrigger != ""&& modifierTrigger != "NotFound")
                     modifierTriggers.Add(int.Parse(modifierTrigger));
             foreach (string resource in GetEntryForTableAndFieldWithID("Narrative", "Resources", id).Split(','))
                 resourceStrings.Add(resource);
-            foreach (string resourceTrigger in GetEntryForTableAndFieldWithID("Narrative", "ResourceTriggers", id).Split(','))
+            foreach (string resourceTrigger in GetEntryForTableAndFieldWithID("Narrative", "ResourceAmountTrigger", id).Split(','))
                 if (resourceTrigger != ""&& resourceTrigger != "NotFound")
                     resourceTriggers.Add(int.Parse(resourceTrigger));
 
@@ -208,7 +208,7 @@ namespace Managers
         
 
         private void LoadGeneratorDataObject(string type)
-        {
+        { 
             GeneratorData generatorData = GetGeneratorData(type);
              
             generatorData._resource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
@@ -237,7 +237,8 @@ namespace Managers
                 generatorData._requiresModifier = true;
             }
             generatorData._requiredLevel =    ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "RequiresLevel", type));
-            generatorData._tooltipText = GetEntryForTableAndFieldWithType("Generators", "Tooltip", type);
+            generatorData._purchasteTooltipText = GetEntryForTableAndFieldWithType("Generators", "TooltipPurchase", type);
+            generatorData._firstWorkerTooltipText = GetEntryForTableAndFieldWithType("Generators", "TooltipWorker", type);
 
         }
         private  void LoadGeneratorFromData(Generator generator)
@@ -253,7 +254,8 @@ namespace Managers
             generator._requiresModifier = generatorData._requiresModifier;
             generator._requiredModifier = generatorData._requiredModifier;
             generator._requiredLevel = generatorData._requiredLevel;
-            generator._tooltipText = generatorData._tooltipText;
+            generator._purchaseTooltip = generatorData._purchasteTooltipText;
+            generator._firstWorkerTooltip = generatorData._firstWorkerTooltipText;
         }
  
  
@@ -287,7 +289,9 @@ namespace Managers
             modifierData._creditPercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "CreditPercentage", type));
             modifierData._happinessCost = ulong.Parse(GetEntryForTableAndFieldWithType("Modifiers", "HappinessCost", type));
             modifierData._levelPricePercentage = float.Parse(GetEntryForTableAndFieldWithType("Modifiers", "LevelPricePercentage", type));
-            modifierData.tooltipText = GetEntryForTableAndFieldWithType("Modifiers", "Tooltip", type);
+            modifierData._purchaseTooltipText = GetEntryForTableAndFieldWithType("Modifiers", "TooltipPurchase", type);
+            modifierData._firstWorkerTooltipText = GetEntryForTableAndFieldWithType("Modifiers", "TooltipWorker", type);
+            modifierData._completedTooltipText = GetEntryForTableAndFieldWithType("Modifiers", "TooltipComplete", type);
         }
         private  void LoadModifierFromData(Modifier modifier)
         {
@@ -303,7 +307,9 @@ namespace Managers
             modifier._creditPercentage = modifierData._creditPercentage;
             modifier._happinessCost = modifierData._happinessCost;
             modifier._levelPricePercentage = modifierData._levelPricePercentage;
-            modifier._tooltipText = modifierData.tooltipText;
+            modifier._purchaseTooltip = modifierData._purchaseTooltipText;
+            modifier._firstWorkerTooltip = modifierData._firstWorkerTooltipText;
+            modifier._completedTooltip = modifierData._completedTooltipText;
         }
         
         

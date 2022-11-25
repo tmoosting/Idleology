@@ -19,7 +19,8 @@ namespace ScriptableObjects
         public bool _requiresModifier;
         public Modifier.Type _requiredModifier;
         public ulong _requiredLevel;
-        public string _tooltipText;
+        public string _purchasteTooltipText;
+        public string _firstWorkerTooltipText;
 
         public Generator.Type GetGeneratorType()
         {

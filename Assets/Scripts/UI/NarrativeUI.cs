@@ -112,21 +112,23 @@ namespace UI
 
 
         private bool EventMeetsGeneratorRequirements(NarrativeEvent narrativeEvent )
-        {
+        { 
             bool returnValue = true;
             if (narrativeEvent.generatorTriggermap.Count == 0)
                 return true;
             else
-            {
+            { 
                 foreach (Generator.Type type in narrativeEvent.generatorTriggermap.Keys)
                 {
                     Generator generator = GeneratorManager.Instance.GetGenerator(type);
+ 
+
                     if (generator._state != IOperator.State.Owned)
                     {
-                        returnValue = false;
-                    }
+                        returnValue = false; 
+                    } 
                     else 
-                    {
+                    {  
                         if (narrativeEvent.generatorTriggermap[type] != 0)
                             if (generator._level < narrativeEvent.generatorTriggermap[type])
                                 returnValue = false;
@@ -134,7 +136,7 @@ namespace UI
                 }
             }
 
-//            Debug.Log("returning " + returnValue + " for id " + narrativeEvent.ID);
+         //    Debug.Log("returning " + returnValue + " for id " + narrativeEvent.ID);
             return returnValue;
         } 
         private bool EventMeetsModifierRequirements(NarrativeEvent narrativeEvent )
@@ -156,9 +158,12 @@ namespace UI
                         if (narrativeEvent.modifierTriggermap[type] != 0)
                             if (modifier._level < narrativeEvent.modifierTriggermap[type])
                                 returnValue = false;
-                    }
+                    } 
+
                 }
             }
+      //    Debug.Log("returning " + returnValue + " for id " + narrativeEvent.ID);
+
             return returnValue;
         } 
         private bool EventMeetsResourceRequirements(NarrativeEvent narrativeEvent )
@@ -171,10 +176,20 @@ namespace UI
                 foreach (Resource.Type type in narrativeEvent.resourceTriggermap.Keys)
                 {
                     Resource resource = ResourceManager.Instance.GetResource(type);
-                  
+                    Debug.Log("type   " + type  + " amount " + resource._amount + " and in dict: " + narrativeEvent.resourceTriggermap[type] );
+
                     if (narrativeEvent.resourceTriggermap[type] != 0)
+                    {
+                        if (resource._type == Resource.Type.Happiness)
+                        {
+                            if (resource._amount < narrativeEvent.resourceTriggermap[type])
+                                returnValue = true;  
+                        }
+                        else
                         if (resource._amount < narrativeEvent.resourceTriggermap[type])
-                            returnValue = false; 
+                            returnValue = false;  
+                    } 
+                        
                 }
             }
 

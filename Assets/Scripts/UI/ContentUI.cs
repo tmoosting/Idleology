@@ -11,8 +11,10 @@ namespace UI
         [Header ("Assigns")]
         public Tab influenceTab;
         public Tab forceTab;
+        public Tab techTab;
         public GameObject influenceSection;
         public GameObject forceSection;
+        public GameObject techSection;
         
         public List<Tab> tabsList = new List<Tab>();
         public List<GameObject> contentsList = new List<GameObject>();
@@ -26,6 +28,7 @@ namespace UI
             // Ugly fix for (true) not working in PurchaseManager's GetChildren() when sections are disabled in editor
             contentsList.Add(influenceSection);
             contentsList.Add(forceSection);
+            contentsList.Add(techSection);
             foreach (GameObject obj in contentsList)
                 obj.SetActive(true);
 
@@ -38,8 +41,10 @@ namespace UI
             {
                 tabsList.Add(influenceTab);
                 tabsList.Add(forceTab); 
+                tabsList.Add(techTab); 
                 tabContentPairings.Add(influenceTab, influenceSection);
                 tabContentPairings.Add(forceTab, forceSection);
+                tabContentPairings.Add(techTab, techSection);
                 
                 foreach (Tab tab in tabsList)
                     tab.HideTab();

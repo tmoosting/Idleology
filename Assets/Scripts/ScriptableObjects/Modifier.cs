@@ -10,7 +10,13 @@ namespace ScriptableObjects
         {
             LongerHours, // more income, decrease happiness
             LessPay, // decrease worker hire cost, decrease happiness
-            NoSafetyRegulations // more income, decrease worker hire cost, decrease happiness
+            NoSafetyRegulations, // more income, decrease worker hire cost, decrease happiness
+            UnionBusters,
+            RiotControl,
+            Curfews,
+            SmartPhones,
+            AutonomousCars,
+            LoveBots
         }
 
    

@@ -175,15 +175,14 @@ namespace UI
             {
                 foreach (Resource.Type type in narrativeEvent.resourceTriggermap.Keys)
                 {
-                    Resource resource = ResourceManager.Instance.GetResource(type);
-                    Debug.Log("type   " + type  + " amount " + resource._amount + " and in dict: " + narrativeEvent.resourceTriggermap[type] );
+                    Resource resource = ResourceManager.Instance.GetResource(type); 
 
                     if (narrativeEvent.resourceTriggermap[type] != 0)
                     {
                         if (resource._type == Resource.Type.Happiness)
                         {
-                            if (resource._amount < narrativeEvent.resourceTriggermap[type])
-                                returnValue = true;  
+                            if (resource._amount != narrativeEvent.resourceTriggermap[type])
+                                returnValue = false;  
                         }
                         else
                         if (resource._amount < narrativeEvent.resourceTriggermap[type])

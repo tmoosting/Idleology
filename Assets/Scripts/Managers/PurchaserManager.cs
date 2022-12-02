@@ -76,10 +76,10 @@ namespace Managers
                         // don't unlock while piling start money
                     }
                     else 
-                        purchaser.ValidateUnlock();
+                        purchaser.ValidateLockState();
                 }
                 else
-                    purchaser.ValidateUnlock();
+                    purchaser.ValidateLockState();
             }
                 
                      

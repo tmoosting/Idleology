@@ -45,14 +45,16 @@ public class Tab : MonoBehaviour
             amountText.GetComponent<TextMeshProUGUI>().text =  resourceManager.FormatNumber(  resourceManager.GetResource(Resource.Type.Influence)._amount); 
             incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", resourceManager.FormatNumber(resourceManager.CalculateIncome(Resource.Type.Influence)));
         }
-          
         else if (gameObject.name == "TabForce")
         {
             amountText.GetComponent<TextMeshProUGUI>().text =  resourceManager.FormatNumber( resourceManager.GetResource(Resource.Type.Force)._amount); 
             incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", resourceManager.FormatNumber(resourceManager.CalculateIncome(Resource.Type.Force)));
         }
-           
-            
+        else if (gameObject.name == "TabTech")
+        {
+            amountText.GetComponent<TextMeshProUGUI>().text =  resourceManager.FormatNumber( resourceManager.GetResource(Resource.Type.Tech)._amount); 
+            incomeText.GetComponent<TextMeshProUGUI>().text = "+" + string.Format("{0:N0}", resourceManager.FormatNumber(resourceManager.CalculateIncome(Resource.Type.Tech)));
+        }  
 
     }
     

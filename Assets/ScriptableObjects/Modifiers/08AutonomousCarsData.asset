@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a5586a6719da848b419bc092a72323, type: 3}
+  m_Name: 08AutonomousCarsData
+  m_EditorClassIdentifier: 
+  _type: 7
+  _costResource: 4
+  _purchaseCost: 1000
+  _levelCost: 1000
+  _requiresGenerator: 1
+  _requiredGenerator: 10
+  _requiresModifier: 0
+  _requiredModifier: 0
+  _requiredLevel: 5
+  _creditPercentage: 0
+  _happinessCost: 0
+  _levelPricePercentage: 0
+  _purchaseTooltipText: PLACEHOLDER
+  _firstWorkerTooltipText: PLACEHOLDER
+  _completedTooltipText: PLACEHOLDER

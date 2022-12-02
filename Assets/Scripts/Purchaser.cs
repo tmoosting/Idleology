@@ -62,12 +62,13 @@ public class Purchaser : MonoBehaviour
         buyButtonText.gameObject.SetActive(false);
         }
     public void Unlock()
-        {
+    {
+            Debug.Log("UNLOCK " + gameObject.name);
                 unlocked = true;
                 if (source._state == IOperator.State.Hidden)
                 { 
                         RevealPurchaser();
-                        ValidateUnlock();
+                        ValidateLockState();
                 }
                 else     if (source._state == IOperator.State.Visible)
                 { 
@@ -80,9 +81,10 @@ public class Purchaser : MonoBehaviour
                 // Update texts
                 UpdateTexts();
         }
-        public void ValidateUnlock()
+        public void ValidateLockState()
         {
-               
+            //    if (source._requiredGenerator == Generator.Type.Laboratory)
+              //  Debug.Log("Validating for: " + gameObject.name + " requires: ");
                 if (source._state == IOperator.State.Hidden)
                 { 
                         if (source._requiresGenerator)
@@ -98,7 +100,6 @@ public class Purchaser : MonoBehaviour
                                         Lock();
                                         return;
                                 }
-                                
                         }
                         if (source._requiresModifier)
                         {
@@ -113,7 +114,6 @@ public class Purchaser : MonoBehaviour
                                         Lock();
                                         return;
                                 }
-                                
                         }
                         if (source.isGenerator == false && source.GetLevel() == 10)
                         {
@@ -138,7 +138,6 @@ public class Purchaser : MonoBehaviour
                         else
                                 Unlock();
                 }
-              
         }
 
         public void ClickBuyButton()
@@ -223,13 +222,15 @@ public class Purchaser : MonoBehaviour
         {
             string currencyString = "";
             if (source._costResource == Resource.Type.Credit)
-                currencyString += "$ ";
+                    currencyString += "$ ";
             if (source._costResource == Resource.Type.Influence)
-                currencyString += "";
+                    currencyString += "INF ";
             if (source._costResource == Resource.Type.Force)
-                currencyString += "";
+                    currencyString += "FRC ";
+            if (source._costResource == Resource.Type.Tech) 
+                    currencyString += "TEC ";
             if (source._costResource == Resource.Type.Happiness)
-                currencyString += "";
+                    currencyString += "HAP ";
 
             buyButtonText.text = currencyString + resourceManager.FormatNumber( GetCurrentCost());
             workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();

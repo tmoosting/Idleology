@@ -107,9 +107,10 @@ namespace Managers
             GenerateCreditIncome(CalculateIncome(Resource.Type.Credit));
             GenerateInfluenceIncome(CalculateIncome(Resource.Type.Influence));
             GenerateForceIncome(CalculateIncome(Resource.Type.Force));
+            GenerateTechIncome(CalculateIncome(Resource.Type.Tech));
         }
+ 
 
-        
 
         public ulong CalculateIncome(Resource.Type resourceType)
         {
@@ -156,6 +157,10 @@ namespace Managers
         private void GenerateForceIncome(ulong amount)
         { 
             AddIncome(Resource.Type.Force,  amount);
+        }  
+        private void GenerateTechIncome(ulong amount)
+        { 
+            AddIncome(Resource.Type.Tech,  amount);
         }
 
         public void AddIncome(Resource.Type resourceType, ulong amount)

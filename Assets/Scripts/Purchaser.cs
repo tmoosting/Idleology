@@ -62,8 +62,7 @@ public class Purchaser : MonoBehaviour
         buyButtonText.gameObject.SetActive(false);
         }
     public void Unlock()
-    {
-            Debug.Log("UNLOCK " + gameObject.name);
+    { 
                 unlocked = true;
                 if (source._state == IOperator.State.Hidden)
                 { 

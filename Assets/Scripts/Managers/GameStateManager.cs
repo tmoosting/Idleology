@@ -77,6 +77,7 @@ namespace Managers
         public void UpdateUI()
         {
             UIManager.GetComponent<ContentUI>().UpdateContentUI();
+            UIManager.GetComponent<BubbleUI>().BubbleTick();
            GetComponent<ResourceManager>().UpdateTexts();
            GetComponent<PurchaserManager>().UpdateAllTexts();
         }

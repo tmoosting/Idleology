@@ -125,8 +125,7 @@ namespace Managers
 
             if (resourceType == Resource.Type.Credit)
                 modifiedIncome = ModifyCreditIncome(rawIncome);
-            
-         
+
             return (ulong)modifiedIncome;
         }
 

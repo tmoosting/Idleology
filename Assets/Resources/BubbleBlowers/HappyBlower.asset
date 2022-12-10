@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a40535fa1a586fe4da303f581f8abeb3, type: 3}
+  m_Name: HappyBlower
+  m_EditorClassIdentifier: 
+  bubblePrefab: {fileID: 1994421790633549853, guid: bf8b61d6a573f954fa53ce7c63580676, type: 3}
+  colored: 1
+  bubbleColor: {r: 1, g: 0.6745098, b: 0, a: 1}
+  bubbleSize: 25
+  spawnsResource: 1
+  resource: 1
+  resourceMinAmount: 1
+  resourceMaxAmount: 1
+  spawnsWorker: 0
+  spawnsDialog: 0
+  spawnFrequency: 10
+  persistTime: 2

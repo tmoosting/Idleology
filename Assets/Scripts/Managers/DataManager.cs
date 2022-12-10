@@ -250,7 +250,7 @@ namespace Managers
             generator._levelCost = generatorData._levelCost;
             generator._production = generatorData._production;
             generator._requiresGenerator = generatorData._requiresGenerator;
-            generator._requiredGenerator = generatorData._requiredGenerator;
+            generator._requiredGeneratorType = generatorData._requiredGenerator;
             generator._requiresModifier = generatorData._requiresModifier;
             generator._requiredModifier = generatorData._requiredModifier;
             generator._requiredLevel = generatorData._requiredLevel;
@@ -300,7 +300,7 @@ namespace Managers
             modifier._purchaseCost = modifierData._purchaseCost;
             modifier._levelCost = modifierData._levelCost; 
             modifier._requiresGenerator = modifierData._requiresGenerator;
-            modifier._requiredGenerator = modifierData._requiredGenerator;
+            modifier._requiredGeneratorType = modifierData._requiredGenerator;
             modifier._requiresModifier = modifierData._requiresModifier;
             modifier._requiredModifier = modifierData._requiredModifier;
             modifier._requiredLevel = modifierData._requiredLevel;

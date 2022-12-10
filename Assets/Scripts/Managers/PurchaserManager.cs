@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using ScriptableObjects;
 using UI;
 using UnityEngine;
 
@@ -51,12 +53,12 @@ namespace Managers
             
             // hide all purchasers
             foreach (Purchaser pur in purchaserList)
-                pur.HidePurchaser();
+                pur.Hide();
         
             if (newGame == true)
             {
                  if (skipIntro == true)
-                        purchaserList[0].Unlock();
+                        purchaserList[0].Reveal();
             }
             else if (newGame == false)
             {
@@ -65,7 +67,7 @@ namespace Managers
         } 
         
         
-        public void ScanUnlockables()
+        public void ValidatePurchasers()
         {
             foreach (Purchaser purchaser in purchaserList)
             {
@@ -81,8 +83,6 @@ namespace Managers
                 else
                     purchaser.ValidateLockState();
             }
-                
-                     
         }
 
 
@@ -90,6 +90,20 @@ namespace Managers
         {
             foreach (Purchaser purchaser in purchaserList)
                 purchaser.UpdateTexts();
+        }
+
+        public void RevealNewestBaseGenerator(Purchaser purchaser)
+        {
+           // reveal one that is two tiers away
+           List<Purchaser> basePurchasers = basePurchaserParent.GetComponentsInChildren<Purchaser>(true).ToList(); 
+
+           foreach (Purchaser pur in basePurchasers)
+           { 
+               if (purchaser == pur)
+                   if (basePurchasers.IndexOf(purchaser) < basePurchasers.Count - 1)
+                       basePurchasers[ basePurchasers.IndexOf(pur)+1].Preview();
+
+           }
         }
     }
 }

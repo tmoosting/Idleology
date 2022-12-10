@@ -8,19 +8,22 @@ namespace Interfaces
          
         public enum State
         {
-            Hidden,
-            Visible,
-            Owned
+            Hidden, // nothing visible
+            Visible, // name visible, buybutton is not
+            Buyable, // name and buybutton visible
+            Owned, // Purchased but with 0 workers
+            Operated, // purchased with >= 1 worker 
+            Completed // max level reached
         }
         
-        [HideInInspector] public State _state { get; set; }
+        public State _state { get; set; }
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
         public ulong _levelCost { get; set; }
         public ulong _level { get; set; }
         public ulong _purchaseCost{ get; set; }
         public bool _requiresGenerator{ get; set; }
-        public Generator.Type _requiredGenerator{ get; set; }
+        public Generator.Type _requiredGeneratorType{ get; set; }
         public bool _requiresModifier{ get; set; }
         public Modifier.Type _requiredModifier{ get; set; }
         public ulong _requiredLevel{ get; set; }

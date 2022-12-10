@@ -22,172 +22,44 @@ public class Purchaser : MonoBehaviour
         public Color disabledColor;
 
 
-        Color defaultColor; 
+        Color defaultColor;
+        PurchaserManager purchaserManager;
         GeneratorManager generatorManager;
         ModifierManager modifierManager;
         ResourceManager resourceManager;
         private HoverUI hoverUI;
-        private bool unlocked = false;
            
-
-        private void Awake()
+ 
+        public IOperator.State GetState()
         {
-
+                return source._state;
         }
-
-        private void Start()
-        { 
-             
-        }
-
         public void Initialize()
         {
                 defaultColor = buyButtonText.color;
+                purchaserManager = GameStateManager.Instance.GetComponent<PurchaserManager>();
                 generatorManager = GameStateManager.Instance.GetComponent<GeneratorManager>();
                 modifierManager = GameStateManager.Instance.GetComponent<ModifierManager>();
                 resourceManager = GameStateManager.Instance.GetComponent<ResourceManager>();
                 hoverUI = GameStateManager.Instance.UIManager.GetComponent<HoverUI>();
         }
+
         
-
-        private void Lock()
-        {
-                unlocked = false;
-                DisableBuyButton();
-        }
-        private void PermaLock()
-        {
-            unlocked = false;
-            DisableBuyButton();
-        buyButtonText.gameObject.SetActive(false);
-        }
-    public void Unlock()
-    { 
-                unlocked = true;
-                if (source._state == IOperator.State.Hidden)
-                { 
-                        RevealPurchaser();
-                        ValidateLockState();
-                }
-                else     if (source._state == IOperator.State.Visible)
-                { 
-                        EnableBuyButton(); 
-                }
-                else     if (source._state == IOperator.State.Owned)
-                { 
-                        EnableBuyButton();
-                }
-                // Update texts
-                UpdateTexts();
-        }
-        public void ValidateLockState()
-        {
-            //    if (source._requiredGenerator == Generator.Type.Laboratory)
-              //  Debug.Log("Validating for: " + gameObject.name + " requires: ");
-                if (source._state == IOperator.State.Hidden)
-                { 
-                        if (source._requiresGenerator)
-                        { 
-                                Generator generator = generatorManager.GetGenerator(source._requiredGenerator);
-                                if (generator._state != IOperator.State.Owned)
-                                {
-                                        Lock();
-                                        return;
-                                }
-                                if (source._requiredLevel > generator.GetLevel()) 
-                                {
-                                        Lock();
-                                        return;
-                                }
-                        }
-                        if (source._requiresModifier)
-                        {
-                                Modifier modifier = modifierManager.GetModifier(source._requiredModifier);
-                                if ( modifier._state != IOperator.State.Owned)
-                                {
-                                        Lock();
-                                        return;
-                                }
-                                if (source._requiredLevel > modifier.GetLevel()) 
-                                {
-                                        Lock();
-                                        return;
-                                }
-                        }
-                        if (source.isGenerator == false && source.GetLevel() == 10)
-                        {
-                                PermaLock();
-                                return;
-                        }
-                        else
-                                Unlock();
-                }
-                else
-                {
-                        if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
-                        {
-                                Lock();
-                                return;
-                        }
-                        if (source.isGenerator == false && source.GetLevel() == 10)
-                        {
-                                PermaLock();
-                                return;
-                        }
-                        else
-                                Unlock();
-                }
-        }
-
-        public void ClickBuyButton()
-        { 
-                Purchase();
-                if (Input.GetKey(KeyCode.LeftControl) )
-                {
-                        for (int i = 0; i < 10; i++)
-                        {
-                                GameStateManager.Instance.ScanUnlockables();
-                                if (unlocked == true)
-                                        Purchase();
-                        }       
-                                          
-                }
-        }
-
-        void Purchase()
-        { 
-                resourceManager.PayResource(source._costResource, GetCurrentCost());
-        if (source._state == IOperator.State.Visible)
-        {
-            source._state = IOperator.State.Owned;
-            workersObject.SetActive(true);
-            if (source.isGenerator)
-                    workersImage.SetActive(true);
-            else
-                    source.AddLevel();
-            imageObject.SetActive(true);
-        }
-        else  if (source._state == IOperator.State.Owned)
-                source.AddLevel();
-
-        if (source.isGenerator == false)
-                modifierManager.HandleStaticModifierEffects(source);
-        GameStateManager.Instance.ScanUnlockables();
-        GameStateManager.Instance.UpdateUI();
-        GameStateManager.Instance.UIManager.GetComponent<HoverUI>().ExitHoverPurchaser(null);
-        }
-
+        
+        
          
+     
+        
+            
+        /*
         public void HidePurchaser()
         { 
-                gameObject.SetActive(false);
-                source._state = IOperator.State.Hidden; 
-                DisableBuyButton();
+           
         }
         public void RevealPurchaser()
         { 
                 // update state
-                source._state = IOperator.State.Visible;
+                source._state = IOperator.GetState.Visible;
                 
                 // activate objects
                 gameObject.SetActive(true);
@@ -201,49 +73,237 @@ public class Purchaser : MonoBehaviour
 
                 //     buyable = false;
         }
+        */
+        void SetImageGrey()
+        { 
+                imageObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.5f);
+        }
+
+        void SetImageBlack()
+        { 
+                imageObject.GetComponent<Image>().color = new Color(0, 0, 0, 1f);
+
+        }
+        public void Preview()
+        {
+                SetState(IOperator.State.Visible); 
+        }
+        public void Reveal() // only called for LemonadeStand at this point, for game start
+        {
+                SetState(IOperator.State.Visible);
+                SetState(IOperator.State.Buyable);
+        }
+        public void Hide()
+        {
+                SetState(IOperator.State.Hidden);
+        }
+        private void SetState(IOperator.State  newState)
+        {
+                if (newState == IOperator.State.Hidden)
+                {
+                        gameObject.SetActive(false);  
+                        nameObject.SetActive(false);  
+                        workersObject.SetActive(false); 
+                        workersImage.SetActive(false);
+
+                }
+                if (newState == IOperator.State.Visible)
+                {
+                        gameObject.SetActive(true);  
+                        nameObject.SetActive(true);
+                        imageObject.SetActive(false);
+                        buyButtonObject.SetActive(false);
+                }
+                if (newState == IOperator.State.Buyable)
+                {
+                        buyButtonObject.SetActive(true);
+                }
+                if (newState == IOperator.State.Owned)
+                {
+                        workersObject.SetActive(true);
+                        workersImage.SetActive(true); 
+                        imageObject.SetActive(true);
+                        SetImageGrey();
+                   
+                }
+                if (newState == IOperator.State.Operated)
+                {
+                        SetImageBlack();
+                         if (source.isGenerator && source._resource == Resource.Type.Credit) // ugly way to limit to 'base' generators
+                             purchaserManager.RevealNewestBaseGenerator(this);
+                }
+                if (newState == IOperator.State.Completed)
+                {
+                        buyButtonText.gameObject.SetActive(false);
+
+                } 
+                source._state = newState;
+                UpdateTexts();
+        }
+
+        
 
 
-        void EnableBuyButton()
+        void SetBuyButtonClickable()
         {
                 buyButtonText.color = defaultColor; 
                 buyButtonObject.GetComponent<Button>().interactable = true; 
         }
-        void DisableBuyButton()
+        void SetBuyButtonNonClickable()
         {
                 buyButtonText.color = disabledColor; 
                 buyButtonObject.GetComponent<Button>().interactable = false; 
+        } 
+         
+   
+
+        public void ValidateLockState()
+        {
+                if (AtMaxLevel()) 
+                        SetState(IOperator.State.Completed);  
+                else if (CheckNextStateRequirements())
+                        ProceedToNextState();
+
+                if (GetState() == IOperator.State.Hidden || 
+                    GetState() == IOperator.State.Visible ||
+                    GetState() == IOperator.State.Completed)
+                        return;
+                if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
+                        SetBuyButtonNonClickable();
+                else
+                        SetBuyButtonClickable();
         }
+
+       
+        /*
+               Hidden, // nothing visible
+               Visible, // name visible, buybutton is not
+               Buyable, // name and buybutton visible
+               Owned, // Purchased but with 0 workers
+               Operated, // purchased with >= 1 worker 
+               Completed // max level reached
+               */
+        private bool CheckNextStateRequirements()
+        { 
+              //  if (GetState() == IOperator.State.Hidden || GetState() == IOperator.State.Visible) hidden should not matter because already Previewed
+                if (GetState() == IOperator.State.Visible)
+                { 
+                        if (source._requiresGenerator)
+                        {
+                                Generator requiredGenerator = generatorManager.GetGenerator(source._requiredGeneratorType);
+                                if (requiredGenerator._state == IOperator.State.Hidden 
+                                    || requiredGenerator._state == IOperator.State.Visible
+                                     ||    requiredGenerator._state == IOperator.State.Buyable)
+                                        return false;
+                                if (source._requiredLevel > requiredGenerator.GetLevel())
+                                        return false; 
+                        }
+                        if (source._requiresModifier)
+                        {
+                                Modifier requiredModifier = modifierManager.GetModifier(source._requiredModifier);
+                                if (requiredModifier._state == IOperator.State.Hidden 
+                                    || requiredModifier._state == IOperator.State.Visible
+                                    ||    requiredModifier._state == IOperator.State.Buyable)
+                                        return false;
+                                if (source._requiredLevel > requiredModifier.GetLevel())
+                                        return false;
+                        }
+                } 
+                return true;
+        }
+
+        private void ProceedToNextState()
+        {
+                 if (GetState() == IOperator.State.Visible)
+                         SetState(IOperator.State.Buyable);
+        }
+        private bool AtMaxLevel()
+        {
+                if (source.isGenerator)
+                        return false;
+                else 
+                    return source.GetLevel() == 10;
+        }
+        private bool PurchaseAllowed()
+        {
+                if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
+                        return false;
+                return GetState() == IOperator.State.Buyable || GetState() == IOperator.State.Operated || GetState() == IOperator.State.Owned; 
+        }
+        public void ClickBuyButton()
+        { 
+                Purchase();
+                if (Input.GetKey(KeyCode.LeftControl) )
+                {
+                        for (int i = 0; i < 10; i++)
+                        {
+                                GameStateManager.Instance.ScanUnlockables();
+                                if (PurchaseAllowed())
+                                        Purchase();
+                        }
+                }
+        }
+
+      
+
+        void Purchase()
+        { 
+                resourceManager.PayResource(source._costResource, GetCurrentCost());
+        if (GetState() == IOperator.State.Buyable)
+        {
+                SetState(IOperator.State.Owned); 
+       
+        }
+        else if (GetState() == IOperator.State.Owned)
+        {
+                SetState(IOperator.State.Operated);
+                source.AddLevel();
+        }
+        else if (GetState() == IOperator.State.Operated)
+        { 
+                source.AddLevel();
+        }
+        if (source.isGenerator == false)
+                modifierManager.HandleStaticModifierEffects(source);
+        GameStateManager.Instance.ScanUnlockables();
+        GameStateManager.Instance.UpdateUI();
+        GameStateManager.Instance.UIManager.GetComponent<HoverUI>().ExitHoverPurchaser(null);
+        }
+
+     
+
+  
 
 
         public void UpdateTexts()
         {
-        if (source._state != IOperator.State.Hidden)
-        {
-            string currencyString = "";
-            if (source._costResource == Resource.Type.Credit)
-                    currencyString += "$ ";
-            if (source._costResource == Resource.Type.Influence)
-                    currencyString += "INF ";
-            if (source._costResource == Resource.Type.Force)
-                    currencyString += "FRC ";
-            if (source._costResource == Resource.Type.Tech) 
-                    currencyString += "TEC ";
-            if (source._costResource == Resource.Type.Happiness)
-                    currencyString += "HAP ";
-
-            buyButtonText.text = currencyString + resourceManager.FormatNumber( GetCurrentCost());
-            workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
-        }
-    }
-
-        public ulong GetCurrentCost()
-        {
-                if (source._state == IOperator.State.Hidden)
+                if (GetState() != IOperator.State.Hidden)
                 {
-                        Debug.LogWarning(("Why are you asking for a Hidden operator's buy cost..?"));
+                        string currencyString = "";
+                        if (source._costResource == Resource.Type.Credit)
+                                currencyString += "$ ";
+                        if (source._costResource == Resource.Type.Influence)
+                                currencyString += "INF ";
+                        if (source._costResource == Resource.Type.Force)
+                                currencyString += "FRC ";
+                        if (source._costResource == Resource.Type.Tech) 
+                                currencyString += "TEC ";
+                        if (source._costResource == Resource.Type.Happiness)
+                                currencyString += "HAP ";
+
+                        buyButtonText.text = currencyString + resourceManager.FormatNumber( GetCurrentCost());
+                        workersObject.GetComponent<TextMeshProUGUI>().text = source.GetLevel().ToString();
+                }
+        }
+
+        private ulong GetCurrentCost()
+        {
+                if (GetState() == IOperator.State.Hidden)
+                {
+                        Debug.LogWarning(("Why am I asking for a Hidden operator's buy cost..?"));
                         return source._purchaseCost; 
                 }
-                if (source._state == IOperator.State.Visible)
+                if (GetState() == IOperator.State.Visible ||GetState() == IOperator.State.Visible )
                         return source._purchaseCost;
 
                 float rawCost = (source.GetLevel() + 1) * source._levelCost;
@@ -251,9 +311,10 @@ public class Purchaser : MonoBehaviour
                 return (ulong)modifiedCost; 
         }
 
+    
         private void OnMouseOver()
         {
-                if (source._state != IOperator.State.Hidden)
+                if (GetState() != IOperator.State.Hidden)
                 {
                         if (hoverUI == null)
                                 hoverUI = FindObjectOfType<HoverUI>();
@@ -264,7 +325,7 @@ public class Purchaser : MonoBehaviour
         }
         private void OnMouseExit()
         {
-                if (source._state != IOperator.State.Hidden)
+                if (GetState() != IOperator.State.Hidden)
                 {
                         if (hoverUI == null)
                                 hoverUI = FindObjectOfType<HoverUI>();

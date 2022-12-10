@@ -79,16 +79,16 @@ public class Tab : MonoBehaviour
         {
             if (_requiresGenerator)
             {
-                Generator generator = GameStateManager.Instance.GetComponent<GeneratorManager>().GetGenerator(_requiredGenerator);
-                if (generator._state != IOperator.State.Owned)
+                Generator generator = GeneratorManager.GetGenerator(_requiredGenerator);
+                if (generator._state == IOperator.State.Hidden || generator._state == IOperator.State.Visible || generator._state == IOperator.State.Buyable)
                     return;
                 if (_requiredLevel > generator.GetLevel())
                     return;
             }
             if (_requiresModifier)
             {
-                Modifier modifier = GameStateManager.Instance.GetComponent<ModifierManager>().GetModifier(_requiredModifier);
-                if (modifier._state != IOperator.State.Owned)
+                Modifier modifier = ModifierManager.GetModifier(_requiredModifier);
+                if (modifier._state == IOperator.State.Hidden || modifier._state == IOperator.State.Visible || modifier._state == IOperator.State.Buyable)
                     return;
                 if (_requiredLevel > modifier.GetLevel())
                     return;
@@ -108,5 +108,35 @@ public class Tab : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-  
+    private GameStateManager _gameStateManager;
+    private GameStateManager GameStateManager 
+    {
+        get
+        {
+            if (_gameStateManager == null)
+                _gameStateManager = FindObjectOfType<GameStateManager>();
+            return _gameStateManager;
+        }
+    }
+          
+    private GeneratorManager _generatorManager;
+    private GeneratorManager GeneratorManager  
+    {
+        get
+        {
+            if (_generatorManager == null)
+                _generatorManager = FindObjectOfType<GeneratorManager>();
+            return _generatorManager;
+        }
+    }
+    private ModifierManager _modifierManager;
+    private ModifierManager ModifierManager  
+    {
+        get
+        {
+            if (_modifierManager == null)
+                _modifierManager = FindObjectOfType<ModifierManager>();
+            return _modifierManager;
+        }
+    }
 }

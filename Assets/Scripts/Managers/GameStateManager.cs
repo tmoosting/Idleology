@@ -69,7 +69,7 @@ namespace Managers
         public void ScanUnlockables()
         {
             // Called on GameStart, GameTick, and Purchaser's ClickBuyButton
-            GetComponent<PurchaserManager>().ScanUnlockables(); 
+            GetComponent<PurchaserManager>().ValidatePurchasers(); 
             UIManager.GetComponent<ContentUI>().ScanUIUnlockables(); 
             UIManager.GetComponent<NarrativeUI>().ScanForNarrativeEventTriggers(); 
         }
@@ -81,7 +81,47 @@ namespace Managers
            GetComponent<ResourceManager>().UpdateTexts();
            GetComponent<PurchaserManager>().UpdateAllTexts();
         }
-        
-        
+        private GameStateManager _gameStateManager;
+        private GameStateManager GameStateManagerr  
+        {
+            get
+            {
+                if (_gameStateManager == null)
+                    _gameStateManager = FindObjectOfType<GameStateManager>();
+                return _gameStateManager;
+            }
+        }
+        private GameSettings _gameSettings;
+        private GameSettings GameSettings  
+        {
+            get
+            {
+                if (_gameSettings == null)
+                    _gameSettings = FindObjectOfType<GameSettings>();
+                return _gameSettings;
+            }
+        }
+        private GeneratorManager _generatorManager;
+        private GeneratorManager GeneratorManager  
+        {
+            get
+            {
+                if (_generatorManager == null)
+                    _generatorManager = FindObjectOfType<GeneratorManager>();
+                return _generatorManager;
+            }
+        }
+        private ModifierManager _modifierManager;
+        private ModifierManager ModifierManager  
+        {
+            get
+            {
+                if (_modifierManager == null)
+                    _modifierManager = FindObjectOfType<ModifierManager>();
+                return _modifierManager;
+            }
+        }
     }
+
+    
 }

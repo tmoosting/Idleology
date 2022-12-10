@@ -1,19 +1,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Bubble : MonoBehaviour
 {
 
+    public Image baseImage;
+    public Image contentImage;
+    public ParticleSystem popParticle;
     private BubbleUI _bubbleUI;
     private SpawnAnchor _spawnAnchor;
+    private Resource.Type resourceType;
     private int containedValue = 0;
-    
+    private int containedHappiness = 0;
+    private int containedWorkers = 0;
+
+
+
+    private bool _clicked = false;
     private void OnMouseDown()
     {
-        ClickBubble();
+        if (_clicked == false)
+        {
+            _clicked = true;
+            ClickBubble();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log("DESTORYY");
     }
 
     private void ClickBubble()
@@ -22,15 +42,41 @@ public class Bubble : MonoBehaviour
         _bubbleUI.PopBubble(this);
     }
 
-    public void InitializeBubble(BubbleUI bubbleUI, SpawnAnchor spawnAnchor)
+    public void InitializeBubble(BubbleUI bubbleUI, SpawnAnchor spawnAnchor, BubbleBlower blower)
     {
         _bubbleUI = bubbleUI;
+        
+        // placement
         _spawnAnchor = spawnAnchor;
         transform.position = spawnAnchor.transform.position;
         _spawnAnchor.SetOccupied(true);
-        containedValue = Random.Range(bubbleUI.bubbleCreditMin, bubbleUI.bubbleCreditMax);
-        StartCoroutine(BubbleFade(bubbleUI.bubblePersistTime));
+        
+        // bubble blower settings
+        if (blower.colored)
+        {
+            contentImage.gameObject.SetActive(true);
+            contentImage.GetComponent<Image>().color = blower.bubbleColor;
+        }
+        baseImage.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, blower.bubbleSize);
+        contentImage.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, blower.bubbleSize);
+        baseImage.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, blower.bubbleSize);
+        contentImage.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, blower.bubbleSize);
+        GetComponent<BoxCollider2D>().size = new Vector2(blower.bubbleSize, blower.bubbleSize); 
+        
+        if (blower.spawnsResource)
+        {
+            resourceType = blower.resource;
+            containedValue = Random.Range(blower.resourceMinAmount, blower.resourceMaxAmount);
+        } 
+        
+        if (blower.spawnsWorker)
+            containedWorkers = 1;
+
+        StartCoroutine(BubbleFade(blower.persistTime));
     }
+    
+    
+    
 
     private IEnumerator BubbleFade(float persistTime)
     {

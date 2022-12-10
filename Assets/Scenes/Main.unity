@@ -4796,8 +4796,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 65}
-  m_SizeDelta: {x: 873.16, y: 456.35}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1039.57, y: 543.32}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1630417053
 MonoBehaviour:
@@ -5080,9 +5080,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1873834687}
   - component: {fileID: 1873834686}
+  - component: {fileID: 1873834689}
   - component: {fileID: 1873834685}
   - component: {fileID: 1873834688}
-  - component: {fileID: 1873834689}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -5175,10 +5175,9 @@ MonoBehaviour:
   bubbleZone: {fileID: 1630417051}
   bubblesParent: {fileID: 2002056355}
   spawnAnchorParent: {fileID: 1688081228}
-  bubbleCreditMin: 0
-  bubbleCreditMax: 0
-  gameTickPopChance: 0.7
-  bubblePersistTime: 1.2
+  gameTickPopChance: 0.9
+  bubblePopSizeMultiplier: 1.008
+  bubblePopTime: 0.6
 --- !u!1 &1934957787
 GameObject:
   m_ObjectHideFlags: 0
@@ -5189,6 +5188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1934957789}
   - component: {fileID: 1934957794}
+  - component: {fileID: 1934957793}
   - component: {fileID: 1934957795}
   - component: {fileID: 1934957788}
   - component: {fileID: 1934957791}
@@ -5297,6 +5297,19 @@ MonoBehaviour:
   changeVisualCreditLocation: {fileID: 1209507485}
   fadeDelay: 1
   fadeSpeed: 0.8
+--- !u!114 &1934957793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934957787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15aecf6757b43245b9e3b8674ca6fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alwaysShowWorkerTooltip: 0
 --- !u!114 &1934957794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6694,7 +6707,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1299180759745111663
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6716,7 +6729,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 42, y: 37}
-  m_SizeDelta: {x: 1730.82, y: 20}
+  m_SizeDelta: {x: 822.04, y: 16.06}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1299180760431083784
 MonoBehaviour:
@@ -6826,7 +6839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 4.799988, y: 0}
+  m_AnchoredPosition: {x: 4.7999573, y: 0}
   m_SizeDelta: {x: -12.6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1299180760900393640
@@ -6964,7 +6977,7 @@ MonoBehaviour:
   m_text: time
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d4ac868bad87f741b69096267dd0a4d, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -5981884518185967194, guid: 6d4ac868bad87f741b69096267dd0a4d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7027,7 +7040,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1299180761232232855
@@ -7146,7 +7159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 4.799988, y: 0}
+  m_AnchoredPosition: {x: 4.7999573, y: 0}
   m_SizeDelta: {x: -12.6, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2400770890578555074
@@ -8350,11 +8363,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7060635956246912393, guid: 07a44b9b36307504f861af884da1502a, type: 3}
       propertyPath: _requiredLevel
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7060635956246912393, guid: 07a44b9b36307504f861af884da1502a, type: 3}
       propertyPath: _requiredGenerator
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7060635956246912393, guid: 07a44b9b36307504f861af884da1502a, type: 3}
       propertyPath: _requiresGenerator

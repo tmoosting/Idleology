@@ -29,16 +29,13 @@ public class HoverUI : MonoBehaviour
     { 
         if (showTooltips)
         {
-            if (purchaser.source._state == IOperator.State.Visible)
-            { 
+            if (purchaser.GetState() == IOperator.State.Buyable)
                 ShowHoverUI(purchaser.source._purchaseTooltip);
-            }
-            else if (purchaser.source._state == IOperator.State.Owned)
-            { 
-                if (purchaser.source._level == 0)
-                    ShowHoverUI(purchaser.source._firstWorkerTooltip);
-            }
-
+            else if (purchaser.GetState() == IOperator.State.Owned )
+                ShowHoverUI(purchaser.source._firstWorkerTooltip);
+            else if (purchaser.GetState() == IOperator.State.Operated)
+              if (GameSettings.alwaysShowWorkerTooltip == true)
+                 ShowHoverUI(purchaser.source._firstWorkerTooltip); 
             if (purchaser.source.isGenerator == false)
             {
                 if (purchaser.source.GetLevel() == 10)
@@ -66,4 +63,16 @@ public class HoverUI : MonoBehaviour
     {
       toolTip.SetActive(false);
     }
+    
+    private GameSettings _gameSettings;
+    private GameSettings GameSettings  
+    {
+        get
+        {
+            if (_gameSettings == null)
+                _gameSettings = FindObjectOfType<GameSettings>();
+            return _gameSettings;
+        }
+    }
+    
 }

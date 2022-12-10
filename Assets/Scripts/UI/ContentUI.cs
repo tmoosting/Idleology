@@ -95,5 +95,8 @@ namespace UI
             foreach (GameObject obj in contentsList)
                 obj.SetActive(false);
         }
+        
+        
+    
     }
 }

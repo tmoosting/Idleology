@@ -29,7 +29,7 @@ namespace ScriptableObjects
         public ulong _levelCost { get; set; }
         public ulong _purchaseCost { get; set; }
         public bool _requiresGenerator { get; set; }
-        public Generator.Type _requiredGenerator { get; set; }
+        public Generator.Type _requiredGeneratorType { get; set; }
         public bool _requiresModifier { get; set; }
         public Type _requiredModifier { get; set; }
         public ulong _requiredLevel { get; set; }

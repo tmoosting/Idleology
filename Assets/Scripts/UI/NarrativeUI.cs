@@ -94,7 +94,7 @@ namespace UI
             if (clickedPopup.gameObject.name == "NAR01")
             {
                 finishedIntroEvents = true;
-                FindObjectOfType<PurchaserManager>().purchaserList[0].Unlock();
+                FindObjectOfType<PurchaserManager>().purchaserList[0].Reveal();
             }
         }
         public void ScanForNarrativeEventTriggers()

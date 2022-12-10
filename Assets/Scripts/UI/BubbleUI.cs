@@ -118,17 +118,19 @@ public class BubbleUI : MonoBehaviour
          yield return null;
       }
       yield return new WaitForSeconds(0.01f);
-      bubble.baseImage.gameObject.SetActive(false);
-      bubble.contentImage.gameObject.SetActive(false);
-      SoundController.Instance.PlayBubblePop(); 
-      float newScale = (bubble.popParticle.transform.localScale.x *
-                        bubble.contentImage.GetComponent<RectTransform>().sizeDelta.x) / 25;
-      bubble.popParticle.transform.localScale = new Vector3(newScale, newScale, newScale);
-      bubble.popParticle.GetComponent<Renderer>().material.color = bubble.contentImage.color;
-      bubble.popParticle.Play();
-      yield return new WaitForSeconds(2.5f); 
       if (bubble != null)
-          Destroy(bubble.gameObject);
+      {
+         bubble.baseImage.gameObject.SetActive(false);
+         bubble.contentImage.gameObject.SetActive(false);
+         SoundController.Instance.PlayBubblePop(); 
+         float newScale = (bubble.popParticle.transform.localScale.x *
+                           bubble.contentImage.GetComponent<RectTransform>().sizeDelta.x) / 25;
+         bubble.popParticle.transform.localScale = new Vector3(newScale, newScale, newScale);
+         bubble.popParticle.GetComponent<Renderer>().material.color = bubble.contentImage.color;
+         bubble.popParticle.Play();
+         yield return new WaitForSeconds(2.5f);
+         bubble.DestroyBubble();
+      } 
    }
    
 }

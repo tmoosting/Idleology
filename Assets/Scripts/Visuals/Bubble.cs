@@ -31,10 +31,7 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        Debug.Log("DESTORYY");
-    }
+   
 
     private void ClickBubble()
     {
@@ -82,6 +79,12 @@ public class Bubble : MonoBehaviour
     {
         //todo alpha change or smth
         yield return new WaitForSeconds(persistTime);
+        if (_clicked == false)
+            DestroyBubble();
+    }
+
+    public void DestroyBubble()
+    {
         _spawnAnchor.SetOccupied(false);
         Destroy(gameObject);
     }

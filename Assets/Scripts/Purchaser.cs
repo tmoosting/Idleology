@@ -124,7 +124,6 @@ public class Purchaser : MonoBehaviour
                         workersImage.SetActive(true); 
                         imageObject.SetActive(true);
                         SetImageGrey();
-                   
                 }
                 if (newState == IOperator.State.Operated)
                 {
@@ -135,7 +134,6 @@ public class Purchaser : MonoBehaviour
                 if (newState == IOperator.State.Completed)
                 {
                         buyButtonText.gameObject.SetActive(false);
-
                 } 
                 source._state = newState;
                 UpdateTexts();

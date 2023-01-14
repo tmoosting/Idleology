@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 10LobbyingFirmData
   m_EditorClassIdentifier: 
-  _type: 3
+  _type: 8
   _resource: 2
   _costResource: 0
-  _purchaseCost: 40000
+  _purchaseCost: 4000000
   _levelCost: 50000
   _production: 1
   _requiresGenerator: 1
@@ -23,4 +23,9 @@ MonoBehaviour:
   _requiresModifier: 0
   _requiredModifier: 0
   _requiredLevel: 10
-  _tooltipText: 
+  _purchasteTooltipText: "corruption? we don\u2019t have that here; we\u2019re a
+    liberal democracy! what we have is lobbying: a 100% safe and legal way for people
+    with money to influence those with political power. you scratch my back and i\u2019ll
+    scratch yours amirite?"
+  _firstWorkerTooltipText: "did you know i went to school with many of the people
+    here? such a coincidence, right? oh hey bob, how\u2019s the wife? good, good"

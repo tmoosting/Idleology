@@ -70,7 +70,7 @@ namespace Managers
         public void ValidatePurchasers()
         {
             foreach (Purchaser purchaser in purchaserList)
-            {
+            { 
                 if (GameStateManager.Instance.skipIntro == false)
                 {
                     if (_narrativeUI.finishedIntroEvents == false)

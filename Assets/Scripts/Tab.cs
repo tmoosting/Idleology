@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class Tab : MonoBehaviour
 {
+    public Purchaser baseGenerator;
     public Image highlight;
     public GameObject amountText;
     public GameObject incomeText;
@@ -74,7 +75,7 @@ public class Tab : MonoBehaviour
     }
 
     public void ValidateUnlock()
-    {
+    { 
         if (_locked == true)
         {
             if (_requiresGenerator)
@@ -105,7 +106,9 @@ public class Tab : MonoBehaviour
     }
     private void UnlockTab()
     {
+        _locked = false;
         gameObject.SetActive(true);
+        baseGenerator.Reveal();
     }
 
     private GameStateManager _gameStateManager;

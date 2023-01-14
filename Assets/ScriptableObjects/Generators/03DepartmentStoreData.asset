@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 03DepartmentStoreData
   m_EditorClassIdentifier: 
-  _type: 5
+  _type: 3
   _resource: 0
   _costResource: 0
   _purchaseCost: 1000
   _levelCost: 200
   _production: 500
   _requiresGenerator: 1
-  _requiredGenerator: 3
+  _requiredGenerator: 2
   _requiresModifier: 0
   _requiredModifier: 0
-  _requiredLevel: 5
-  _tooltipText: who needs small local shops when you can just cram all your consumer
-    goods into one big edifice. come for the expensive perfume showers, stay for
-    the complicated loyalty rewards program
+  _requiredLevel: 10
+  _purchasteTooltipText: who needs small local shops when you can just cram all your
+    consumer goods into one big building. come for the expensive perfume showers,
+    stay for the complicated loyalty rewards program
+  _firstWorkerTooltipText: would you like that wrapped?

@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 06StripMineData
   m_EditorClassIdentifier: 
-  _type: 8
+  _type: 6
   _resource: 0
   _costResource: 0
   _purchaseCost: 1000000
   _levelCost: 5000
   _production: 10000
   _requiresGenerator: 1
-  _requiredGenerator: 7
-  _requiresModifier: 1
+  _requiredGenerator: 5
+  _requiresModifier: 0
   _requiredModifier: 1
   _requiredLevel: 10
-  _tooltipText: not to be confused with a strip mall, the stripping here actually
-    refers to the complete decemation of the earths crust to get at the precious
-    rocks that lie within. go ahead, add one colourless mana to your pool while you're
-    at it
+  _purchasteTooltipText: not to be confused with a strip mall, the stripping here
+    actually refers to the complete decemation of the earths crust to get at the
+    precious rocks that lie beneath. go ahead, add one colourless mana to your pool
+    while you're at it
+  _firstWorkerTooltipText: and remember to always wash your hands after procuring
+    a blood diamond

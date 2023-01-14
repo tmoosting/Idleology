@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 04ChocolateFactoryData
   m_EditorClassIdentifier: 
-  _type: 6
+  _type: 4
   _resource: 0
   _costResource: 0
   _purchaseCost: 10000
   _levelCost: 500
   _production: 1000
   _requiresGenerator: 1
-  _requiredGenerator: 4
+  _requiredGenerator: 3
   _requiresModifier: 0
   _requiredModifier: 0
-  _requiredLevel: 5
-  _tooltipText: so we take the seeds from this sacred tree, grow them in other warm
-    climates, use our patented processing to get rid of the bitterness, and presto!
-    chocolate! favoured by young and old, you really can't do no wrong with these
-    candy bars
+  _requiredLevel: 10
+  _purchasteTooltipText: so we take the seeds from this sacred tree, grow them in
+    other warm climates, use our patented processing to get rid of the bitterness,
+    and presto! chocolate! favoured by young and old, you really can't do no wrong
+    with these candy bars
+  _firstWorkerTooltipText: if only we could somehow trick a bunch of orange coloured
+    people into indentured servitude...

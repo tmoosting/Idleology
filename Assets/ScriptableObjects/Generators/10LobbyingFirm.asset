@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2277116fdcad98b429681ae32bfd9f87, type: 3}
   m_Name: 10LobbyingFirm
   m_EditorClassIdentifier: 
-  _type: 3
-  _production: 1
+  _type: 8

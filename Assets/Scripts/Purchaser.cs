@@ -90,15 +90,19 @@ public class Purchaser : MonoBehaviour
         }
         public void Reveal() // only called for LemonadeStand at this point, for game start
         {
+                Debug.Log("REVEAL " + gameObject.name);
                 SetState(IOperator.State.Visible);
                 SetState(IOperator.State.Buyable);
         }
+      
         public void Hide()
         {
                 SetState(IOperator.State.Hidden);
         }
         private void SetState(IOperator.State  newState)
         {
+                if (gameObject.name == "LongerHours")
+                        Debug.Log("longhour " + GetState() + "... " + newState);
                 if (newState == IOperator.State.Hidden)
                 {
                         gameObject.SetActive(false);  
@@ -137,6 +141,7 @@ public class Purchaser : MonoBehaviour
                 } 
                 source._state = newState;
                 UpdateTexts();
+          
         }
 
         
@@ -156,7 +161,9 @@ public class Purchaser : MonoBehaviour
    
 
         public void ValidateLockState()
-        {
+        { 
+                if (gameObject.name == "LongerHours")
+                        Debug.Log("VALIDATE longhour " + GetState() ); 
                 if (AtMaxLevel()) 
                         SetState(IOperator.State.Completed);  
                 else if (CheckNextStateRequirements())
@@ -166,6 +173,7 @@ public class Purchaser : MonoBehaviour
                     GetState() == IOperator.State.Visible ||
                     GetState() == IOperator.State.Completed)
                         return;
+           
                 if (resourceManager.RequirementsMet(source._costResource, GetCurrentCost()) == false)
                         SetBuyButtonNonClickable();
                 else
@@ -182,9 +190,9 @@ public class Purchaser : MonoBehaviour
                Completed // max level reached
                */
         private bool CheckNextStateRequirements()
-        { 
-              //  if (GetState() == IOperator.State.Hidden || GetState() == IOperator.State.Visible) hidden should not matter because already Previewed
-                if (GetState() == IOperator.State.Visible)
+        {  
+              //  if (GetState() == IOperator.State.Hidden || GetState() == IOperator.State.Visible)  
+                if (GetState() == IOperator.State.Hidden || GetState() == IOperator.State.Visible)
                 { 
                         if (source._requiresGenerator)
                         {
@@ -212,6 +220,9 @@ public class Purchaser : MonoBehaviour
 
         private void ProceedToNextState()
         {
+                Debug.Log("NEXT for " + gameObject.name);
+                if (GetState() == IOperator.State.Hidden)
+                        SetState(IOperator.State.Visible);
                  if (GetState() == IOperator.State.Visible)
                          SetState(IOperator.State.Buyable);
         }

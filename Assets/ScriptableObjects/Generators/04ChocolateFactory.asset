@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2277116fdcad98b429681ae32bfd9f87, type: 3}
   m_Name: 04ChocolateFactory
   m_EditorClassIdentifier: 
-  _type: 6
-  _production: 0
+  _type: 4

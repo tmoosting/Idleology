@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 11PoliceStationData
   m_EditorClassIdentifier: 
-  _type: 4
+  _type: 9
   _resource: 3
   _costResource: 0
-  _purchaseCost: 100000
-  _levelCost: 50000
+  _purchaseCost: 6000000
+  _levelCost: 200000
   _production: 1
   _requiresGenerator: 1
-  _requiredGenerator: 3
+  _requiredGenerator: 8
   _requiresModifier: 0
   _requiredModifier: 0
   _requiredLevel: 10
+  _purchasteTooltipText: "ah yes, law enforcement! another pillar of any stable democracy.
+    armed officials that have no greater joy in life than following orders. it\u2019s
+    like an army that you can use at home."
+  _firstWorkerTooltipText: "with this small donation to the police ball we\u2019ll
+    ensure that they\u2019ll protect and serve our interests just a little bit better"

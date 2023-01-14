@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20130bfcf7c57d40bb38131b0b62f55, type: 3}
   m_Name: 07OilConglomerateData
   m_EditorClassIdentifier: 
-  _type: 9
+  _type: 7
   _resource: 0
   _costResource: 0
-  _purchaseCost: 0
-  _levelCost: 0
-  _production: 0
-  _requiresGenerator: 0
-  _requiredGenerator: 8
+  _purchaseCost: 2000000
+  _levelCost: 20000
+  _production: 50000
+  _requiresGenerator: 1
+  _requiredGenerator: 6
   _requiresModifier: 0
   _requiredModifier: 0
-  _requiredLevel: 0
+  _requiredLevel: 10
+  _purchasteTooltipText: what runs the world? oil! also known as petroleum, black
+    gold or texas tea, this sticky stuff is what we need to power the machines that
+    make modern living possible. clearly there are no significant drawbacks to any
+    of this
+  _firstWorkerTooltipText: may the flares atop our rigs light the night sky forevermore!

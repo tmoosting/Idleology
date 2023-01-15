@@ -40,6 +40,11 @@ namespace Managers
         private ulong increaseAmount = 100;
         private ulong finalIncreaseAmount = 5;
         private int rateCounter = 0;
+        private ulong _previousIncomeCredit;
+        private ulong _previousIncomeInfluence;
+        private ulong _previousIncomeForce;
+        private ulong _previousIncomeTech;
+        
         private void FixedUpdate()
         {
             if (countToStartMoney == true)
@@ -72,6 +77,7 @@ namespace Managers
                     GetResource(Resource.Type.Happiness)._amount = GetResource(Resource.Type.Happiness)._devGame;
                     GetResource(Resource.Type.Influence)._amount = GetResource(Resource.Type.Influence)._devGame;
                     GetResource(Resource.Type.Force)._amount = GetResource(Resource.Type.Force)._devGame;
+                    GetResource(Resource.Type.Tech)._amount = GetResource(Resource.Type.Tech)._devGame;
                 }
                 else
                 {
@@ -79,6 +85,7 @@ namespace Managers
                     GetResource(Resource.Type.Happiness)._amount = GetResource(Resource.Type.Happiness)._newGame;
                     GetResource(Resource.Type.Influence)._amount = GetResource(Resource.Type.Influence)._newGame;
                     GetResource(Resource.Type.Force)._amount = GetResource(Resource.Type.Force)._newGame;
+                    GetResource(Resource.Type.Tech)._amount = GetResource(Resource.Type.Tech)._newGame;
                 }
 
                 if (skipIntro == false)
@@ -126,7 +133,36 @@ namespace Managers
             if (resourceType == Resource.Type.Credit)
                 modifiedIncome = ModifyCreditIncome(rawIncome);
 
+            modifiedIncome = InnovateIncome(resourceType, modifiedIncome);
             return (ulong)modifiedIncome;
+        }
+
+        private float InnovateIncome(Resource.Type resourceType, float originalIncome)
+        {
+            List<Innovation> applicableInnovations = new List<Innovation>();
+            foreach (var innovation in InnovationManager.GetAllInnovations())
+                if (innovation.affectParameter == Innovation.Paramater.Income)
+                    if (resourceType ==  GeneratorManager.GetGeneratedResourceForGenerator(innovation.affectGeneratorType))
+                            applicableInnovations.Add(innovation);
+            if (applicableInnovations.Count == 0)
+                return originalIncome;
+            else // has relevant Innovations
+            {
+                foreach (var innovation in applicableInnovations)
+                {
+                    float effectAmount = 0;
+                    if (innovation.originParamater == Innovation.Paramater.Income)
+                    {
+                        Resource.Type checkedResource =  GeneratorManager.GetGeneratedResourceForGenerator(innovation.affectGeneratorType);
+                        effectAmount = GetResource(checkedResource)._amount;
+                        effectAmount *= innovation.originMultiplier;
+                    }
+
+                }
+                
+            }
+
+            return originalIncome;
         }
 
         private ulong ModifyCreditIncome(ulong rawAmount)
@@ -144,25 +180,29 @@ namespace Managers
             return (ulong)modifiedAmount;
         }
         private void GenerateCreditIncome(ulong amount)
-        { 
-            AddIncome(Resource.Type.Credit, (ulong)amount);
+        {
+            _previousIncomeCredit = amount;
+            AddResource(Resource.Type.Credit, (ulong)amount);
         }
 
         private void GenerateInfluenceIncome(ulong amount)
         { 
-            AddIncome(Resource.Type.Influence,  amount);
+            _previousIncomeInfluence = amount; 
+            AddResource(Resource.Type.Influence,  amount);
         }
         
         private void GenerateForceIncome(ulong amount)
         { 
-            AddIncome(Resource.Type.Force,  amount);
+            _previousIncomeInfluence = amount;
+            AddResource(Resource.Type.Force,  amount);
         }  
         private void GenerateTechIncome(ulong amount)
         { 
-            AddIncome(Resource.Type.Tech,  amount);
+            _previousIncomeTech = amount;
+            AddResource(Resource.Type.Tech,  amount);
         }
 
-        public void AddIncome(Resource.Type resourceType, ulong amount)
+        private void AddResource(Resource.Type resourceType, ulong amount)
         {
             GetResource(resourceType)._amount += amount;
         }
@@ -247,9 +287,29 @@ namespace Managers
                 } 
                 return (Math.Floor(m * 100) / 100).ToString("0.##") + unit;
             }
+        } 
+        private GeneratorManager _generatorManager;
+        private GeneratorManager GeneratorManager  
+        {
+            get
+            {
+                if (_generatorManager == null)
+                    _generatorManager = FindObjectOfType<GeneratorManager>();
+                return _generatorManager;
+            }
         }
-        
-        
+        private InnovationManager _innovationManager;
+        private InnovationManager InnovationManager  
+        {
+            get
+            {
+                if (_innovationManager == null)
+                    _innovationManager = FindObjectOfType<InnovationManager>();
+                return _innovationManager;
+            }
+        }
      
     }
+    
+    
 }

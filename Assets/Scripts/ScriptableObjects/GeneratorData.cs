@@ -13,6 +13,7 @@ namespace ScriptableObjects
         public Resource.Type _costResource;
         public ulong _purchaseCost;
         public ulong _levelCost;
+        public float _costMultiplier;
         public ulong _production;
         public bool _requiresGenerator;
         public Generator.Type _requiredGenerator;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UI;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -18,17 +19,19 @@ public class BubbleUI : MonoBehaviour
    public GameObject bubbleZone;
    public Transform bubblesParent;
    public Transform spawnAnchorParent;
-
+   public ContentUI contentUI;
  
    public float gameTickPopChance; // 0 to 1
    public float bubblePopSizeMultiplier;
    public float bubblePopTime;
 
    private List<BubbleBlower> _bubbleBlowers;
+   private List<Bubble> _bubbles;
    private List<SpawnAnchor> _spawnAnchors;
    private Dictionary<int, BubbleBlower> blowerChancing;
    private void Awake()
    {
+      _bubbles = new List<Bubble>();
       _spawnAnchors = new List<SpawnAnchor>();
       foreach (var spawnAnchor in spawnAnchorParent.GetComponentsInChildren<SpawnAnchor>())
          _spawnAnchors.Add(spawnAnchor);
@@ -45,8 +48,7 @@ public class BubbleUI : MonoBehaviour
       Object[] bubbleBlowerObjects = Resources.LoadAll(path);
       BubbleBlower[] blowers = new BubbleBlower[bubbleBlowerObjects.Length];
       bubbleBlowerObjects.CopyTo(blowers, 0);
-      _bubbleBlowers = blowers.ToList(); 
-      
+      _bubbleBlowers = blowers.ToList();  
    }
    private void CreateBubbleLowerChanceDict()
    {
@@ -61,8 +63,9 @@ public class BubbleUI : MonoBehaviour
    }
    public void BubbleTick()
    { 
-      if (Random.Range(0f,1f) < gameTickPopChance)
-         SpawnBubble(ChooseBubbleBlower()); 
+      if (contentUI.IsWorldZoneOpen())
+         if (Random.Range(0f,1f) < gameTickPopChance)
+          SpawnBubble(ChooseBubbleBlower()); 
    }
 
    private BubbleBlower ChooseBubbleBlower()
@@ -75,6 +78,7 @@ public class BubbleUI : MonoBehaviour
       GameObject obj = Instantiate(blower.bubblePrefab, bubblesParent.transform);
       SpawnAnchor anchor = GetRandomUnoccupiedAnchor();
       obj.GetComponent<Bubble>().InitializeBubble(this, anchor, blower);
+      _bubbles.Add(  obj.GetComponent<Bubble>());
    }
 
    private SpawnAnchor GetRandomUnoccupiedAnchor()
@@ -94,13 +98,26 @@ public class BubbleUI : MonoBehaviour
       return _spawnAnchors[randomIndex];
    }
 
+   public void ClearBubbleFromList(Bubble bubble)
+   {
+      if (_bubbles.Contains(bubble))
+         _bubbles.Remove(bubble);
+   }
+      
    public void PopBubble(Bubble bubble)
    {
+      ClearBubbleFromList(bubble);
        StartCoroutine(BubblePopEffect(bubble ));
    }
     
     
-    
+   public void Reopen()
+   {
+      foreach (var bubble in _bubbles)
+         if (bubble != null)
+            Destroy(bubble.gameObject);
+      _bubbles = new List<Bubble>();
+   }
 
    private IEnumerator BubblePopEffect(Bubble bubble)
    {
@@ -132,5 +149,6 @@ public class BubbleUI : MonoBehaviour
          bubble.DestroyBubble();
       } 
    }
-   
+
+  
 }

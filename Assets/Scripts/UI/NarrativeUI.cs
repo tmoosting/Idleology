@@ -114,6 +114,10 @@ namespace UI
         private bool EventMeetsGeneratorRequirements(NarrativeEvent narrativeEvent )
         { 
             bool returnValue = true;
+            if (narrativeEvent == null)
+                return false;   
+            if (narrativeEvent.generatorTriggermap == null)
+                return false;
             if (narrativeEvent.generatorTriggermap.Count == 0)
                 return true;
             else

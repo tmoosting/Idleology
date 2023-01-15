@@ -20,7 +20,7 @@ public class Bubble : MonoBehaviour
     private int containedWorkers = 0;
 
 
-
+    
     private bool _clicked = false;
     private void OnMouseDown()
     {
@@ -69,7 +69,8 @@ public class Bubble : MonoBehaviour
         if (blower.spawnsWorker)
             containedWorkers = 1;
 
-        StartCoroutine(BubbleFade(blower.persistTime));
+        if (bubbleUI.contentUI.IsWorldZoneOpen())
+              StartCoroutine(BubbleFade(blower.persistTime));
     }
     
     
@@ -85,6 +86,7 @@ public class Bubble : MonoBehaviour
 
     public void DestroyBubble()
     {
+        _bubbleUI.ClearBubbleFromList(this);
         _spawnAnchor.SetOccupied(false);
         Destroy(gameObject);
     }

@@ -49,6 +49,7 @@ namespace Managers
         {
             GetComponent<DataManager>().LoadDataObjects(); // if (loadDatabase == true)
             GetComponent<GeneratorManager>().InitializeGenerators(newGame);
+            GetComponent<InnovationManager>().InitializeInnovations(newGame);
             GetComponent<PurchaserManager>().InitializePurchasers(newGame, skipIntro);
             GetComponent<ModifierManager>().InitializeModifiers(newGame);
             GetComponent<ResourceManager>().InitializeResources(newGame, skipIntro);
@@ -62,6 +63,7 @@ namespace Managers
         private void GameTick()
         {
             GetComponent<ResourceManager>().GenerateIncome();
+            UIManager.GetComponent<BubbleUI>().BubbleTick();
             ScanUnlockables();
             UpdateUI();
         }
@@ -70,6 +72,7 @@ namespace Managers
         {
             // Called on GameStart, GameTick, and Purchaser's ClickBuyButton
             GetComponent<PurchaserManager>().ValidatePurchasers(); 
+            GetComponent<InnovationManager>().ValidateInnovationBodies(); 
             UIManager.GetComponent<ContentUI>().ScanUIUnlockables(); 
             UIManager.GetComponent<NarrativeUI>().ScanForNarrativeEventTriggers(); 
         }
@@ -77,7 +80,6 @@ namespace Managers
         public void UpdateUI()
         {
             UIManager.GetComponent<ContentUI>().UpdateContentUI();
-            UIManager.GetComponent<BubbleUI>().BubbleTick();
            GetComponent<ResourceManager>().UpdateTexts();
            GetComponent<PurchaserManager>().UpdateAllTexts();
         }
@@ -101,6 +103,27 @@ namespace Managers
                 return _gameSettings;
             }
         }
+
+        private ResourceManager _resourceManager;
+        private ResourceManager ResourceManager  
+        {
+            get
+            {
+                if (_resourceManager == null)
+                    _resourceManager = FindObjectOfType<ResourceManager>();
+                return _resourceManager;
+            }
+        }
+        private InnovationManager _innovationManager;
+        private InnovationManager InnovationManager  
+        {
+            get
+            {
+                if (_innovationManager == null)
+                    _innovationManager = FindObjectOfType<InnovationManager>();
+                return _innovationManager;
+            }
+        }
         private GeneratorManager _generatorManager;
         private GeneratorManager GeneratorManager  
         {
@@ -119,6 +142,16 @@ namespace Managers
                 if (_modifierManager == null)
                     _modifierManager = FindObjectOfType<ModifierManager>();
                 return _modifierManager;
+            }
+        }
+        private HoverUI _hoverUI;
+        private HoverUI HoverUI  
+        {
+            get
+            {
+                if (_hoverUI == null)
+                    _hoverUI = FindObjectOfType<HoverUI>();
+                return _hoverUI;
             }
         }
     }

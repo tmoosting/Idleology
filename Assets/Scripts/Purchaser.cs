@@ -89,8 +89,7 @@ public class Purchaser : MonoBehaviour
                 SetState(IOperator.State.Visible); 
         }
         public void Reveal() // only called for LemonadeStand at this point, for game start
-        {
-                Debug.Log("REVEAL " + gameObject.name);
+        { 
                 SetState(IOperator.State.Visible);
                 SetState(IOperator.State.Buyable);
         }
@@ -100,9 +99,7 @@ public class Purchaser : MonoBehaviour
                 SetState(IOperator.State.Hidden);
         }
         private void SetState(IOperator.State  newState)
-        {
-                if (gameObject.name == "LongerHours")
-                        Debug.Log("longhour " + GetState() + "... " + newState);
+        { 
                 if (newState == IOperator.State.Hidden)
                 {
                         gameObject.SetActive(false);  
@@ -161,9 +158,7 @@ public class Purchaser : MonoBehaviour
    
 
         public void ValidateLockState()
-        { 
-                if (gameObject.name == "LongerHours")
-                        Debug.Log("VALIDATE longhour " + GetState() ); 
+        {  
                 if (AtMaxLevel()) 
                         SetState(IOperator.State.Completed);  
                 else if (CheckNextStateRequirements())
@@ -219,8 +214,7 @@ public class Purchaser : MonoBehaviour
         }
 
         private void ProceedToNextState()
-        {
-                Debug.Log("NEXT for " + gameObject.name);
+        { 
                 if (GetState() == IOperator.State.Hidden)
                         SetState(IOperator.State.Visible);
                  if (GetState() == IOperator.State.Visible)
@@ -258,25 +252,25 @@ public class Purchaser : MonoBehaviour
         void Purchase()
         { 
                 resourceManager.PayResource(source._costResource, GetCurrentCost());
-        if (GetState() == IOperator.State.Buyable)
-        {
-                SetState(IOperator.State.Owned); 
+                if (GetState() == IOperator.State.Buyable)
+                {
+                        SetState(IOperator.State.Owned); 
        
-        }
-        else if (GetState() == IOperator.State.Owned)
-        {
-                SetState(IOperator.State.Operated);
-                source.AddLevel();
-        }
-        else if (GetState() == IOperator.State.Operated)
-        { 
-                source.AddLevel();
-        }
-        if (source.isGenerator == false)
-                modifierManager.HandleStaticModifierEffects(source);
-        GameStateManager.Instance.ScanUnlockables();
-        GameStateManager.Instance.UpdateUI();
-        GameStateManager.Instance.UIManager.GetComponent<HoverUI>().ExitHoverPurchaser(null);
+                }
+                else if (GetState() == IOperator.State.Owned)
+                {
+                        SetState(IOperator.State.Operated);
+                        source.AddLevel();
+                }
+                else if (GetState() == IOperator.State.Operated)
+                { 
+                        source.AddLevel();
+                }
+                if (source.isGenerator == false)
+                        modifierManager.HandleStaticModifierEffects(source);
+                GameStateManager.Instance.ScanUnlockables();
+                GameStateManager.Instance.UpdateUI();
+                GameStateManager.Instance.UIManager.GetComponent<HoverUI>().ExitHoverPurchaser(null);
         }
 
      
@@ -316,6 +310,7 @@ public class Purchaser : MonoBehaviour
                         return source._purchaseCost;
 
                 float rawCost = (source.GetLevel() + 1) * source._levelCost;
+                rawCost *= Mathf.Pow(source._costMultiplier, source.GetLevel());
                 float modifiedCost = modifierManager.GetDiscountLevellingPrice(rawCost);
                 return (ulong)modifiedCost; 
         }

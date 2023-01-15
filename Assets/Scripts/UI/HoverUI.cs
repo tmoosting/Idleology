@@ -63,7 +63,16 @@ public class HoverUI : MonoBehaviour
     {
       toolTip.SetActive(false);
     }
-    
+    public void HoverInnovationBody(InnovationBody innovationBody)
+    {
+        if (showTooltips)
+            ShowHoverUI(innovationBody.GetInnovation().tooltip);
+    }
+
+    public void ExitHoverInnovationBody(InnovationBody innovationBody)
+    {
+        toolTip.SetActive(false); 
+    }
     private GameSettings _gameSettings;
     private GameSettings GameSettings  
     {
@@ -74,5 +83,6 @@ public class HoverUI : MonoBehaviour
             return _gameSettings;
         }
     }
-    
+
+
 }

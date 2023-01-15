@@ -62,6 +62,18 @@ namespace Managers
          return null;
      }
 
+     public Resource.Type GetGeneratedResourceForGenerator(Generator.Type generatorType)
+     {
+         if (generatorType == Generator.Type.LobbyingFirm)
+             return Resource.Type.Influence;
+         if (generatorType == Generator.Type.PoliceStation)
+             return Resource.Type.Force;
+         if (generatorType == Generator.Type.Laboratory)
+             return Resource.Type.Tech;
+         return Resource.Type.Credit;
+
+     }
+
 
     }
 }

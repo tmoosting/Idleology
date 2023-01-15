@@ -88,8 +88,10 @@ namespace Managers
                 Debug.LogWarning("NO Generator Table Found..!");
             if (GetTableNames().Contains("Modifiers"))
             {
-                foreach (string str in GetFieldValuesForTable("Modifiers", "Type")) 
-                    LoadModifierDataObject(str);
+                if (GetFieldValuesForTable("Modifiers", "Type").Count != 0)
+                    foreach (string str in GetFieldValuesForTable("Modifiers", "Type")) 
+                        if (string.IsNullOrEmpty(str) == false)
+                           LoadModifierDataObject(str);
             }
             else
                 Debug.LogWarning("NO Modifier Table Found..!");
@@ -143,9 +145,9 @@ namespace Managers
                 }
             foreach (string modifier in GetEntryForTableAndFieldWithID("Narrative", "Modifiers", id).Split(','))
                 modifierStrings.Add(modifier);
-            foreach (string modifierTrigger in GetEntryForTableAndFieldWithID("Narrative", "ModifierLevelTrigger", id).Split(','))
+            /*foreach (string modifierTrigger in GetEntryForTableAndFieldWithID("Narrative", "ModifierLevelTrigger", id).Split(','))
                 if (modifierTrigger != ""&& modifierTrigger != "NotFound")
-                    modifierTriggers.Add(int.Parse(modifierTrigger));
+                    modifierTriggers.Add(int.Parse(modifierTrigger));*/
             foreach (string resource in GetEntryForTableAndFieldWithID("Narrative", "Resources", id).Split(','))
                 resourceStrings.Add(resource);
             foreach (string resourceTrigger in GetEntryForTableAndFieldWithID("Narrative", "ResourceAmountTrigger", id).Split(','))
@@ -166,6 +168,7 @@ namespace Managers
             if (modifierStrings.Count != 0)
                 foreach (string str in modifierStrings)
                 {
+                    return;
                     if (str != "")
                     {
                         Modifier.Type modType = (Modifier.Type) System.Enum.Parse(typeof(Modifier.Type),str); 
@@ -218,6 +221,7 @@ namespace Managers
             generatorData._purchaseCost = ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "PurchaseCost", type));
         //    Debug.Log("Entry: " + GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
             generatorData._levelCost = ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "LevelCost", type));
+            generatorData._costMultiplier = float.Parse( GetEntryForTableAndFieldWithType("Generators", "CostMultiplier", type));
             generatorData._production= ulong.Parse( GetEntryForTableAndFieldWithType("Generators", "Production", type));
             string requiredGenerator = GetEntryForTableAndFieldWithType("Generators", "RequiresGenerator", type);
             if (requiredGenerator == "")
@@ -248,6 +252,7 @@ namespace Managers
             generator._costResource = generatorData._costResource;
             generator._purchaseCost = generatorData._purchaseCost;
             generator._levelCost = generatorData._levelCost;
+            generator._costMultiplier = generatorData._costMultiplier;
             generator._production = generatorData._production;
             generator._requiresGenerator = generatorData._requiresGenerator;
             generator._requiredGeneratorType = generatorData._requiredGenerator;
@@ -263,7 +268,8 @@ namespace Managers
          private void LoadModifierDataObject(string type)
         {
             ModifierData modifierData = GetModifierData(type);
-             
+
+            return; 
             modifierData._costResource = (Resource.Type) System.Enum.Parse(typeof(Resource.Type),
                 GetEntryForTableAndFieldWithType("Modifiers", "CostResource", type)); 
             modifierData._purchaseCost = ulong.Parse( GetEntryForTableAndFieldWithType("Modifiers", "PurchaseCost", type));
@@ -366,7 +372,7 @@ namespace Managers
             return null;
         }
         public ModifierData GetModifierData(string type)
-        {
+        { 
             foreach (ModifierData mod in modifierDataList)
                 if (mod.GetModifierType().ToString() == type)
                     return mod;

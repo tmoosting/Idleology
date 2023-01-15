@@ -38,6 +38,7 @@ namespace ScriptableObjects
         public Resource.Type _resource { get; set; }
         public Resource.Type _costResource { get; set; }
         public ulong _levelCost { get; set; }
+        public float _costMultiplier { get; set; }
         public ulong _purchaseCost { get; set; }
         public bool _requiresGenerator { get; set; }
         public Type _requiredGeneratorType { get; set; }
